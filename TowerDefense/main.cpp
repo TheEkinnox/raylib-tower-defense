@@ -4,6 +4,9 @@
 
 int main()
 {
+    // Set the working directory to avoid issues with asset paths
+    ChangeDirectory(GetApplicationDirectory());
+
     InitWindow(300, 300, "Raylib works!");
     InitAudioDevice();
 
