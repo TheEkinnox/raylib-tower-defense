@@ -1,7 +1,6 @@
 #include "pch.h"
 
-#include "raylib.h"
-
+#include <raylib.h>
 
 int main()
 {
@@ -18,7 +17,7 @@ int main()
     {
         // error...
     }
-
+    
     while (!WindowShouldClose())
     {
         BeginDrawing();
