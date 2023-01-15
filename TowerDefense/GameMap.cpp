@@ -43,23 +43,20 @@ bool TD::GameMap::BuildFromFile(const std::string& fileName)
 
 		m_terrain.reserve(static_cast<size_t>(width) * height);
 
-		bool isValidLine = true;
+		unsigned int y;
 
-		for (unsigned int y = 0; y < height && isValidLine; y++)
+		for (y = 0; y < height && std::getline(fileStream, curLine); y++)
 		{
-			if (!std::getline(fileStream, curLine))
-			{
-				isValidLine = false;
-				break;
-			}
-
 			tokens = SplitString(curLine, " ", false);
 
-			if (tokens.empty() || tokens.size() != width)
+			if (tokens.size() != width)
 				return false;
 
 			for (unsigned int x = 0; x < width; x++)
 			{
+				if (!std::isdigit(tokens[x][0]))
+					return false;
+
 				unsigned int terrainType = Unpack(std::stoul(tokens[x]),
 					TERRAIN_TYPE_BIT_OFFSET, TERRAIN_TYPE_BIT_COUNT);
 
@@ -67,8 +64,7 @@ bool TD::GameMap::BuildFromFile(const std::string& fileName)
 			}
 		}
 
-		if (isValidLine)
-			return true;
+		return y == height;
 	}
 
 	return false;
