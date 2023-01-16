@@ -14,9 +14,9 @@ namespace TD
 {
 	enum TerrainType
 	{
-		GRASS,
-		DIRT,
 		ROAD,
+		DIRT,
+		GRASS,
 		SAND
 	};
 
