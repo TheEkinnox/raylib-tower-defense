@@ -6,7 +6,7 @@
 TD::Renderer::Renderer() :
 	m_target(LoadRenderTexture(GetRenderWidth(), GetRenderHeight()))
 {
-	m_sprites.resize(UINT8_MAX);
+	m_sprites.resize(UINT8_MAX + 1);
 }
 
 TD::Renderer::~Renderer()
@@ -59,14 +59,18 @@ void TD::Renderer::DrawSprites() const
 		return;
 
 	BeginDrawing();
-	BeginTextureMode(m_target);
 
-	ClearBackground(RAYWHITE);
+		BeginTextureMode(m_target);
 
-	for (auto& layerSprites : m_sprites)
-		for (const Sprite* sprite : layerSprites)
-			sprite->Draw();
+			ClearBackground(RAYWHITE);
 
-	EndTextureMode();
+			for (auto& layerSprites : m_sprites)
+				for (const Sprite* sprite : layerSprites)
+					sprite->Draw();
+
+		EndTextureMode();
+
+		DrawTexture(m_target.texture, 0, 0, WHITE);
+
 	EndDrawing();
 }
