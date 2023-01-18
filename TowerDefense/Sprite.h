@@ -13,45 +13,46 @@ namespace TD
 
 		Sprite();
 
-		Sprite(const Texture& texture, const Vector2& position = { 0, 0 },
-			Renderer::Layer layer = 0, const float& rotation = 0,
-			const float& scale = 1, const Color& tint = WHITE);
+		Sprite(Texture texture, Vector2 position, Renderer::Layer layer = 0);
 
-		Sprite(const Texture& spriteSheet, const Rectangle& spriteRect,
-			const Vector2& position = { 0, 0 }, Renderer::Layer layer = 0,
-			const float& rotation = 0, const float& scale = 1,
-			const Color& tint = WHITE);
+		Sprite(Texture spriteSheet, Rectangle spriteRect, Vector2 position,
+			Renderer::Layer layer = 0);
 
-		Sprite(const Sprite& other);
-		Sprite(Sprite&& other) noexcept;
+		Sprite(const Sprite& other) = default;
+		Sprite(Sprite&& other) = default;
 
 		~Sprite() = default;
 
-		Sprite& operator=(const Sprite& other);
-		Sprite& operator=(Sprite&& other) noexcept;
+		Sprite&		operator=(const Sprite& other);
+		Sprite&		operator=(Sprite&& other) noexcept;
 
-		Texture	GetTexture() const;
+		Texture		GetTexture() const;
 
-		Vector2	GetPosition() const;
-		void	SetPosition(const float& xPos, const float& yPos);
+		Vector2		GetPosition() const;
+		void		SetPosition(float xPos, float yPos);
 
-		float	GetRotation() const;
-		void	SetRotation(const float& rotation);
+		Vector2		GetOrigin() const;
+		void		SetOrigin(float xOrigin, float yOrigin);
 
-		float	GetScale() const;
-		void	SetScale(const float& scale);
+		Vector2		GetScale() const;
+		void		SetScale(float scale);
+		void		SetScale(float xScale, float yScale);
 
-		Color	GetTint() const;
-		void	SetTint(const Color& tint);
+		float		GetRotation() const;
+		void		SetRotation(float rotation);
 
-		void	Draw() const;
+		Color		GetTint() const;
+		void		SetTint(Color tint);
+
+		void		Draw() const;
 
 	private:
-		const Texture*	m_spriteSheet;
-		Rectangle		m_spriteRect;
-		Vector2			m_position;
-		float			m_rotation;
-		float			m_scale;
-		Color			m_tint;
+		Texture		m_spriteSheet;
+		Rectangle	m_spriteRect;
+		Vector2		m_position;
+		Vector2		m_origin = { 0, 0 };
+		Vector2		m_scale = { 1.f, 1.f };
+		float		m_rotation = 0;
+		Color		m_tint = WHITE;
 	};
 }
