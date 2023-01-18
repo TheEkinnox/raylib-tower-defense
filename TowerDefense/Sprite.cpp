@@ -69,14 +69,14 @@ namespace TD
 		return m_spriteSheet;
 	}
 
-	Vector2 Sprite::GetPosition() const
+	Vector2 Sprite::Position() const
 	{
 		return m_position;
 	}
 
-	void Sprite::SetPosition(const float xPos, const float yPos)
+	Vector2& Sprite::Position()
 	{
-		m_position = { xPos, yPos };
+		return m_position;
 	}
 
 	Vector2 Sprite::GetOrigin() const

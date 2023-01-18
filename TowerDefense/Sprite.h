@@ -28,8 +28,8 @@ namespace TD
 
 		Texture		GetTexture() const;
 
-		Vector2		GetPosition() const;
-		void		SetPosition(float xPos, float yPos);
+		Vector2		Position() const;
+		Vector2&	Position();
 
 		Vector2		GetOrigin() const;
 		void		SetOrigin(float xOrigin, float yOrigin);
