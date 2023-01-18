@@ -22,11 +22,14 @@ namespace TD
 		void							RemoveSprite(Sprite& sprite);
 		const Texture*					LoadTextureFile(const std::string& name);
 		const Texture*					GetTexture(const std::string& name);
+		Vector2							GetTextureScale(const Texture& texture) const;
 		void							DrawSprites() const;
 
 	private:
 		std::map<std::string, Texture>	m_textures;
 		std::vector<std::list<Sprite*>>	m_sprites;
 		RenderTexture					m_target;
+
+		void							DrawTarget() const;
 	};
 }

@@ -3,74 +3,130 @@
 
 #include "Sprite.h"
 
-TD::Renderer::Renderer() :
-	m_target(LoadRenderTexture(GetRenderWidth(), GetRenderHeight()))
+namespace TD
 {
-	m_sprites.resize(UINT8_MAX + 1);
-}
+	Renderer::Renderer() :
+		m_target(LoadRenderTexture(GetRenderWidth(), GetRenderHeight()))
+	{
+		m_sprites.resize(UINT8_MAX + 1);
+	}
 
-TD::Renderer::~Renderer()
-{
-	for (auto& layerSprites : m_sprites)
-		for (const Sprite* sprite : layerSprites)
-			delete sprite;
+	Renderer::~Renderer()
+	{
+		for (auto& layerSprites : m_sprites)
+			for (const Sprite* sprite : layerSprites)
+				delete sprite;
 
-	for (const auto& pair : m_textures)
-		UnloadTexture(pair.second);
+		for (const auto& pair : m_textures)
+			UnloadTexture(pair.second);
 
-	UnloadRenderTexture(m_target);
+		UnloadRenderTexture(m_target);
 
-	m_sprites.clear();
-	m_textures.clear();
-}
+		m_sprites.clear();
+		m_textures.clear();
+	}
 
-TD::Sprite& TD::Renderer::CreateSprite(const Texture& texture, Vector2 position, Layer zLayer)
-{
-	m_sprites[zLayer].push_back(new Sprite(texture, position, zLayer));
+	Sprite& Renderer::CreateSprite(const Texture& texture, const Vector2 position,
+		const Layer zLayer)
+	{
+		m_sprites[zLayer].push_back(new Sprite(texture, position, zLayer));
 
-	return *m_sprites[zLayer].back();
-}
+		return *m_sprites[zLayer].back();
+	}
 
-void TD::Renderer::RemoveSprite(Sprite& sprite)
-{
-	if (sprite.Layer < 0 || sprite.Layer > m_sprites.size())
-		return;
+	void Renderer::RemoveSprite(Sprite& sprite)
+	{
+		if (sprite.Layer < 0 || sprite.Layer > m_sprites.size())
+			return;
 
-	m_sprites[sprite.Layer].remove(&sprite);
-	delete& sprite;
-}
+		m_sprites[sprite.Layer].remove(&sprite);
+		delete& sprite;
+	}
 
-const Texture* TD::Renderer::LoadTextureFile(const std::string& name)
-{
-	if (m_textures.find(name) == m_textures.end())
-		m_textures[name] = LoadTexture(name.c_str());
+	const Texture* Renderer::LoadTextureFile(const std::string& name)
+	{
+		const Texture texture = LoadTexture(name.c_str());
 
-	return &m_textures[name];
-}
+		if (texture.id == 0)
+			return nullptr;
 
-const Texture* TD::Renderer::GetTexture(const std::string& name)
-{
-	return &m_textures[name];
-}
+		m_textures[name] = texture;
+		return &m_textures[name];
+	}
 
-void TD::Renderer::DrawSprites() const
-{
-	if (m_sprites.empty())
-		return;
+	const Texture* Renderer::GetTexture(const std::string& name)
+	{
+		if (m_textures.find(name) != m_textures.end())
+			return &m_textures[name];
 
-	BeginDrawing();
+		return LoadTextureFile(name);
+	}
 
-		BeginTextureMode(m_target);
+	Vector2 Renderer::GetTextureScale(const Texture& texture) const
+	{
+		return {
+			static_cast<float>(m_target.texture.width) / static_cast<float>(texture.width),
+			static_cast<float>(m_target.texture.height) / static_cast<float>(texture.height)
+		};
+	}
 
-			ClearBackground(RAYWHITE);
+	void Renderer::DrawSprites() const
+	{
+		if (m_sprites.empty())
+			return;
 
-			for (auto& layerSprites : m_sprites)
-				for (const Sprite* sprite : layerSprites)
-					sprite->Draw();
+		BeginDrawing();
 
-		EndTextureMode();
+			BeginTextureMode(m_target);
 
-		DrawTexture(m_target.texture, 0, 0, WHITE);
+				ClearBackground(RAYWHITE);
 
-	EndDrawing();
+				for (auto& layerSprites : m_sprites)
+					for (const Sprite* sprite : layerSprites)
+						sprite->Draw();
+
+			EndTextureMode();
+
+		ClearBackground(BLACK);
+
+		DrawTarget();
+
+		EndDrawing();
+	}
+
+	void Renderer::DrawTarget() const
+	{
+		Vector2 scale{
+			static_cast<float>(GetScreenWidth()) / static_cast<float>(m_target.texture.width),
+			static_cast<float>(GetScreenHeight()) / static_cast<float>(m_target.texture.height)
+		};
+
+		Vector2 pos{ 0, 0 };
+
+		// determine the game's target and current aspect ratio
+		const float targetAspect = static_cast<float>(m_target.texture.width) / static_cast<float>(m_target.texture.height);
+		const float screenAspect = static_cast<float>(GetScreenWidth()) / static_cast<float>(GetScreenHeight());
+
+		// current viewport height should be scaled by this amount
+		const float heightScale = screenAspect / targetAspect;
+
+		// if scaled height is less than current height, add letterbox (black bars on the top and bottom)
+		if (heightScale < 1.f)
+		{
+			scale.y *= heightScale;
+			pos.y = (1.f - heightScale) * .5f * static_cast<float>(GetScreenHeight());
+		}
+		else // add pillar-box (black bars on the left and right)
+		{
+			const float widthScale = 1.f / heightScale;
+			scale.x *= widthScale;
+			pos.x = (1.f - widthScale) * .5f * static_cast<float>(GetScreenWidth());
+		}
+
+		Sprite targetSprite = { m_target.texture, pos, 0 };
+
+		// Flip the sprite since render textures are flipped by default
+		targetSprite.SetScale(scale.x, -scale.y);
+		targetSprite.Draw();
+	}
 }
