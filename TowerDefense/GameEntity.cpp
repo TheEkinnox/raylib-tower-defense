@@ -5,22 +5,22 @@
 
 namespace TD
 {
-	GameEntity::GameEntity(Sprite& sprite) : sprite(&sprite)
+	GameEntity::GameEntity(Sprite& sprite) : m_sprite(&sprite)
 	{
 	}
 
 	const Sprite& GameEntity::GetSprite() const
 	{
-		return *sprite;
+		return *m_sprite;
 	}
 
-	Vector2 GameEntity::GetPosition() const
+	Vector2 GameEntity::Position() const
 	{
-		return sprite->GetPosition();
+		return m_sprite->Position();
 	}
 
-	void GameEntity::SetPosition(const Vector2 position)
+	Vector2& GameEntity::Position()
 	{
-		sprite->SetPosition(position.x, position.y);
+		return m_sprite->Position();
 	}
 }

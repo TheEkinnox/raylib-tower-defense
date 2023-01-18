@@ -11,10 +11,10 @@ namespace TD
 		explicit		GameEntity(Sprite& sprite);
 
 		const Sprite&	GetSprite() const;
-		Vector2			GetPosition() const;
-		void			SetPosition(Vector2 position);
+		Vector2			Position() const;
+		Vector2&		Position();
 
 	protected:
-		Sprite*			sprite;
+		Sprite*			m_sprite;
 	};
 }
