@@ -9,6 +9,7 @@ namespace TD
 	{
 	public:
 		explicit		GameEntity(Sprite& sprite);
+		virtual			~GameEntity() = default;
 
 		const Sprite&	GetSprite() const;
 		Vector2			Position() const;
