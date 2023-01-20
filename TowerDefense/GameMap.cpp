@@ -84,8 +84,8 @@ namespace TD
 
 					const Vector2 position = Vector2
 					{
-						static_cast<float>(x),
-						static_cast<float>(y)
+						static_cast<float>(x) * TILE_WIDTH,
+						static_cast<float>(y) * TILE_HEIGHT
 					};
 
 					AddTile(tileData, static_cast<size_t>(y) * width + x);
