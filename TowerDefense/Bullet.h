@@ -1,20 +1,23 @@
 #pragma once
 #include <raylib.h>
 #include "bullettype.h"
-
-using namespace std;
+#include "PooledObject.h"
+#include "Sprite.h"
 
 namespace TD
 {
-	struct Bullet // public structure
+	class Bullet : public PooledObject
 	{
-		Vector2 pos;				// position of the bullet
-		Vector2 dir;				// direction of the bullet 
-		float speed = 2;			// the speed is two pixel per move
-		//BulletType ;
-		//Sprite : TD::Sprite*
+	public:
+		Bullet(Sprite& sprite);
+		//LibMath::Vector2 dir;		// direction of the bullet
+		//BulletType;
+		TD::Sprite* Sprite;
+		float speed = 20;			// the speed is twenty pixel per sec
 
-		void Update();
-		void spawnBullet();
+		Vector2 Position() const;
+		Vector2& Position();
+
+		void Update()override;
 	};
 }

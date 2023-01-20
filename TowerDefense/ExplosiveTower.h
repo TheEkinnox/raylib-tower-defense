@@ -1,15 +1,16 @@
 #pragma once
-
-using namespace std;
+#include "ITower.h"
+#include "Bullet.h"
+#include "Vector/Vector2.h"
 
 namespace TD
 {
-	namespace ITower
-	{
-		class ExplosiveTower
+		class ExplosiveTower : public ITower
 		{
 		public:
-			//ShootAt(TD::Enemy const&);
+			ExplosiveTower(Sprite&);
+
+			void ShootAt();
+			void Update() override;					//update de explosive tower
 		};
-	}
 }

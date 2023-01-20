@@ -1,18 +1,20 @@
 #include "pch.h"
 #include "ITower.h"
-
+#include <raylib.h>
 
 namespace TD
 {
-	void LevelUp()
+	//Update()
+	//{
+	//};
+
+	//void LevelUp()
+	//{
+	//};
+
+	ITower::ITower(Sprite& sprite) : GameEntity(sprite)
 	{
-
-	};
-
-	void Update()
-	{
-
-	};
+	}
 
 	/*CheckRange() TD::Enemy* {};*/
 }

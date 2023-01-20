@@ -1,13 +1,17 @@
 #pragma once
 #include "ITower.h"
-
-using namespace std;
+#include "Bullet.h"
+#include "Vector/Vector2.h"
 
 namespace TD
 {
+	static Bullet *rBullet;
 	class RegularTower : public ITower
 		{
 		public:
-			//ShootAt(TD::Enemy const&):void
+			RegularTower(Sprite&);
+
+			void ShootAt();
+			void Update() override;				// update the regular tower
 		};
 }
