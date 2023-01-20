@@ -81,16 +81,16 @@ namespace TD
 
 			switch (tiles[i])
 			{
-			case ROAD:
+			case TerrainType::ROAD:
 				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile034.png"), pos, WHITE);
 				break;
-			case DIRT:
+			case TerrainType::DIRT:
 				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile050.png"), pos, WHITE);
 				break;
-			case GRASS:
+			case TerrainType::GRASS:
 				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile024.png"), pos, WHITE);
 				break;
-			case SAND:
+			case TerrainType::SAND:
 				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile029.png"), pos, WHITE);
 				break;
 			}

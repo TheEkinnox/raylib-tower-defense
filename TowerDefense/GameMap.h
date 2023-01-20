@@ -19,14 +19,14 @@
 
 namespace TD
 {
-	enum SpecialType
+	enum class SpecialType
 	{
 		NONE,
 		HQ,
 		SPAWN_POINT
 	};
 
-	enum TerrainType
+	enum class TerrainType
 	{
 		ROAD,
 		DIRT,
@@ -52,6 +52,7 @@ namespace TD
 		T*							AddTower(Vector2 cellPosition);
 		ITower*						GetTowerOnScreenPosition(Vector2 screenPos) const;
 		Vector2						GetPlayerHQPosition() const;
+		Vector2						GetSpawnPosition() const;
 		void						Clear();
 
 	private:
@@ -59,6 +60,10 @@ namespace TD
 		unsigned int				m_height;
 		std::vector<TerrainType>	m_terrain;
 		std::vector<ITower*>		m_towers;
+		std::vector<Vector2>		m_spawnPoints;
 		Vector2						m_hqPosition{ -1, -1 };
+
+		bool						AddTile(unsigned int tileData, size_t index);
+		bool						AddSpecialTile(unsigned int tileData, Vector2 position);
 	};
 }

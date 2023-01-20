@@ -2,7 +2,7 @@
 #include <fstream>
 
 #include "GameMap.h"
-
+#include "ITower.h"
 #include "utility.h"
 
 namespace TD
@@ -59,7 +59,7 @@ namespace TD
 			const unsigned int height = std::stoul(tokens[MAP_HEIGHT_INDEX]);
 
 			m_terrain.clear();
-			m_terrain.resize(static_cast<size_t>(width) * height, GRASS);
+			m_terrain.resize(static_cast<size_t>(width) * height, TerrainType::GRASS);
 			m_terrain.shrink_to_fit();
 
 			m_towers.clear();
@@ -79,34 +79,17 @@ namespace TD
 				{
 					if (!std::isdigit(tokens[x][0]))
 						return false;
-					unsigned int tileData = std::stoul(tokens[x]);
 
-					unsigned int terrainType = Unpack(tileData,
-						TERRAIN_TYPE_BIT_OFFSET, TERRAIN_TYPE_BIT_COUNT);
+					const unsigned int tileData = std::stoul(tokens[x]);
 
-					unsigned int specialType = static_cast<SpecialType>(Unpack(tileData,
-						SPECIAL_TYPE_BIT_OFFSET, SPECIAL_TYPE_BIT_COUNT));
-
-					switch (specialType)
+					const Vector2 position = Vector2
 					{
-					case NONE:
-						break;
-					case HQ:
-						if (m_hqPosition.x != -1)
-							return false;
+						static_cast<float>(x),
+						static_cast<float>(y)
+					};
 
-						m_hqPosition = Vector2{ static_cast<float>(x) * TILE_WIDTH, static_cast<float>(y) * TILE_HEIGHT };
-						break;
-					case SPAWN_POINT:
-						// TODO: Handle spawn 
-						break;
-					default:
-						return false;
-					}
-
-					size_t index = static_cast<size_t>(y) * width + x;
-
-					m_terrain[index] = static_cast<TerrainType>(terrainType);
+					AddTile(tileData, static_cast<size_t>(y) * width + x);
+					AddSpecialTile(tileData, position);
 				}
 			}
 
@@ -123,10 +106,10 @@ namespace TD
 		return false;
 	}
 
-	ITower* GameMap::GetTowerOnScreenPosition(Vector2 screenPos) const
+	ITower* GameMap::GetTowerOnScreenPosition(const Vector2 screenPos) const
 	{
-		Vector2 cellPos{ screenPos.x / TILE_WIDTH, screenPos.y / TILE_HEIGHT };
-		size_t index = static_cast<size_t>(cellPos.y) * GetWidth() + static_cast<size_t>(cellPos.x);
+		const Vector2 cellPos{ screenPos.x / TILE_WIDTH, screenPos.y / TILE_HEIGHT };
+		const size_t index = static_cast<size_t>(cellPos.y) * GetWidth() + static_cast<size_t>(cellPos.x);
 
 		if (index < 0 || index > m_towers.size())
 			return nullptr;
@@ -139,12 +122,65 @@ namespace TD
 		return m_hqPosition;
 	}
 
+	Vector2 GameMap::GetSpawnPosition() const
+	{
+		if (m_spawnPoints.empty())
+			return { 0 , 0 };
+
+		return m_spawnPoints[Random(0, static_cast<int>(m_spawnPoints.size()))];
+	}
+
 	void GameMap::Clear()
 	{
 		m_width = 0;
 		m_height = 0;
 		m_terrain.clear();
 
-		// TODO: When towers are implemented, deallocate them and clear m_towers
+		for (const auto tower : m_towers)
+			delete tower;
+
+		m_towers.clear();
+	}
+
+	bool GameMap::AddTile(const unsigned int tileData, const size_t index)
+	{
+		try
+		{
+			const TerrainType type = static_cast<TerrainType>(Unpack(tileData,
+				TERRAIN_TYPE_BIT_OFFSET, TERRAIN_TYPE_BIT_COUNT));
+
+			m_terrain[index] = type;
+
+			return true;
+		}
+		catch(...)
+		{
+			return false;
+		}
+	}
+
+	bool GameMap::AddSpecialTile(const unsigned int tileData, const Vector2 position)
+	{
+		const SpecialType type = static_cast<SpecialType>(Unpack(tileData,
+			SPECIAL_TYPE_BIT_OFFSET, SPECIAL_TYPE_BIT_COUNT));
+
+		switch (type)
+		{
+		case SpecialType::NONE:
+			break;
+		case SpecialType::HQ:
+			if (m_hqPosition.x != -1)
+				return false;
+
+			m_hqPosition = position;
+			break;
+		case SpecialType::SPAWN_POINT:
+			m_spawnPoints.push_back(position);
+			break;
+		default:
+			return false;
+		}
+
+		return true;
 	}
 }
