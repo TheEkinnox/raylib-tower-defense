@@ -49,4 +49,12 @@ namespace TD
 	 * \return The unpacked data
 	 */
 	uint32_t Unpack(uint32_t data, uint8_t offset, uint8_t bitCount);
+
+	/**
+	 * \brief Generate a random number in the given range
+	 * \param min The smallest accepted value
+	 * \param max The largest accepted value
+	 * \return A random number in range [min, max]
+	 */
+	int	Random(int min, int max);
 }

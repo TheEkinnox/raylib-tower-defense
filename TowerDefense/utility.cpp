@@ -3,6 +3,8 @@
 
 #include "utility.h"
 
+#include <random>
+
 namespace TD
 {
 	std::string TrimLeft(const std::string& str)
@@ -88,5 +90,13 @@ namespace TD
 	{
 		const uint32_t mask = (1 << bitCount) - 1;
 		return (data >> offset) & mask;
+	}
+
+	int Random(const int min, const int max)
+	{
+		std::default_random_engine generator(clock());
+		std::uniform_int_distribution<int> distribution(min, max);
+
+		return distribution(generator);
 	}
 }
