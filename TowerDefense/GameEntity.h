@@ -8,6 +8,7 @@ namespace TD
 	class GameEntity
 	{
 	public:
+						GameEntity();
 		explicit		GameEntity(Sprite& sprite);
 		virtual			~GameEntity() = default;
 
