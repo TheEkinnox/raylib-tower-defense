@@ -8,7 +8,6 @@ namespace TD
 	Renderer::Renderer() :
 		m_target(LoadRenderTexture(GetScreenWidth(), GetScreenHeight()))
 	{
-		m_sprites.resize(UINT8_MAX + 1);
 	}
 
 	Renderer::~Renderer()
@@ -29,6 +28,9 @@ namespace TD
 	Sprite& Renderer::CreateSprite(const Texture& texture, const Vector2 position,
 		const Layer zLayer)
 	{
+		if (zLayer >= m_sprites.size())
+			m_sprites.resize(static_cast<size_t>(zLayer) + 1);
+
 		m_sprites[zLayer].push_back(new Sprite(texture, position, zLayer));
 
 		return *m_sprites[zLayer].back();
