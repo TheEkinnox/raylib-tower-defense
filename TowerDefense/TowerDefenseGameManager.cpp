@@ -65,7 +65,8 @@ namespace TD
 
 	TowerDefenseGameManager& TowerDefenseGameManager::GetInstance()
 	{
-		return m_instance;
+		static TowerDefenseGameManager instance;
+		return instance;
 	}
 
 	void TowerDefenseGameManager::DrawTiles()
