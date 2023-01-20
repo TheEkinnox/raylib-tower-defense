@@ -17,5 +17,8 @@ namespace TD
 		void								Update() override;
 		static	TowerDefenseGameManager&	GetInstance();
 		void DrawTiles();
+
+	private:
+		static TowerDefenseGameManager		m_instance;
 	};
 }
