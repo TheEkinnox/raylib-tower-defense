@@ -105,6 +105,8 @@
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="ITower.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Pool.h" />
+    <ClInclude Include="PooledObject.h" />
     <ClInclude Include="RegularTower.h" />
     <ClInclude Include="StunTower.h" />
     <ClInclude Include="Renderer.h" />
@@ -122,6 +124,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PooledObject.cpp" />
     <ClCompile Include="RegularTower.cpp" />
     <ClCompile Include="StunTower.cpp" />
     <ClCompile Include="Renderer.cpp" />
