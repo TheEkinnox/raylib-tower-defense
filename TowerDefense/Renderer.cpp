@@ -6,7 +6,7 @@
 namespace TD
 {
 	Renderer::Renderer() :
-		m_target(LoadRenderTexture(GetRenderWidth(), GetRenderHeight()))
+		m_target(LoadRenderTexture(GetScreenWidth(), GetScreenHeight()))
 	{
 		m_sprites.resize(UINT8_MAX + 1);
 	}
