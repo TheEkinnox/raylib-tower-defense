@@ -1,38 +1,16 @@
 #include "pch.h"
 
-#include <raylib.h>
+#include "App.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    // Set the working directory to avoid issues with asset paths
-    ChangeDirectory(GetApplicationDirectory());
+	TD::App app;
 
-    InitWindow(300, 300, "Raylib works!");
-    InitAudioDevice();
+    app.Init();
 
-    Sound sound = LoadSound("Assets/sounds/doorClose_000.ogg");
+    app.Run();
 
-	if (sound.stream.buffer == nullptr)
-        return -1;
-
-    Font font = LoadFont("Assets/fonts/GROBOLD.ttf");
-    if (font.texture.id == 0)
-    {
-        // error...
-    }
-    
-    while (!WindowShouldClose())
-    {
-        BeginDrawing();
-
-        ClearBackground(BLACK);
-        DrawCircle(100, 100, 100, GREEN);
-
-        EndDrawing();
-    }
-
-    CloseAudioDevice();
-    CloseWindow();
+    app.Quit();
 
     return 0;
 }
