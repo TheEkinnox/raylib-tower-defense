@@ -64,11 +64,11 @@ namespace TD
 		return LoadTextureFile(name);
 	}
 
-	Vector2 Renderer::GetTextureScale(const Texture& texture) const
+	Vector2 Renderer::GetTextureScale(const float width, const float height) const
 	{
 		return {
-			static_cast<float>(m_target.texture.width) / static_cast<float>(texture.width),
-			static_cast<float>(m_target.texture.height) / static_cast<float>(texture.height)
+			static_cast<float>(m_target.texture.width) / width,
+			static_cast<float>(m_target.texture.height) / height
 		};
 	}
 

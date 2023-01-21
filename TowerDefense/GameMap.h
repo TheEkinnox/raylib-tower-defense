@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <string>
 #include <vector>
+#include "ITower.h"
 
 #define MAP_DATA_KEY "map"
 #define MAP_TOKENS_COUNT 3
@@ -51,9 +52,11 @@ namespace TD
 		template<typename T>
 		T*							AddTower(Vector2 cellPosition);
 		ITower*						GetTowerOnScreenPosition(Vector2 screenPos) const;
+		void						UpdateTowers();
 		Vector2						GetPlayerHQPosition() const;
 		Vector2						GetSpawnPosition() const;
 		void						Clear();
+		float						GetScale() const;
 
 	private:
 		unsigned int				m_width;
@@ -66,4 +69,28 @@ namespace TD
 		bool						AddTile(unsigned int tileData, size_t index);
 		bool						AddSpecialTile(unsigned int tileData, Vector2 position);
 	};
+
+	template<typename T>
+	inline T* GameMap::AddTower(Vector2 cellPosition)
+	{
+		if (!std::is_base_of_v<ITower, T>)
+			return nullptr;
+
+		size_t index = static_cast<size_t>(cellPosition.y) * m_width + static_cast<size_t>(cellPosition.x);
+
+		if (m_towers[index] != nullptr)
+			return static_cast<T*>(m_towers[index]);
+
+		const float scale = GetScale();
+
+		Vector2 towerPos
+		{
+			cellPosition.x * TILE_WIDTH * scale,
+			cellPosition.y * TILE_HEIGHT * scale
+		};
+
+		m_towers[index] = new T(towerPos);
+
+		return static_cast<T*>(m_towers[index]);
+	}
 }

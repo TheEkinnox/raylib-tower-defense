@@ -8,7 +8,7 @@ namespace TD
 		class ExplosiveTower : public ITower
 		{
 		public:
-			ExplosiveTower(Sprite&);
+			ExplosiveTower(Vector2 position);
 
 			void ShootAt();
 			void Update() override;					//update de explosive tower

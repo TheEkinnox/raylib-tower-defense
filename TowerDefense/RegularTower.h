@@ -9,7 +9,7 @@ namespace TD
 	class RegularTower : public ITower
 		{
 		public:
-			RegularTower(Sprite&);
+			RegularTower(Vector2 position);
 
 			void ShootAt();
 			void Update() override;				// update the regular tower

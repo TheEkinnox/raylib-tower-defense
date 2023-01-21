@@ -3,6 +3,9 @@
 
 #include "Sprite.h"
 #include "Arithmetic.h"
+#include "utility.h"
+#include "ExplosiveTower.h"
+#include "RegularTower.h"
 
 namespace TD
 {
@@ -40,12 +43,11 @@ namespace TD
 
 		EndTextureMode();
 
-		const Vector2	scaleVec = renderer.GetTextureScale(mapTexture.texture);
-		const float		scale = LibMath::min(scaleVec.x, scaleVec.y);
+		const float		scale = Map.GetScale();
 
 		const Vector2	pos = {
 			0,
-			static_cast<float>(mapTexture.texture.height) * scale * .25f *.5f
+			0
 		};
 
 		Sprite& mapSprite = renderer.CreateSprite(mapTexture.texture, pos, 0);
@@ -59,6 +61,14 @@ namespace TD
 
 		if (IsKeyPressed(KeyboardKey::KEY_F11))
 			ToggleFullscreen();
+
+		if (IsKeyPressed(KEY_R))
+		{
+			Map.AddTower<ExplosiveTower>(Vector2{ (float)Random(0,Map.GetWidth() - 1), (float)Random(0, Map.GetHeight() - 1) });
+			Map.AddTower<RegularTower>(Vector2{ (float)Random(0,Map.GetWidth() - 1), (float)Random(0, Map.GetHeight() - 1) });
+		}
+
+		Map.UpdateTowers();
 
 		renderer.DrawSprites();
 	}

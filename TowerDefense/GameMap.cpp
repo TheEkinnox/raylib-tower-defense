@@ -1,6 +1,8 @@
 #include "pch.h"
 #include <fstream>
 
+#include "TowerDefenseGameManager.h"
+#include "Arithmetic.h"
 #include "GameMap.h"
 #include "ITower.h"
 #include "utility.h"
@@ -108,13 +110,21 @@ namespace TD
 
 	ITower* GameMap::GetTowerOnScreenPosition(const Vector2 screenPos) const
 	{
-		const Vector2 cellPos{ screenPos.x / TILE_WIDTH, screenPos.y / TILE_HEIGHT };
+		const float scale = GetScale();
+		const Vector2 cellPos{ screenPos.x / (TILE_WIDTH * scale), screenPos.y / (TILE_HEIGHT * scale) };
 		const size_t index = static_cast<size_t>(cellPos.y) * GetWidth() + static_cast<size_t>(cellPos.x);
 
 		if (index < 0 || index > m_towers.size())
 			return nullptr;
 
 		return m_towers[index];
+	}
+
+	void GameMap::UpdateTowers()
+	{
+		for (const auto tower : m_towers)
+			if (tower != nullptr)
+				tower->Update();
 	}
 
 	Vector2 GameMap::GetPlayerHQPosition() const
@@ -140,6 +150,16 @@ namespace TD
 			delete tower;
 
 		m_towers.clear();
+	}
+
+	float GameMap::GetScale() const
+	{
+		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+		const int pixelWidth = static_cast<int>(GetWidth()) * TILE_WIDTH;
+		const int pixelHeight = static_cast<int>(GetHeight()) * TILE_HEIGHT;
+		const Vector2    scaleVec = renderer.GetTextureScale(pixelWidth, pixelHeight);
+
+		return LibMath::min(scaleVec.x, scaleVec.y);
 	}
 
 	bool GameMap::AddTile(const unsigned int tileData, const size_t index)
