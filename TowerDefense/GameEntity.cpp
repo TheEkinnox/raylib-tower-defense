@@ -5,6 +5,10 @@
 
 namespace TD
 {
+	GameEntity::GameEntity() : m_sprite(nullptr)
+	{
+	}
+
 	GameEntity::GameEntity(Sprite& sprite) : m_sprite(&sprite)
 	{
 	}
