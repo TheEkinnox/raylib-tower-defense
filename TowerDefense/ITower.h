@@ -19,7 +19,7 @@ namespace TD
 		//ShootAt(TD::Enemy const&) : void = 0
 		//LevelUp : void = 0 
 	protected:
-		ITower(Sprite& sprite);
+		ITower() = default;
 
 		Pool<Bullet> m_bulletPool;
 		//CheckRange() : TD::Enemy*

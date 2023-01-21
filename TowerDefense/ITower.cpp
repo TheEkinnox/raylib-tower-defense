@@ -12,9 +12,5 @@ namespace TD
 	//{
 	//};
 
-	ITower::ITower(Sprite& sprite) : GameEntity(sprite)
-	{
-	}
-
 	/*CheckRange() TD::Enemy* {};*/
 }
