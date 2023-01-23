@@ -49,8 +49,6 @@ namespace LibMath
 
 		float			distanceFrom(Vector2 const&) const;				// return distance between 2 points
 		float			distanceSquaredFrom(Vector2 const&) const;		// return square value of the distance between 2 points
-		float			distance2DFrom(Vector2 const&) const;			// return the distance between 2 points on the X-Y axis only
-		float			distance2DSquaredFrom(Vector2 const&) const;	// return the square value of the distance between 2 points points on the X-Y axis only
 
 		float			dot(Vector2 const&) const;						// return dot product result
 
