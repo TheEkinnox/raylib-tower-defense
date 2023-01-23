@@ -1,9 +1,7 @@
 #include "pch.h"
-#include <vector>
+#include <random>
 
 #include "utility.h"
-
-#include <random>
 
 namespace TD
 {
