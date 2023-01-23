@@ -101,9 +101,13 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="bulletType.h" />
     <ClInclude Include="ConfigTower.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyArmy.h" />
+    <ClInclude Include="EnemyConfig.h" />
     <ClInclude Include="ExplosiveTower.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameMap.h" />
+    <ClInclude Include="HealerEnemy.h" />
     <ClInclude Include="IGameManager.h" />
     <ClInclude Include="ITower.h" />
     <ClInclude Include="pch.h" />
@@ -119,9 +123,13 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyArmy.cpp" />
+    <ClCompile Include="EnemyConfig.cpp" />
     <ClCompile Include="ExplosiveTower.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="HealerEnemy.cpp" />
     <ClCompile Include="IGameManager.cpp" />
     <ClCompile Include="ITower.cpp" />
     <ClCompile Include="pch.cpp">

@@ -1,6 +1,8 @@
 #pragma once
 #include <raylib.h>
 
+#define ENTITY_LAYER 1
+
 namespace TD
 {
 	class Sprite;

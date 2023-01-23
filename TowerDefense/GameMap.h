@@ -52,11 +52,11 @@ namespace TD
 		template<typename T>
 		T*							AddTower(Vector2 cellPosition);
 		ITower*						GetTowerOnScreenPosition(Vector2 screenPos) const;
-		void						UpdateTowers();
-		Vector2						GetPlayerHQPosition() const;
+		void						UpdateTowers() const;
+		Vector2						GetPlayerHQPosition(bool scale = true) const;
 		Vector2						GetSpawnPosition() const;
-		void						Clear();
 		float						GetScale() const;
+		void						Clear();
 
 	private:
 		unsigned int				m_width;

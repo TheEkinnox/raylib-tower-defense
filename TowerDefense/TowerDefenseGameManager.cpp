@@ -2,7 +2,6 @@
 #include "TowerDefenseGameManager.h"
 
 #include "Sprite.h"
-#include "Arithmetic.h"
 #include "utility.h"
 #include "ExplosiveTower.h"
 #include "RegularTower.h"
@@ -39,7 +38,7 @@ namespace TD
 			DrawTiles();
 
 			DrawTextureV(*renderer.GetTexture("Assets/HQ.png"),
-				Map.GetPlayerHQPosition(), WHITE);
+				Map.GetPlayerHQPosition(false), WHITE);
 
 		EndTextureMode();
 
@@ -67,6 +66,8 @@ namespace TD
 			Map.AddTower<ExplosiveTower>(Vector2{ (float)Random(0,Map.GetWidth() - 1), (float)Random(0, Map.GetHeight() - 1) });
 			Map.AddTower<RegularTower>(Vector2{ (float)Random(0,Map.GetWidth() - 1), (float)Random(0, Map.GetHeight() - 1) });
 		}
+
+		EnemyArmy.Update();
 
 		Map.UpdateTowers();
 

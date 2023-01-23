@@ -45,7 +45,7 @@ namespace TD
 
 		std::string	curLine;
 
-		while(std::getline(fileStream, curLine))
+		while (std::getline(fileStream, curLine))
 		{
 			curLine = Trim(RemoveComments(curLine));
 
@@ -120,16 +120,24 @@ namespace TD
 		return m_towers[index];
 	}
 
-	void GameMap::UpdateTowers()
+	void GameMap::UpdateTowers() const
 	{
 		for (const auto tower : m_towers)
 			if (tower != nullptr)
 				tower->Update();
 	}
 
-	Vector2 GameMap::GetPlayerHQPosition() const
+	Vector2 GameMap::GetPlayerHQPosition(const bool scale) const
 	{
-		return m_hqPosition;
+		Vector2 pos = m_hqPosition;
+
+		if (scale)
+		{
+			pos.x *= GetScale();
+			pos.y *= GetScale();
+		}
+
+		return pos;
 	}
 
 	Vector2 GameMap::GetSpawnPosition() const
@@ -137,7 +145,12 @@ namespace TD
 		if (m_spawnPoints.empty())
 			return { 0 , 0 };
 
-		return m_spawnPoints[Random(0, static_cast<int>(m_spawnPoints.size()))];
+		const int index = Random(0, static_cast<int>(m_spawnPoints.size() - 1));
+		Vector2 pos = m_spawnPoints[index];
+		pos.x *= GetScale();
+		pos.y *= GetScale();
+
+		return pos;
 	}
 
 	void GameMap::Clear()
@@ -154,10 +167,10 @@ namespace TD
 
 	float GameMap::GetScale() const
 	{
-		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
-		const int pixelWidth = static_cast<int>(GetWidth()) * TILE_WIDTH;
-		const int pixelHeight = static_cast<int>(GetHeight()) * TILE_HEIGHT;
-		const Vector2    scaleVec = renderer.GetTextureScale(pixelWidth, pixelHeight);
+		const Renderer&	renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+		const float		pixelWidth = static_cast<float>(GetWidth()) * TILE_WIDTH;
+		const float		pixelHeight = static_cast<float>(GetHeight()) * TILE_HEIGHT;
+		const Vector2	scaleVec = renderer.GetTextureScale(pixelWidth, pixelHeight);
 
 		return LibMath::min(scaleVec.x, scaleVec.y);
 	}
@@ -173,7 +186,7 @@ namespace TD
 
 			return true;
 		}
-		catch(...)
+		catch (...)
 		{
 			return false;
 		}

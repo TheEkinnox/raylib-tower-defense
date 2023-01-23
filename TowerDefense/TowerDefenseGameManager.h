@@ -1,5 +1,6 @@
 #pragma once
 #include "GameMap.h"
+#include "EnemyArmy.h"
 #include "IGameManager.h"
 
 namespace TD
@@ -8,14 +9,14 @@ namespace TD
 	{
 	public:
 		GameMap		Map;
-	//	EnemyArmy	EnemyArmy;	// TODO: Uncomment this line when EnemyArmy is implemented
+		EnemyArmy	EnemyArmy;
 	//	Player		Player;		// TODO: Uncomment this when Player is implemented
 
 		TowerDefenseGameManager();
 
 		void								Init() override;
 		void								Update() override;
-		static	TowerDefenseGameManager&	GetInstance();
-		void DrawTiles();
+		static TowerDefenseGameManager&		GetInstance();
+		void								DrawTiles();
 	};
 }

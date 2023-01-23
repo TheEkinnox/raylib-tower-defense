@@ -134,7 +134,7 @@ namespace TD
 
 		const Rectangle sourceRect = {
 			m_spriteRect.x, m_spriteRect.y,
-			m_spriteRect.width * (flipX ? -1.f : 1.f) ,
+			m_spriteRect.width * (flipX ? -1.f : 1.f),
 			m_spriteRect.height * (flipY ? -1.f : 1.f)
 		};
 
