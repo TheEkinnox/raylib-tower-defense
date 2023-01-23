@@ -44,15 +44,21 @@ std::vector<TD::Enemy*>& TD::EnemyArmy::GetArmy()
 
 void TD::EnemyArmy::Update()
 {
+#ifdef _DEBUG
 	if (IsKeyPressed(KEY_W))
 	{
 		if (IsKeyDown(KEY_LEFT_CONTROL))
+		{
 			ClearEnemies();
-
-		SpawnEnemy<Enemy>(EnemyType::TANK);
-		SpawnEnemy<HealerEnemy>(EnemyType::HEALER);
-		SpawnEnemy<Enemy>(EnemyType::SCOUT);
+		}
+		else
+		{
+			SpawnEnemy<Enemy>(EnemyType::TANK);
+			SpawnEnemy<HealerEnemy>(EnemyType::HEALER);
+			SpawnEnemy<Enemy>(EnemyType::SCOUT);
+		}
 	}
+#endif
 
 	for (Enemy* enemy : m_enemies)
 		if (enemy != nullptr)
