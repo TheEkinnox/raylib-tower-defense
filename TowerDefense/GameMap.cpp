@@ -28,7 +28,7 @@ namespace TD
 		return m_height;
 	}
 
-	std::vector<TerrainType> GameMap::GetTiles() const
+	std::vector<TerrainTile> GameMap::GetTiles() const
 	{
 		return m_terrain;
 	}
@@ -61,7 +61,7 @@ namespace TD
 			const unsigned int height = std::stoul(tokens[MAP_HEIGHT_INDEX]);
 
 			m_terrain.clear();
-			m_terrain.resize(static_cast<size_t>(width) * height, TerrainType::GRASS);
+			m_terrain.resize(static_cast<size_t>(width) * height);
 			m_terrain.shrink_to_fit();
 
 			m_towers.clear();
@@ -182,7 +182,7 @@ namespace TD
 			const TerrainType type = static_cast<TerrainType>(Unpack(tileData,
 				TERRAIN_TYPE_BIT_OFFSET, TERRAIN_TYPE_BIT_COUNT));
 
-			m_terrain[index] = type;
+			m_terrain[index] = { type, tileData };
 
 			return true;
 		}
@@ -202,7 +202,7 @@ namespace TD
 		case SpecialType::NONE:
 			break;
 		case SpecialType::HQ:
-			if (m_hqPosition.x != -1)
+			if (m_hqPosition.x >= 0)
 				return false;
 
 			m_hqPosition = position;

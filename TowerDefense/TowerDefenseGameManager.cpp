@@ -63,8 +63,18 @@ namespace TD
 
 		if (IsKeyPressed(KEY_R))
 		{
-			Map.AddTower<ExplosiveTower>(Vector2{ (float)Random(0,Map.GetWidth() - 1), (float)Random(0, Map.GetHeight() - 1) });
-			Map.AddTower<RegularTower>(Vector2{ (float)Random(0,Map.GetWidth() - 1), (float)Random(0, Map.GetHeight() - 1) });
+			const Vector2 regularTowerPos = Vector2{
+				static_cast<float>(Random(0, static_cast<int>(Map.GetWidth()) - 1)),
+				static_cast<float>(Random(0, static_cast<int>(Map.GetHeight()) - 1))
+			};
+
+			const Vector2 explosiveTowerPos = Vector2{
+				static_cast<float>(Random(0, static_cast<int>(Map.GetWidth()) - 1)),
+				static_cast<float>(Random(0, static_cast<int>(Map.GetHeight()) - 1))
+			};
+
+			Map.AddTower<ExplosiveTower>(regularTowerPos);
+			Map.AddTower<RegularTower>(explosiveTowerPos);
 		}
 
 		EnemyArmy.Update();
@@ -82,7 +92,7 @@ namespace TD
 
 	void TowerDefenseGameManager::DrawTiles()
 	{
-		const std::vector<TerrainType> tiles(Map.GetTiles());
+		const std::vector<TerrainTile> tiles(Map.GetTiles());
 
 		for (size_t i = 0; i < tiles.size(); i++)
 		{
@@ -91,7 +101,7 @@ namespace TD
 				static_cast<float>(i / Map.GetWidth()) * TILE_HEIGHT
 			};
 
-			switch (tiles[i])
+			switch (tiles[i].Type)
 			{
 			case TerrainType::ROAD:
 				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile034.png"), pos, WHITE);

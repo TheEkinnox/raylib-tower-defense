@@ -37,6 +37,12 @@ namespace TD
 
 	class ITower;
 
+	struct TerrainTile
+	{
+		TerrainType		Type = TerrainType::GRASS;
+		unsigned int	Weight = (uint32_t)TerrainType::GRASS << TERRAIN_TYPE_BIT_OFFSET;
+	};
+
 	class GameMap
 	{
 	public:
@@ -45,7 +51,7 @@ namespace TD
 
 		unsigned int				GetWidth() const;
 		unsigned int				GetHeight() const;
-		std::vector<TerrainType>	GetTiles() const;
+		std::vector<TerrainTile>	GetTiles() const;
 
 		bool						BuildFromFile(const std::string& fileName);
 
@@ -61,7 +67,7 @@ namespace TD
 	private:
 		unsigned int				m_width;
 		unsigned int				m_height;
-		std::vector<TerrainType>	m_terrain;
+		std::vector<TerrainTile>	m_terrain;
 		std::vector<ITower*>		m_towers;
 		std::vector<Vector2>		m_spawnPoints;
 		Vector2						m_hqPosition{ -1, -1 };
