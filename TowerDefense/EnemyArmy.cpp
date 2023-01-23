@@ -46,7 +46,9 @@ void TD::EnemyArmy::Update()
 {
 	if (IsKeyPressed(KEY_W))
 	{
-		ClearEnemies();
+		if (IsKeyDown(KEY_LEFT_CONTROL))
+			ClearEnemies();
+
 		SpawnEnemy<Enemy>(EnemyType::TANK);
 		SpawnEnemy<HealerEnemy>(EnemyType::HEALER);
 		SpawnEnemy<Enemy>(EnemyType::SCOUT);

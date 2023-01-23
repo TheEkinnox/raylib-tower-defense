@@ -1,9 +1,11 @@
 #include "pch.h"
 #include <fstream>
 #include <vector>
+#include <Vector/Vector2.h>
 
 #include "HealerEnemy.h"
 #include "EnemyArmy.h"
+#include "TowerDefenseGameManager.h"
 #include "utility.h"
 
 
@@ -60,17 +62,30 @@ void TD::HealerEnemy::HealAround()
 	if (!m_army || GetTime() < m_nextHealTime)
 		return;
 
+	const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
+	const float scale = map.GetScale();
+	const float squaredRange = m_healRange * TILE_WIDTH * scale * TILE_HEIGHT * scale;
+
 	const std::vector<Enemy*>& enemies = m_army->GetArmy();
+	const LibMath::Vector2 healerPos(Position().x, Position().y);
+
+	bool healedAllies = false;
 
 	for (Enemy* enemy : enemies)
 	{
 		if (enemy == this)
 			continue;
 
-		enemy->Heal(m_healAmount);
+		LibMath::Vector2 enemyPos = {enemy->Position().x, enemy->Position().y};
+
+		if (healerPos.distanceSquaredFrom(enemyPos) <= squaredRange)
+		{
+			enemy->Heal(m_healAmount);
+			healedAllies = true;
+		}
 	}
 
-	if (enemies.size() == 1)
+	if (!healedAllies)
 		Heal(m_healAmount);
 
 	m_nextHealTime = GetTime() + static_cast<double>(m_healCooldown);
