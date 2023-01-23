@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 #define COMMENT_CHAR '#'
 
@@ -18,6 +19,7 @@ namespace TD
 	 * \return The trimmed string
 	 */
 	std::string TrimRight(const std::string& str);
+	
 	/**
 	 * \brief Removes whitespaces from the left and right of the given string
 	 * \param str The string to trim
