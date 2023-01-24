@@ -21,16 +21,17 @@ namespace TD
 	};
 
 	template <typename T>
-	TD::Pool<T>::~Pool()
+	Pool<T>::~Pool()
 	{
 		for (T* object : m_objects)
-			delete object;
+			if (object != nullptr)
+				delete object;
 
 		m_objects.clear();
 	}
 
 	template <typename T>
-	void TD::Pool<T>::Update()
+	void Pool<T>::Update()
 	{
 		for (T* object : m_objects)
 			if (object->IsActive())
@@ -39,7 +40,7 @@ namespace TD
 	
 	template <typename T>
 	template <typename ... Args>
-	inline T& Pool<T>::GetObject(Args&... args)
+	T& Pool<T>::GetObject(Args&... args)
 	{
 		if (!std::is_base_of_v<PooledObject, T>)
 			throw; // TODO: Throw invalid_argument exception
