@@ -7,11 +7,12 @@
 
 namespace TD
 {
-	Bullet::Bullet(TD::Sprite& sprite) : dir(), sprite(&sprite), speed(0)
+	Bullet::Bullet(Sprite& sprite) : dir(), sprite(&sprite), speed(0)
 	{
 		GameMap& map = TowerDefenseGameManager::GetInstance().Map;
 		const float scale = map.GetScale();
 		this->sprite->SetScale(scale);
+		this->sprite->SetOrigin(.5f, .5f);
 	}
 
 	Bullet::~Bullet()

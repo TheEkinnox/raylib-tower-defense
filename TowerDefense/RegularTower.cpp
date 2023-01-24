@@ -38,9 +38,18 @@ namespace TD
 			return;
 
 		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
-		const Texture* towerTexture = renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile275.png");
+		const Texture* bulletTexture = renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile275.png");
 
-		Bullet& bullet = m_bulletPool.GetObject(renderer.CreateSprite(*towerTexture, Position(), ENTITY_LAYER + 1));
+		const float scale = TowerDefenseGameManager::GetInstance().Map.GetScale();
+		const float scaledWidth = static_cast<float>(m_sprite->GetTexture().width) * scale;
+		const float scaledHeight = static_cast<float>(m_sprite->GetTexture().height) * scale;
+
+		const Vector2 spawnPos = {
+			Position().x + scaledWidth / 2,
+			Position().y + scaledHeight / 2,
+		};
+
+		Bullet& bullet = m_bulletPool.GetObject(renderer.CreateSprite(*bulletTexture, spawnPos, ENTITY_LAYER + 1));
 
 		LibMath::Vector2 dir(enemy.Position().x - Position().x, enemy.Position().y - Position().y);
 		dir.normalize();
@@ -54,7 +63,7 @@ namespace TD
 
 	void RegularTower::Update()
 	{
-		if (IsKeyPressed(KEY_L))
+		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_R))
 			LevelUp();
 
 		Enemy* enemy = CheckRange();
