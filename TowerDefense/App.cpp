@@ -13,7 +13,7 @@ namespace TD
 	{
 	}
 
-	void App::Init()
+	void App::Init(const int argc, const char* argv[])
 	{
 		SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
 
@@ -24,17 +24,18 @@ namespace TD
 		ChangeDirectory(GetApplicationDirectory());
 #endif
 
-		InitWindow(App::designWidth, App::designHeight, "Tower Defense");
-		SetWindowMinSize(App::minWidth, App::minHeight);
+		InitWindow(App::DesignWidth, App::DesignHeight, "Tower Defense");
+		SetWindowMinSize(App::MinWidth, App::MinHeight);
 		InitAudioDevice();
 
 		m_gameManager = &TowerDefenseGameManager::GetInstance();
-		m_gameManager->Init();
+		m_gameManager->Init(argc, argv);
 	}
 
 	void App::Run() const
 	{
-		while (!(WindowShouldClose() || m_gameManager->GetCurrentState() == GameState::QUIT || m_gameManager->GetCurrentState() == GameState::ERROR))
+		while (!(WindowShouldClose() || m_gameManager->GetCurrentState() == GameState::QUIT
+			|| m_gameManager->GetCurrentState() == GameState::ERROR))
 			m_gameManager->Update();
 	}
 

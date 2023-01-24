@@ -18,7 +18,7 @@ namespace TD
 	public:
 		virtual				~IGameManager() = default;
 
-		virtual void		Init() = 0;
+		virtual void		Init(int argc = 0, const char* argv[] = nullptr) = 0;
 		virtual void		Update() = 0;
 
 		Renderer&			GetRenderer();

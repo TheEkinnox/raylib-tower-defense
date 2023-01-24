@@ -3,8 +3,20 @@
   "Id": "da96622d-f089-4176-8132-3ee455dc1b74",
   "Items": [
     {
+      "Id": "f299a663-3aa6-48b7-ac2b-b5beae3dd5c6",
+      "Command": "level1.cfg"
+    },
+    {
       "Id": "ef6c26e9-c1cc-4472-af6f-89af8103b7a4",
       "Command": "level2.cfg"
+    },
+    {
+      "Id": "ed851b95-f6a7-49b9-b546-c2dd5dec580f",
+      "Command": "level3.cfg"
+    },
+    {
+      "Id": "70a97d5e-2ded-498e-860f-fe5f12137565",
+      "Command": "level4.cfg"
     }
   ]
 }

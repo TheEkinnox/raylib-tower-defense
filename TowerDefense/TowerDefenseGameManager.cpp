@@ -14,10 +14,13 @@ namespace TD
 	{
 	}
 
-	void TowerDefenseGameManager::Init()
+	void TowerDefenseGameManager::Init(const int argc, const char* argv[])
 	{
+		const char* configPath = TextFormat("Assets/maps/%s",
+			argc > 1 ? argv[1] : "level1.cfg");
+
 		//TODO: Handle this on level load - Init should just open the main menu
-		if (!Map.BuildFromFile("Assets/maps/level2.cfg"))
+		if (!Map.BuildFromFile(configPath))
 		{
 			currentState = GameState::ERROR;
 			return;

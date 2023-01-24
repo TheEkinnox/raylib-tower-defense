@@ -7,16 +7,16 @@ namespace TD
 	class App
 	{
 	public:
-		const int	designWidth = 1280;
-		const int	designHeight = 720;
+		const int	DesignWidth = 1280;
+		const int	DesignHeight = 576;
 
-		const int	minWidth = 800;
-		const int	minHeight = 600;
+		const int	MinWidth = 800;
+		const int	MinHeight = 360;
 
 		App();
 		~App() = default;
 
-		void			Init();
+		void			Init(int argc = 0, const char* argv[] = nullptr);
 		void			Run() const;
 		void			Quit() const;
 
