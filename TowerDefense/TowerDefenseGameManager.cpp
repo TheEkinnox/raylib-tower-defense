@@ -14,7 +14,7 @@ namespace TD
 	{
 	}
 
-	void TowerDefenseGameManager::Init(const int argc, const char* argv[])
+	void TowerDefenseGameManager::Init(const int argc, char* const* argv)
 	{
 		const char* configPath = TextFormat("Assets/maps/%s",
 			argc > 1 ? argv[1] : "level1.cfg");

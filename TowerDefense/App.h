@@ -16,7 +16,7 @@ namespace TD
 		App();
 		~App() = default;
 
-		void			Init(int argc = 0, const char* argv[] = nullptr);
+		void			Init(int argc = 0, char* const* argv = nullptr);
 		void			Run() const;
 		void			Quit() const;
 

@@ -14,7 +14,7 @@ namespace TD
 
 		TowerDefenseGameManager();
 
-		void								Init(int argc = 0, const char* argv[] = nullptr) override;
+		void								Init(int argc = 0, char* const* argv = nullptr) override;
 		void								Update() override;
 		static TowerDefenseGameManager&		GetInstance();
 		void								DrawTiles();

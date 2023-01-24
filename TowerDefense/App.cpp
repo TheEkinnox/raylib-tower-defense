@@ -13,7 +13,7 @@ namespace TD
 	{
 	}
 
-	void App::Init(const int argc, const char* argv[])
+	void App::Init(const int argc, char* const* argv)
 	{
 		SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
 
