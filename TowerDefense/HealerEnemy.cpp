@@ -64,7 +64,7 @@ void TD::HealerEnemy::HealAround()
 
 	const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
 	const float scale = map.GetScale();
-	const float squaredRange = m_healRange * TILE_WIDTH * scale * TILE_HEIGHT * scale;
+	const float squaredRange = m_healRange * m_healRange * TILE_WIDTH * scale * TILE_HEIGHT * scale;
 
 	const std::vector<Enemy*>& enemies = m_army->GetArmy();
 	const LibMath::Vector2 healerPos(Position().x, Position().y);
