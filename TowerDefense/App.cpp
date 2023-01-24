@@ -15,10 +15,14 @@ namespace TD
 
 	void App::Init()
 	{
-        SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
+		SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
 
-        // Set the working directory to avoid issues with asset paths
-        ChangeDirectory(GetApplicationDirectory());
+#ifdef _DEBUG
+		ChangeDirectory(TextFormat("%s%s", GetApplicationDirectory(), "../../"));
+#else
+		// Set the working directory to avoid issues with asset paths
+		ChangeDirectory(GetApplicationDirectory());
+#endif
 
 		InitWindow(App::designWidth, App::designHeight, "Tower Defense");
 		SetWindowMinSize(App::minWidth, App::minHeight);
