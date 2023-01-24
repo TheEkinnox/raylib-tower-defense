@@ -15,11 +15,12 @@ namespace TD
 		virtual void	Update();
 		void			Damage(unsigned int damage);
 		void			Heal(unsigned int amount);
-
+		void			Stun(float duration);
 
 	protected:
 		EnemyConfig		m_config;
 		EnemyArmy*		m_army;
+		float			stunTime;
 		double			m_nextHitTime;
 	};
 }

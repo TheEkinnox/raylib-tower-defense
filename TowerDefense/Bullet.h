@@ -1,23 +1,30 @@
 #pragma once
 #include <raylib.h>
-#include "bullettype.h"
+#include <functional>
+
 #include "PooledObject.h"
 #include "Sprite.h"
 
 namespace TD
 {
+	class Enemy;
+	class ITower;
+
 	class Bullet : public PooledObject
 	{
 	public:
 		Bullet(Sprite& sprite);
-		//LibMath::Vector2 dir;		// direction of the bullet
-		//BulletType;
-		TD::Sprite* Sprite;
-		float speed = 50;			// the speed of the bullets in pixy/sec  
+		~Bullet();
 
-		Vector2 Position() const;
-		Vector2& Position();
+		Vector2		dir;			// direction of the bullet
+		TD::Sprite*	sprite;
+		float		speed;			// the speed of the bullets in pixy/sec  
+		ITower*		parent;
 
-		void Update()override;
+		Vector2		Position() const;
+		Vector2&	Position();
+
+		void		Update() override;
+		Enemy*		CheckCollision();
 	};
 }

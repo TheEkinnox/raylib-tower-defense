@@ -48,6 +48,7 @@ namespace TD
 		{
 			if (!m_objects[i]->IsActive())
 			{
+				m_objects[i]->~T();
 				new (m_objects[i]) T(args...);
 				m_objects[i]->SetActive(true);
 				return *m_objects[i];

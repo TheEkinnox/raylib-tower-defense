@@ -5,6 +5,7 @@
 #include "utility.h"
 #include "ExplosiveTower.h"
 #include "RegularTower.h"
+#include "StunTower.h"
 
 namespace TD
 {
@@ -67,15 +68,29 @@ namespace TD
 				static_cast<float>(Random(0, static_cast<int>(Map.GetWidth()) - 1)),
 				static_cast<float>(Random(0, static_cast<int>(Map.GetHeight()) - 1))
 			};
+			Map.AddTower<RegularTower>(regularTowerPos);
+		}
 
+		if (IsKeyPressed(KEY_S))
+		{
+
+			const Vector2 stunTowerPos = Vector2{
+				static_cast<float>(Random(0, static_cast<int>(Map.GetWidth()) - 1)),
+				static_cast<float>(Random(0, static_cast<int>(Map.GetHeight()) - 1))
+			};
+			Map.AddTower<StunTower>(stunTowerPos);
+		}
+
+		if (IsKeyPressed(KEY_E))
+		{
 			const Vector2 explosiveTowerPos = Vector2{
 				static_cast<float>(Random(0, static_cast<int>(Map.GetWidth()) - 1)),
 				static_cast<float>(Random(0, static_cast<int>(Map.GetHeight()) - 1))
 			};
-
-			Map.AddTower<ExplosiveTower>(regularTowerPos);
-			Map.AddTower<RegularTower>(explosiveTowerPos);
+			Map.AddTower<ExplosiveTower>(explosiveTowerPos);
 		}
+
+
 
 		EnemyArmy.Update();
 

@@ -5,7 +5,7 @@ namespace TD
 {
 	enum class BulletType
 	{
-		NORMAL,
+		REGULAR,
 		STUNNING,
 		EXPLOSIVE
 	};

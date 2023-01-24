@@ -32,6 +32,12 @@ namespace TD
 
 	void Enemy::Update()
 	{
+		if (stunTime > 0)
+		{
+			stunTime -= GetFrameTime();
+			return;
+		}
+
 		LibMath::Vector2 pos(Position().x, Position().y);
 
 		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
@@ -69,5 +75,10 @@ namespace TD
 	void Enemy::Heal(const unsigned int amount)
 	{
 		m_config.Life = std::min(m_config.Life + amount, m_config.MaxLife);
+	}
+
+	void Enemy::Stun(float duration)
+	{
+		stunTime = duration;
 	}
 }

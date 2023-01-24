@@ -1,17 +1,26 @@
 #pragma once
+#include <raylib.h>
+#include <string>
+#include <vector>
+#include "bulletType.h"
 
-using namespace std;
+#define MAX_LEVEL 3
+#define TOWER_CONIFG_PATH_FORMAT "Assets/towers/tower_%d_%d.cfg"
+#define TOWER_CONFIG_DATA_COUNT 6
 
 namespace TD
 {
 	class ConfigTower
 	{
 	public:
-		//float firingRate;
-		//unsigned int damage;
-		//float range;
-
-		//Bullet : TD::BulletType
-		//unsigned int maxLevel; 
+		unsigned int maxLevel;
+		float bulletSpeed;
+		float firingRate;
+		float range;
+		unsigned int damage;
+		unsigned int price;
+		TD::BulletType bulletType;
+		
+		bool LoadFromFile(BulletType type, std::uint8_t level);
 	};
 }

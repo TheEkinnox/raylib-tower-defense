@@ -1,17 +1,17 @@
 #pragma once
 #include "ITower.h"
-#include "Bullet.h"
-#include "Vector/Vector2.h"
 
 namespace TD
 {
-	static Bullet *rBullet;
 	class RegularTower : public ITower
-		{
-		public:
-			RegularTower(Vector2 position);
+	{
+	public:
 
-			void ShootAt();
-			void Update() override;				// update the regular tower
-		};
+		RegularTower(Vector2 position);
+
+		void LevelUp();
+		void ShootAt(const Enemy& enemy) override;
+		void Update() override;	// update the regular tower
+		void OnBulletCollision(Enemy& enemy) override;
+	};
 }
