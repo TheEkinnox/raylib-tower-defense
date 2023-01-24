@@ -144,6 +144,11 @@ namespace TD
 			m_spriteRect.height * fabsf(m_scale.y)
 		};
 
-		DrawTexturePro(m_spriteSheet, sourceRect, scaledRect, m_origin, m_rotation, m_tint);
+		const Vector2 origin = {
+			static_cast<float>(m_spriteSheet.width) * m_origin.x,
+			static_cast<float>(m_spriteSheet.height) * m_origin.y
+		};
+
+		DrawTexturePro(m_spriteSheet, sourceRect, scaledRect, origin, m_rotation, m_tint);
 	}
 }
