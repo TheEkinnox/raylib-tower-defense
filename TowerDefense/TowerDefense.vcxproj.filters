@@ -123,6 +123,15 @@
     <ClInclude Include="OpenClosedLists.hpp">
       <Filter>Header Files\PathFinding</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyWave.h">
+      <Filter>Header Files\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyType.h">
+      <Filter>Header Files\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyArmyConfig.h">
+      <Filter>Header Files\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -202,6 +211,12 @@
     </ClCompile>
     <ClCompile Include="AStar.cpp">
       <Filter>Source Files\PathFinding</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyArmyConfig.cpp">
+      <Filter>Source Files\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyWave.cpp">
+      <Filter>Source Files\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,18 +1,13 @@
 #pragma once
 #include <string>
 
+#include "EnemyType.h"
+
 #define ENEMY_CONFIG_PATH_FORMAT "Assets/enemies/enemy_%d.cfg"
 #define ENEMY_CONFIG_DATA_COUNT 5
 
 namespace TD
 {
-	enum class EnemyType
-	{
-		SCOUT,
-		TANK,
-		HEALER
-	};
-
 	struct EnemyConfig
 	{
 		EnemyType		Type;

@@ -106,7 +106,10 @@
     <ClInclude Include="Edge.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyArmy.h" />
+    <ClInclude Include="EnemyArmyConfig.h" />
     <ClInclude Include="EnemyConfig.h" />
+    <ClInclude Include="EnemyType.h" />
+    <ClInclude Include="EnemyWave.h" />
     <ClInclude Include="ExplosiveTower.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameMap.h" />
@@ -136,7 +139,9 @@
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyArmy.cpp" />
+    <ClCompile Include="EnemyArmyConfig.cpp" />
     <ClCompile Include="EnemyConfig.cpp" />
+    <ClCompile Include="EnemyWave.cpp" />
     <ClCompile Include="ExplosiveTower.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameMap.cpp" />

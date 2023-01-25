@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <vector>
 #include "Enemy.h"
+#include "EnemyArmyConfig.h"
 
 namespace TD
 {
@@ -11,7 +12,7 @@ namespace TD
 	class EnemyArmy
 	{
 	public:
-		EnemyArmy() = default;
+		EnemyArmy();
 		~EnemyArmy();
 
 		template<typename T>
@@ -19,10 +20,12 @@ namespace TD
 		void					RemoveEnemy(const Enemy& enemy);
 		void					ClearEnemies();
 		std::vector<Enemy*>&	GetArmy();
+		bool					Load(const std::string& filePath);
 		void					Update();
 
 	private:
 		std::vector<Enemy*>		m_enemies;
+		EnemyArmyConfig			m_config;
 
 		static Vector2			GetSpawnPosition();
 	};

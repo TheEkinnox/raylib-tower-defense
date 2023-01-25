@@ -20,7 +20,7 @@ namespace TD
 			argc > 1 ? argv[1] : "level1.cfg");
 
 		//TODO: Handle this on level load - Init should just open the main menu
-		if (!Map.BuildFromFile(configPath))
+		if (!Map.BuildFromFile(configPath) || !EnemyArmy.Load(configPath))
 			currentState = GameState::ERROR;
 
 		const float scale = Map.GetScale();

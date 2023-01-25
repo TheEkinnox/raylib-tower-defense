@@ -1,5 +1,6 @@
 #pragma once
 #include "EnemyConfig.h"
+#include "EnemyType.h"
 #include "GameEntity.h"
 #include "IPathFinder.h"
 
