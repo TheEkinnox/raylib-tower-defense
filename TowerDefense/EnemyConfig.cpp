@@ -9,7 +9,7 @@
 namespace TD
 {
 	EnemyConfig::EnemyConfig(const EnemyType type) :
-		Type(type), Speed(0), AttackRate(0), Damage(0), Gold(0), Life(0), MaxLife(0)
+		Type(type), Speed(0), Damage(0), Gold(0), Life(0), MaxLife(0)
 	{
 	}
 
@@ -57,8 +57,6 @@ namespace TD
 			Gold = std::stoul(tokens[1]);
 		else if (tokens[0] == "health")
 			Life = MaxLife = std::stoul(tokens[1]);
-		else if (tokens[0] == "attack_rate")
-			AttackRate = std::stof(tokens[1]);
 		else
 			return false;
 

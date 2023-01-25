@@ -7,12 +7,11 @@
 
 namespace TD
 {
-	Bullet::Bullet(Sprite& sprite) : dir(), sprite(&sprite), speed(0)
+	Bullet::Bullet(Sprite& sprite, ITower& parent) : dir(), sprite(&sprite), speed(0), parent(&parent)
 	{
-		GameMap& map = TowerDefenseGameManager::GetInstance().Map;
+		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
 		const float scale = map.GetScale();
 		this->sprite->SetScale(scale);
-		this->sprite->SetOrigin(.5f, .5f);
 	}
 
 	Bullet::~Bullet()
@@ -36,13 +35,13 @@ namespace TD
 		Position().y += dir.y * speed * GetFrameTime();
 
 		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
-		GameMap& map = gameManager.Map;
+		const GameMap& map = gameManager.Map;
 		Renderer& renderer = gameManager.GetRenderer();
 
-		unsigned int mapWidth = map.GetWidth() * TILE_WIDTH * map.GetScale();
-		unsigned int mapHeight = (map.GetHeight()-1) * TILE_HEIGHT * map.GetScale();
+		const Vector2 cellPos = map.GetCellPosition(Position());
 
-		if (Position().x < 0 || Position().x > mapWidth || Position().y < 0 || Position().y > mapHeight)
+		if (cellPos.x < 0 || static_cast<uint32_t>(cellPos.x) > map.GetWidth() ||
+			cellPos.y < 0 || static_cast<uint32_t>(cellPos.y) > map.GetHeight())
 		{
 			renderer.RemoveSprite(*sprite);
 			SetActive(false);

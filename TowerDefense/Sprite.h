@@ -50,7 +50,7 @@ namespace TD
 		Texture		m_spriteSheet;
 		Rectangle	m_spriteRect;
 		Vector2		m_position;
-		Vector2		m_origin = { 0, 0 };
+		Vector2		m_origin = { .5f, .5f };
 		Vector2		m_scale = { 1.f, 1.f };
 		float		m_rotation = 0;
 		Color		m_tint = WHITE;

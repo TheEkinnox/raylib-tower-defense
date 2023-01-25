@@ -3,7 +3,11 @@
 
 namespace TD
 {
-	void PooledObject::SetActive(bool active)
+	PooledObject::PooledObject() : m_active(true)
+	{
+	}
+
+	void PooledObject::SetActive(const bool active)
 	{ 
 		m_active = active;
 	};

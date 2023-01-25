@@ -21,39 +21,17 @@ namespace TD
 
 		//TODO: Handle this on level load - Init should just open the main menu
 		if (!Map.BuildFromFile(configPath))
-		{
 			currentState = GameState::ERROR;
-			return;
-		}
 
-		const int pixelWidth = static_cast<int>(Map.GetWidth()) * TILE_WIDTH;
-		const int pixelHeight = static_cast<int>(Map.GetHeight()) * TILE_HEIGHT;
+		const float scale = Map.GetScale();
+		const Texture mapTexture = Map.GetTexture();
 
-		const RenderTexture mapTexture = LoadRenderTexture(pixelWidth, pixelHeight);
-
-		if (mapTexture.id == 0)
-		{
-			currentState = GameState::ERROR;
-			return;
-		}
-
-		BeginTextureMode(mapTexture);
-
-			DrawTiles();
-
-			DrawTextureV(*renderer.GetTexture("Assets/HQ.png"),
-				Map.GetPlayerHQPosition(false), WHITE);
-
-		EndTextureMode();
-
-		const float		scale = Map.GetScale();
-
-		const Vector2	pos = {
-			0,
-			0
+		const Vector2 pos = {
+			static_cast<float>(mapTexture.width) / 2,
+			static_cast<float>(mapTexture.height) / 2
 		};
 
-		Sprite& mapSprite = renderer.CreateSprite(mapTexture.texture, pos, 0);
+		Sprite& mapSprite = renderer.CreateSprite(mapTexture, pos, 0);
 		mapSprite.SetScale(scale, -scale);
 	}
 
@@ -93,8 +71,6 @@ namespace TD
 			Map.AddTower<ExplosiveTower>(explosiveTowerPos);
 		}
 
-
-
 		EnemyArmy.Update();
 
 		Map.UpdateTowers();
@@ -106,34 +82,5 @@ namespace TD
 	{
 		static TowerDefenseGameManager instance;
 		return instance;
-	}
-
-	void TowerDefenseGameManager::DrawTiles()
-	{
-		const std::vector<TerrainTile> tiles(Map.GetTiles());
-
-		for (size_t i = 0; i < tiles.size(); i++)
-		{
-			const Vector2 pos{
-				static_cast<float>(i % Map.GetWidth()) * TILE_WIDTH,
-				static_cast<float>(i / Map.GetWidth()) * TILE_HEIGHT
-			};
-
-			switch (tiles[i].Type)
-			{
-			case TerrainType::ROAD:
-				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile034.png"), pos, WHITE);
-				break;
-			case TerrainType::DIRT:
-				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile050.png"), pos, WHITE);
-				break;
-			case TerrainType::GRASS:
-				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile024.png"), pos, WHITE);
-				break;
-			case TerrainType::SAND:
-				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile029.png"), pos, WHITE);
-				break;
-			}
-		}
 	}
 }

@@ -43,6 +43,7 @@ namespace TD
 		m_spriteRect = other.m_spriteRect;
 		m_position = other.m_position;
 		m_rotation = other.m_rotation;
+		m_origin = other.m_origin;
 		m_scale = other.m_scale;
 		m_tint = other.m_tint;
 
@@ -58,6 +59,7 @@ namespace TD
 		m_spriteRect = other.m_spriteRect;
 		m_position = other.m_position;
 		m_rotation = other.m_rotation;
+		m_origin = other.m_origin;
 		m_scale = other.m_scale;
 		m_tint = other.m_tint;
 

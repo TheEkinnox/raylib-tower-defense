@@ -1,68 +1,97 @@
 #include "pch.h"
 #include "Enemy.h"
 
+#include <stdexcept>
 #include <Arithmetic.h>
 #include <Vector/Vector2.h>
 
+#include "AStar.h"
 #include "EnemyArmy.h"
 #include "TowerDefenseGameManager.h"
 
 namespace TD
 {
 	Enemy::Enemy(const EnemyType type, EnemyArmy& army, const Vector2 position) :
-		GameEntity(), m_config(type), m_army(&army), m_nextHitTime(0)
+		GameEntity(), m_config(type), m_army(&army), m_remainingStunTime(0)
 	{
 		if (!m_config.LoadFromFile())
-			throw;
-
-		if (m_config.AttackRate > 0.f)
-			m_nextHitTime = GetTime() + static_cast<double>(1.f / m_config.AttackRate);
+			throw runtime_error("Unable to load the enemy's configuration file.");
 
 		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
 		Renderer& renderer = gameManager.GetRenderer();
 		const Texture& texture = *renderer.GetTexture(m_config.TexturePath);
 		m_sprite = &renderer.CreateSprite(texture, position, ENTITY_LAYER);
-		m_sprite->SetScale(gameManager.Map.GetScale());
+
+		const GameMap& map = gameManager.Map;
+		m_sprite->SetScale(map.GetScale());
+
+		ai::Graph mapGraph = map.GetGraph();
+
+		const Vector2 cellPos = map.GetCellPosition(position);
+		const Vector2 hqCellPos = map.GetCellPosition(map.GetPlayerHQPosition());
+		ai::ManhattanHeuristic heuristic(hqCellPos.x, hqCellPos.y);
+
+		m_pathFinder = new ai::AStarPathFinder(heuristic);
+
+		const uint32_t index = map.PositionToIndex(cellPos);
+		const uint32_t hqIndex = map.PositionToIndex(hqCellPos);
+
+		if (!m_pathFinder->PathFind(mapGraph, *mapGraph.GetNode(index),
+			*mapGraph.GetNode(hqIndex)))
+			throw runtime_error("Unable to find a path to the HQ.");
 	}
 
 	Enemy::~Enemy()
 	{
 		TowerDefenseGameManager::GetInstance().GetRenderer().RemoveSprite(*m_sprite);
+		delete m_pathFinder;
 	}
 
 	void Enemy::Update()
 	{
-		if (stunTime > 0)
+		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
+		const uint32_t index = map.PositionToIndex(map.GetCellPosition(Position()));
+		
+		const ai::Edge* targetEdge = m_pathFinder->GetPathEdge(index);
+
+		if (targetEdge == nullptr)
 		{
-			stunTime -= GetFrameTime();
+			HitHQ();
 			return;
 		}
 
-		LibMath::Vector2 pos(Position().x, Position().y);
+		MoveTo(map.IndexToPosition(targetEdge->To->GetIndex()));
+	}
+
+	void Enemy::MoveTo(const Vector2 cellPosition)
+	{
+		if (m_remainingStunTime > 0)
+		{
+			m_remainingStunTime -= GetFrameTime();
+			return;
+		}
 
 		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
-		const Vector2 hqPos = map.GetPlayerHQPosition();
+		const Vector2 targetVec = map.GetScreenPosition(cellPosition);
 
-		// TODO: Use path-finding to get the target pos
-		const float scaledWidth = static_cast<float>(m_sprite->GetTexture().width) * map.GetScale();
-		const LibMath::Vector2 target(hqPos.x - scaledWidth, hqPos.y);
+		LibMath::Vector2 pos(Position().x, Position().y);
+		const LibMath::Vector2 targetPos(targetVec.x, targetVec.y);
+		const float deltaSpeed = m_config.Speed * GetFrameTime();
 
-		LibMath::Vector2 dir = target - pos;
+		if (pos.distanceSquaredFrom(targetPos) < deltaSpeed * deltaSpeed)
+		{
+			Position() = targetVec;
+			return;
+		}
+
+		LibMath::Vector2 dir = targetPos - pos;
 		dir.normalize();
 
-		pos += dir * m_config.Speed * GetFrameTime();
+		pos += dir * deltaSpeed;
 
-		if (LibMath::abs(target.m_x - pos.m_x) > .5f)
-			Position().x = LibMath::max(pos.m_x, 0);
-		else
-			Position().x = target.m_x;
-
-		if (LibMath::abs(target.m_y - pos.m_y) > .5f)
-			Position().y = LibMath::max(pos.m_y, 0);
-		else
-			Position().y = target.m_y;
+		Position().x = LibMath::max(pos.m_x, 0);
+		Position().y = LibMath::max(pos.m_y, 0);
 	}
-	
 
 	void Enemy::Damage(const unsigned int damage)
 	{
@@ -77,8 +106,15 @@ namespace TD
 		m_config.Life = std::min(m_config.Life + amount, m_config.MaxLife);
 	}
 
-	void Enemy::Stun(float duration)
+	void Enemy::Stun(const float duration)
 	{
-		stunTime = duration;
+		m_remainingStunTime = duration;
+	}
+
+	void Enemy::HitHQ() const
+	{
+		// TODO : Inflict damage to the player's head quarter
+		//TowerDefenseGameManager::GetInstance().Player.Damage(m_config.Damage);
+		m_army->RemoveEnemy(*this);
 	}
 }

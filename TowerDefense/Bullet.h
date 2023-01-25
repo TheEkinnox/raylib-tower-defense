@@ -1,6 +1,5 @@
 #pragma once
 #include <raylib.h>
-#include <functional>
 
 #include "PooledObject.h"
 #include "Sprite.h"
@@ -13,8 +12,8 @@ namespace TD
 	class Bullet : public PooledObject
 	{
 	public:
-		Bullet(Sprite& sprite);
-		~Bullet();
+		Bullet(Sprite& sprite, ITower& parent);
+		~Bullet() override;
 
 		Vector2		dir;			// direction of the bullet
 		TD::Sprite*	sprite;

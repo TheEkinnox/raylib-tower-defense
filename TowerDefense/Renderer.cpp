@@ -129,6 +129,7 @@ namespace TD
 
 		// Flip the sprite since render textures are flipped by default
 		targetSprite.SetScale(scale.x, -scale.y);
+		targetSprite.SetOrigin(0, 0);
 		targetSprite.Draw();
 	}
 }

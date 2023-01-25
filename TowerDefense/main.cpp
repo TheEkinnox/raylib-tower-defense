@@ -2,7 +2,7 @@
 
 #include "App.h"
 
-int main(const int argc, const char* argv[])
+int main(const int argc, char* argv[])
 {
 	TD::App app;
 

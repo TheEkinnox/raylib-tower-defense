@@ -93,7 +93,6 @@ void TD::HealerEnemy::HealAround()
 
 void TD::HealerEnemy::Update()
 {
-	Enemy::Update();
-
 	HealAround();
+	Enemy::Update();
 }

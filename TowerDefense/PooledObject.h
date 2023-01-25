@@ -4,13 +4,15 @@ namespace TD
 {
 	class PooledObject
 	{
-	private:
-		bool m_active;
-
 	public:
-		void	SetActive(bool active);
-		bool	IsActive() const;
+						PooledObject();
+		virtual			~PooledObject() = default;
+		void			SetActive(bool active);
+		bool			IsActive() const;
 
-		virtual void Update() = 0;
+		virtual void	Update() = 0;
+
+	private:
+		bool			m_active;
 	};
 }

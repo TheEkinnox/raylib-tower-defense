@@ -9,7 +9,7 @@
 
 namespace TD
 {
-	GameMap::GameMap() : m_width(0), m_height(0)
+	GameMap::GameMap() : m_width(0), m_height(0), m_mapTexture(), m_graph(0)
 	{
 	}
 
@@ -82,7 +82,7 @@ namespace TD
 					if (!std::isdigit(tokens[x][0]))
 						return false;
 
-					const unsigned int tileData = std::stoul(tokens[x]);
+					const uint8_t tileData = static_cast<uint8_t>(std::stoul(tokens[x]));
 
 					const Vector2 position = Vector2
 					{
@@ -99,7 +99,7 @@ namespace TD
 			{
 				m_width = width;
 				m_height = height;
-				return true;
+				return BuildGraph() && GenerateMapTexture();
 			}
 
 			return false;
@@ -110,9 +110,8 @@ namespace TD
 
 	ITower* GameMap::GetTowerOnScreenPosition(const Vector2 screenPos) const
 	{
-		const float scale = GetScale();
-		const Vector2 cellPos{ screenPos.x / (TILE_WIDTH * scale), screenPos.y / (TILE_HEIGHT * scale) };
-		const size_t index = static_cast<size_t>(cellPos.y) * GetWidth() + static_cast<size_t>(cellPos.x);
+		const Vector2 cellPos = GetCellPosition(screenPos);
+		const size_t index = PositionToIndex(cellPos);
 
 		if (index < 0 || index > m_towers.size())
 			return nullptr;
@@ -140,29 +139,55 @@ namespace TD
 		return pos;
 	}
 
-	Vector2 GameMap::GetSpawnPosition() const
+	Vector2 GameMap::GetSpawnPosition(const Vector2 origin) const
 	{
 		if (m_spawnPoints.empty())
 			return { 0 , 0 };
 
 		const int index = Random(0, static_cast<int>(m_spawnPoints.size() - 1));
 		Vector2 pos = m_spawnPoints[index];
-		pos.x *= GetScale();
-		pos.y *= GetScale();
+		pos.x = (pos.x + TILE_WIDTH * origin.x) * GetScale();
+		pos.y = (pos.y + TILE_HEIGHT * origin.y) * GetScale();
 
 		return pos;
 	}
 
-	void GameMap::Clear()
+	Vector2 GameMap::GetCellPosition(const Vector2 screenPosition) const
 	{
-		m_width = 0;
-		m_height = 0;
-		m_terrain.clear();
+		const float scale = GetScale();
 
-		for (const auto tower : m_towers)
-			delete tower;
+		return Vector2{
+			LibMath::floor(screenPosition.x / (TILE_WIDTH * scale)),
+			LibMath::floor(screenPosition.y / (TILE_HEIGHT * scale))
+		};
+	}
 
-		m_towers.clear();
+	Vector2 GameMap::GetScreenPosition(const Vector2 cellPosition, const Vector2 origin) const
+	{
+		const float scale = GetScale();
+		const float xOffset = TILE_WIDTH * origin.x * scale;
+		const float yOffset = TILE_HEIGHT * origin.y * scale;
+
+		return Vector2{
+				cellPosition.x * TILE_WIDTH * scale + xOffset,
+				cellPosition.y * TILE_HEIGHT * scale + yOffset
+		};
+	}
+
+	unsigned int GameMap::PositionToIndex(const Vector2 cellPosition) const
+	{
+		return static_cast<unsigned int>(cellPosition.y) * GetWidth() +
+			static_cast<unsigned int>(cellPosition.x);
+	}
+
+	Vector2 GameMap::IndexToPosition(const uint32_t index) const
+	{
+		const float scale = GetScale();
+
+		return Vector2{
+				static_cast<float>(index % m_width),
+				static_cast<float>(index / m_width)
+		};
 	}
 
 	float GameMap::GetScale() const
@@ -175,14 +200,38 @@ namespace TD
 		return LibMath::min(scaleVec.x, scaleVec.y);
 	}
 
-	bool GameMap::AddTile(const unsigned int tileData, const size_t index)
+	ai::Graph GameMap::GetGraph() const
+	{
+		return m_graph;
+	}
+
+	Texture GameMap::GetTexture() const
+	{
+		return m_mapTexture.texture;
+	}
+
+	void GameMap::Clear()
+	{
+		m_width = 0;
+		m_height = 0;
+		m_terrain.clear();
+
+		for (const auto tower : m_towers)
+			delete tower;
+
+		m_towers.clear();
+
+		UnloadRenderTexture(m_mapTexture);
+	}
+
+	bool GameMap::AddTile(const uint8_t tileData, const size_t index)
 	{
 		try
 		{
 			const TerrainType type = static_cast<TerrainType>(Unpack(tileData,
 				TERRAIN_TYPE_BIT_OFFSET, TERRAIN_TYPE_BIT_COUNT));
 
-			m_terrain[index] = { type, tileData };
+			m_terrain[index] = { type, static_cast<uint32_t>(type) << TILE_WEIGHT_OFFSET};
 
 			return true;
 		}
@@ -192,7 +241,7 @@ namespace TD
 		}
 	}
 
-	bool GameMap::AddSpecialTile(const unsigned int tileData, const Vector2 position)
+	bool GameMap::AddSpecialTile(const uint8_t tileData, const Vector2 position)
 	{
 		const SpecialType type = static_cast<SpecialType>(Unpack(tileData,
 			SPECIAL_TYPE_BIT_OFFSET, SPECIAL_TYPE_BIT_COUNT));
@@ -215,5 +264,107 @@ namespace TD
 		}
 
 		return true;
+	}
+
+	bool GameMap::BuildGraph()
+	{
+		if (m_terrain.empty())
+			return false;
+
+		ai::Graph graph(static_cast<unsigned int>(m_terrain.size()));
+
+		for (unsigned int i = 0; i < m_terrain.size(); i++)
+		{
+			const Vector2 cellPos = IndexToPosition(i);
+
+			ai::Node& node = *graph.GetNode(i);
+			unsigned int neighborIndex;
+
+			// Try to link up tile
+			if (cellPos.y > 0)
+			{
+				neighborIndex = PositionToIndex({ cellPos.x, cellPos.y - 1 });
+				node.AddEdge(graph.GetNode(neighborIndex),
+					m_terrain[neighborIndex].Weight);
+			}
+
+			// Try to link down tile
+			if (static_cast<unsigned int>(cellPos.y) < m_height - 1)
+			{
+				neighborIndex = PositionToIndex({ cellPos.x, cellPos.y + 1 });
+				node.AddEdge(graph.GetNode(neighborIndex),
+					m_terrain[neighborIndex].Weight);
+			}
+
+			// Try to link left tile
+			if (cellPos.x > 0)
+			{
+				neighborIndex = PositionToIndex({ cellPos.x - 1, cellPos.y });
+				node.AddEdge(graph.GetNode(neighborIndex),
+					m_terrain[neighborIndex].Weight);
+			}
+
+			// Try to link right tile
+			if (static_cast<unsigned int>(cellPos.x) < m_width - 1)
+			{
+				neighborIndex = PositionToIndex({ cellPos.x + 1, cellPos.y });
+				node.AddEdge(graph.GetNode(neighborIndex),
+					m_terrain[neighborIndex].Weight);
+			}
+		}
+
+		m_graph = std::move(graph);
+
+		return true;
+	}
+
+	bool GameMap::GenerateMapTexture()
+	{
+		const int pixelWidth = static_cast<int>(m_width) * TILE_WIDTH;
+		const int pixelHeight = static_cast<int>(m_height) * TILE_HEIGHT;
+
+		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+
+		m_mapTexture = LoadRenderTexture(pixelWidth, pixelHeight);
+
+		if (m_mapTexture.id == 0)
+			return false;
+
+		BeginTextureMode(m_mapTexture);
+
+		DrawTiles();
+
+		DrawTextureV(*renderer.GetTexture("Assets/HQ.png"),
+			GetPlayerHQPosition(false), WHITE);
+
+		EndTextureMode();
+
+		return true;
+	}
+
+	void GameMap::DrawTiles() const
+	{
+		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+		for (size_t i = 0; i < m_terrain.size(); i++)
+		{
+			const Vector2 cellPos = IndexToPosition(static_cast<uint32_t>(i));
+			const Vector2 pos = GetScreenPosition(cellPos, { 0, 0 });
+
+			switch (m_terrain[i].Type)
+			{
+			case TerrainType::ROAD:
+				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile034.png"), pos, WHITE);
+				break;
+			case TerrainType::DIRT:
+				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile050.png"), pos, WHITE);
+				break;
+			case TerrainType::GRASS:
+				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile024.png"), pos, WHITE);
+				break;
+			case TerrainType::SAND:
+				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile029.png"), pos, WHITE);
+				break;
+			}
+		}
 	}
 }
