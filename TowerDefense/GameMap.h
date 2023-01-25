@@ -64,7 +64,7 @@ namespace TD
 		Vector2						GetPlayerHQPosition(bool scale = true) const;
 		Vector2						GetSpawnPosition(Vector2 origin = { .5f, .5f }) const;
 		Vector2						GetCellPosition(Vector2 screenPosition) const;
-		Vector2						GetScreenPosition(Vector2 cellPosition, Vector2 origin = { .5f, .5f }) const;
+		Vector2						GetScreenPosition(Vector2 cellPosition, Vector2 origin = { .5f, .5f }, bool useScale = true) const;
 		Vector2						IndexToPosition(uint32_t index) const;
 		unsigned int				PositionToIndex(Vector2 cellPosition) const;
 		float						GetScale() const;

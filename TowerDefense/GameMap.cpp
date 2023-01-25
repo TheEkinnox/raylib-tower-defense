@@ -162,9 +162,10 @@ namespace TD
 		};
 	}
 
-	Vector2 GameMap::GetScreenPosition(const Vector2 cellPosition, const Vector2 origin) const
+	Vector2 GameMap::GetScreenPosition(const Vector2 cellPosition,
+		const Vector2 origin, const bool useScale) const
 	{
-		const float scale = GetScale();
+		const float scale = useScale ? GetScale() : 1;
 		const float xOffset = TILE_WIDTH * origin.x * scale;
 		const float yOffset = TILE_HEIGHT * origin.y * scale;
 
@@ -348,7 +349,7 @@ namespace TD
 		for (size_t i = 0; i < m_terrain.size(); i++)
 		{
 			const Vector2 cellPos = IndexToPosition(static_cast<uint32_t>(i));
-			const Vector2 pos = GetScreenPosition(cellPos, { 0, 0 });
+			const Vector2 pos = GetScreenPosition(cellPos, { 0, 0 }, false);
 
 			switch (m_terrain[i].Type)
 			{
