@@ -26,5 +26,8 @@ namespace TD
 		EnemyArmy*			m_army;
 		ai::IPathFinder*	m_pathFinder;
 		float				m_remainingStunTime;
+		Vector2				m_currentTarget;
+
+		const float			ENEMY_TILE_THRESHOLD = .03f;
 	};
 }

@@ -12,7 +12,7 @@
 namespace TD
 {
 	Enemy::Enemy(const EnemyType type, EnemyArmy& army, const Vector2 position) :
-		GameEntity(), m_config(type), m_army(&army), m_remainingStunTime(0)
+		GameEntity(), m_config(type), m_army(&army), m_remainingStunTime(0), m_currentTarget{ -1, -1 }
 	{
 		if (!m_config.LoadFromFile())
 			throw runtime_error("Unable to load the enemy's configuration file.");
@@ -50,17 +50,28 @@ namespace TD
 	void Enemy::Update()
 	{
 		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
-		const uint32_t index = map.PositionToIndex(map.GetCellPosition(Position()));
-		
-		const ai::Edge* targetEdge = m_pathFinder->GetPathEdge(index);
 
-		if (targetEdge == nullptr)
+		Vector2 targetCell = m_currentTarget;
+		const Vector2 targetVec = map.GetScreenPosition(targetCell);
+		const LibMath::Vector2 targetPos(targetVec.x, targetVec.y);
+
+		if (targetCell.x < 0 || targetCell.y < 0 ||
+			targetPos.distanceSquaredFrom({Position().x, Position().y}) < TILE_WIDTH * map.GetScale() * ENEMY_TILE_THRESHOLD)
 		{
-			HitHQ();
-			return;
+			const uint32_t index = map.PositionToIndex(map.GetCellPosition(Position()));
+			const ai::Edge* targetEdge = m_pathFinder->GetPathEdge(index);
+
+			if (targetEdge == nullptr)
+			{
+				HitHQ();
+				return;
+			}
+
+			targetCell = map.IndexToPosition(targetEdge->To->GetIndex());
+			m_currentTarget = targetCell;
 		}
 
-		MoveTo(map.IndexToPosition(targetEdge->To->GetIndex()));
+		MoveTo(targetCell);
 	}
 
 	void Enemy::MoveTo(const Vector2 cellPosition)
@@ -113,8 +124,7 @@ namespace TD
 
 	void Enemy::HitHQ() const
 	{
-		// TODO : Inflict damage to the player's head quarter
-		//TowerDefenseGameManager::GetInstance().Player.Damage(m_config.Damage);
+		TowerDefenseGameManager::GetInstance().Player.Damage(m_config.Damage);
 		m_army->RemoveEnemy(*this);
 	}
 }
