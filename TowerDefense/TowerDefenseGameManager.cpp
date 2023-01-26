@@ -6,7 +6,7 @@
 #include "ExplosiveTower.h"
 #include "RegularTower.h"
 #include "StunTower.h"
-#include "NewTowerButton.h"
+//#include "TowerButton.h"
 
 namespace TD
 {
@@ -21,9 +21,11 @@ namespace TD
 			argc > 1 ? argv[1] : "level1.cfg");
 
 		//TODO: Handle this on level load - Init should just open the main menu
-		if (!Map.BuildFromFile(configPath) || !EnemyArmy.Load(configPath))
+		if (!Map.BuildFromFile(configPath) ||
+			!EnemyArmy.Load(configPath) ||
+			!Player.Load(configPath))
 			currentState = GameState::ERROR;
-
+			
 		const float scale = Map.GetScale();
 		const Texture mapTexture = Map.GetTexture();
 
@@ -71,8 +73,8 @@ namespace TD
 			};
 			Map.AddTower<ExplosiveTower>(explosiveTowerPos);
 		}
-		TowerButton regularButton(BulletType::REGULAR);
-		regularButton.Update();
+		//TowerButton regularButton(BulletType::REGULAR);
+		//regularButton.Update();
 
 		EnemyArmy.Update();
 

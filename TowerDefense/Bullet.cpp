@@ -16,6 +16,9 @@ namespace TD
 
 	Bullet::~Bullet()
 	{
+		if (sprite == nullptr)
+			return;
+
 		TowerDefenseGameManager::GetInstance().GetRenderer().RemoveSprite(*sprite);
 	}
 

@@ -9,8 +9,32 @@ namespace TD
 {
 	Pool<Bullet> ITower::m_bulletPool{};
 
-	ITower::ITower() : level(1), config(), m_nextShootTime(), upgradeCost()
+	ITower::ITower(const Vector2 position, BulletType type) : level(1), config(), m_nextShootTime(), upgradeCost()
 	{
+		if (!config.LoadFromFile(type, 1))
+			throw;
+
+		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+		const Texture* towerTexture = renderer.GetTexture(config.texturePath);
+		m_sprite = &renderer.CreateSprite(*towerTexture, position, ENTITY_LAYER);
+
+		GameMap& map = TowerDefenseGameManager::GetInstance().Map;
+		const float scale = map.GetScale();
+		m_sprite->SetScale(scale);
+	}
+
+	void ITower::LevelUp()
+	{
+		if (level == config.maxLevel)
+			return;
+
+		level++; // add payment here.
+
+		if (!config.LoadFromFile(config.bulletType, level))
+			throw;
+
+		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+		m_sprite->SetTexture(*renderer.GetTexture(config.texturePath));
 	}
 
 	Enemy* ITower::CheckRange()

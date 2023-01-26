@@ -7,29 +7,9 @@
 
 namespace TD
 {
-	RegularTower::RegularTower(Vector2 position) : ITower()
+	RegularTower::RegularTower(Vector2 position) :
+		ITower(position, BulletType::REGULAR)
 	{
-		if(!config.LoadFromFile(BulletType::REGULAR, level))
-			throw;
-
-		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
-		const Texture* towerTexture = renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile249.png");
-		m_sprite = &renderer.CreateSprite(*towerTexture, position, ENTITY_LAYER);
-		
-		GameMap& map = TowerDefenseGameManager::GetInstance().Map;
-		const float scale = map.GetScale();
-		m_sprite->SetScale(scale);
-	}
-
-	void RegularTower::LevelUp()
-	{
-		if (level == config.maxLevel)
-			return;
-
-		level++; // add payment here.
-
-		if (!config.LoadFromFile(config.bulletType, level))
-			throw;
 	}
 
 	void RegularTower::ShootAt(const Enemy& enemy)
@@ -52,7 +32,7 @@ namespace TD
 
 	void RegularTower::Update()
 	{
-		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_R))
+		if (IsKeyPressed(KEY_ONE))
 			LevelUp();
 
 		Enemy* enemy = CheckRange();

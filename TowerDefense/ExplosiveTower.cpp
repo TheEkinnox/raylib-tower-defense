@@ -7,29 +7,9 @@
 
 namespace TD
 {
-	ExplosiveTower::ExplosiveTower(Vector2 position) : ITower()
+	ExplosiveTower::ExplosiveTower(Vector2 position) :
+		ITower(position, BulletType::EXPLOSIVE)
 	{
-		if (!config.LoadFromFile(BulletType::EXPLOSIVE, level))
-			throw;
-
-		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
-		const Texture* towerTexture = renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile250.png");
-		m_sprite = &renderer.CreateSprite(*towerTexture, position, ENTITY_LAYER);
-
-		GameMap& map = TowerDefenseGameManager::GetInstance().Map;
-		const float scale = map.GetScale();
-		m_sprite->SetScale(scale);
-	}
-	
-	void ExplosiveTower::LevelUp()
-	{
-		if (level == config.maxLevel)
-			return;
-
-		level++; // add payment here.
-
-		if (!config.LoadFromFile(config.bulletType, level))
-			throw;
 	}
 
 	void ExplosiveTower::ShootAt(const Enemy& enemy)
@@ -52,7 +32,7 @@ namespace TD
 
 	void ExplosiveTower::Update()
 	{
-		if (IsKeyPressed(KEY_TWO))
+		if (IsKeyPressed(KEY_THREE))
 			LevelUp();
 
 		Enemy* enemy = CheckRange();

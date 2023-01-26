@@ -9,7 +9,6 @@ namespace TD
 
 		RegularTower(Vector2 position);
 
-		void LevelUp();
 		void ShootAt(const Enemy& enemy) override;
 		void Update() override;	// update the regular tower
 		void OnBulletCollision(Enemy& enemy) override;

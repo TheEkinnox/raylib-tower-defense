@@ -62,6 +62,11 @@ namespace TD
 				bulletSpeed = std::stof(tokens[1]);
 				loadedCount++;
 			}
+			else if (tokens[0] == "texture")
+			{
+				texturePath = TrimLeft(curLine.substr(tokens[0].size()));
+				loadedCount++;
+			}
 		}
 		return loadedCount == TOWER_CONFIG_DATA_COUNT;
 	}

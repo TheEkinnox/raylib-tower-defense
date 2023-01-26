@@ -48,7 +48,7 @@ namespace TD
 			return false;
 
 		if (tokens[0] == "texture")
-			TexturePath = TrimLeft(line.substr(tokens[0].size())); 
+			TexturePath = TrimLeft(line.substr(tokens[0].size()));
 		else if (tokens[0] == "speed")
 			Speed = std::stof(tokens[1]);
 		else if (tokens[0] == "damage")

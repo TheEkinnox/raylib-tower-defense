@@ -19,12 +19,12 @@ namespace TD
 		ConfigTower config;
 
 		virtual void Update() = 0;
-		virtual void LevelUp()= 0;
+		virtual void LevelUp();
 		virtual void ShootAt(const Enemy& enemy) = 0;
 		virtual void OnBulletCollision(Enemy& enemy) = 0;
 
 	protected:
-		ITower();
+		ITower(Vector2 position, BulletType type);
 
 		double m_nextShootTime;
 

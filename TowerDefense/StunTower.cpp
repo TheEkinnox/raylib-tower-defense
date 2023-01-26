@@ -7,29 +7,9 @@
 
 namespace TD
 {
-	StunTower::StunTower(const Vector2 position) : ITower()
+	StunTower::StunTower(const Vector2 position) :
+		ITower(position, BulletType::STUNNING)
 	{
-		if (!config.LoadFromFile(BulletType::STUNNING, level))
-			throw;
-
-		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
-		const Texture* towerTexture = renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile227.png");
-		m_sprite = &renderer.CreateSprite(*towerTexture, position, ENTITY_LAYER);
-
-		GameMap& map = TowerDefenseGameManager::GetInstance().Map;
-		const float scale = map.GetScale();
-		m_sprite->SetScale(scale);
-	}
-
-	void StunTower::LevelUp()
-	{
-		if (level == config.maxLevel)
-			return;
-
-		level++; // add payment here.
-
-		if (!config.LoadFromFile(config.bulletType, level))
-			throw;
 	}
 
 	void StunTower::ShootAt(const Enemy& enemy)
@@ -52,7 +32,7 @@ namespace TD
 
 	void StunTower::Update()
 	{
-		if (IsKeyDown(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_S))
+		if (IsKeyPressed(KEY_TWO))
 			LevelUp();
 
 		Enemy* enemy = CheckRange();
