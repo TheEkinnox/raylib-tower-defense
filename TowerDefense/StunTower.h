@@ -16,5 +16,4 @@ namespace TD
 		void Update() override;	// update the regular tower
 		void OnBulletCollision(Enemy& enemy) override;
 	};
-
 }

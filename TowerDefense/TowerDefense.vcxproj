@@ -101,6 +101,7 @@
     <ClInclude Include="AStar.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="bulletType.h" />
+    <ClInclude Include="PlayerConfig.h" />
     <ClInclude Include="ConfigTower.h" />
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Edge.h" />
@@ -114,14 +115,21 @@
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="GameOver.h" />
     <ClInclude Include="HealerEnemy.h" />
+    <ClInclude Include="HUDButton.h" />
+    <ClInclude Include="HUDWindow.h" />
     <ClInclude Include="IGameManager.h" />
     <ClInclude Include="IPathFinder.h" />
     <ClInclude Include="ITower.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="OpenClosedLists.h" />
     <ClInclude Include="OpenClosedLists.hpp" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="NewTowerButton.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerHUD.h" />
     <ClInclude Include="Pool.h" />
     <ClInclude Include="PooledObject.h" />
     <ClInclude Include="RegularTower.h" />
@@ -135,6 +143,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="PlayerConfig.cpp" />
     <ClCompile Include="ConfigTower.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -146,16 +155,22 @@
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="GameOverWindow.cpp" />
     <ClCompile Include="HealerEnemy.cpp" />
+    <ClCompile Include="HUDWindow.cpp" />
     <ClCompile Include="IGameManager.cpp" />
     <ClCompile Include="IPathFinder.cpp" />
     <ClCompile Include="ITower.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="NewTowerButton.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerHUD.cpp" />
     <ClCompile Include="PooledObject.cpp" />
     <ClCompile Include="RegularTower.cpp" />
     <ClCompile Include="StunTower.cpp" />

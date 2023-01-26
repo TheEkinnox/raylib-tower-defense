@@ -6,6 +6,7 @@
 #include "ExplosiveTower.h"
 #include "RegularTower.h"
 #include "StunTower.h"
+#include "NewTowerButton.h"
 
 namespace TD
 {
@@ -70,6 +71,8 @@ namespace TD
 			};
 			Map.AddTower<ExplosiveTower>(explosiveTowerPos);
 		}
+		TowerButton regularButton(BulletType::REGULAR);
+		regularButton.Update();
 
 		EnemyArmy.Update();
 

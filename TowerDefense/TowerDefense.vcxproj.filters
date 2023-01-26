@@ -25,6 +25,24 @@
     <Filter Include="Header Files\Core">
       <UniqueIdentifier>{e616930c-4fdd-4c3c-a95a-8a100723f807}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Towers">
+      <UniqueIdentifier>{e89655ea-d538-4a68-8470-60a7032cb8ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Towers">
+      <UniqueIdentifier>{c4586a54-0474-4c05-8bf5-c81ee6931b6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HUD">
+      <UniqueIdentifier>{42313506-52ad-43df-ab62-0262ec8d3978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HUD">
+      <UniqueIdentifier>{b79f3cfd-866c-4774-89ee-1f555729acc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Menus">
+      <UniqueIdentifier>{7ebaf489-2af3-445a-9a75-53d78a5ac1b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menus">
+      <UniqueIdentifier>{b274a099-ad91-4dce-989f-141e11b898ec}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\PathFinding">
       <UniqueIdentifier>{20dccc52-5098-46f5-95a5-28105513a7e3}</UniqueIdentifier>
     </Filter>
@@ -34,27 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StunTower.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RegularTower.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ITower.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExplosiveTower.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConfigTower.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="bulletType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
@@ -132,27 +129,57 @@
     <ClInclude Include="EnemyArmyConfig.h">
       <Filter>Header Files\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="ConfigTower.h">
+      <Filter>Header Files\Towers</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosiveTower.h">
+      <Filter>Header Files\Towers</Filter>
+    </ClInclude>
+    <ClInclude Include="ITower.h">
+      <Filter>Header Files\Towers</Filter>
+    </ClInclude>
+    <ClInclude Include="RegularTower.h">
+      <Filter>Header Files\Towers</Filter>
+    </ClInclude>
+    <ClInclude Include="StunTower.h">
+      <Filter>Header Files\Towers</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files\Towers</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletType.h">
+      <Filter>Header Files\Towers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHUD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HUDWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HUDButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NewTowerButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerConfig.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StunTower.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RegularTower.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ITower.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ExplosiveTower.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
@@ -211,6 +238,45 @@
     </ClCompile>
     <ClCompile Include="AStar.cpp">
       <Filter>Source Files\PathFinding</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\Towers</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigTower.cpp">
+      <Filter>Source Files\Towers</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosiveTower.cpp">
+      <Filter>Source Files\Towers</Filter>
+    </ClCompile>
+    <ClCompile Include="ITower.cpp">
+      <Filter>Source Files\Towers</Filter>
+    </ClCompile>
+    <ClCompile Include="StunTower.cpp">
+      <Filter>Source Files\Towers</Filter>
+    </ClCompile>
+    <ClCompile Include="RegularTower.cpp">
+      <Filter>Source Files\Towers</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHUD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HUDWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NewTowerButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerConfig.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EnemyArmyConfig.cpp">
       <Filter>Source Files\Enemies</Filter>
