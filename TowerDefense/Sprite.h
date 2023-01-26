@@ -27,6 +27,8 @@ namespace TD
 		Sprite&		operator=(Sprite&& other) noexcept;
 
 		Texture		GetTexture() const;
+		void		SetTexture(Texture texture);
+		void		SetTexture(Texture texture, Rectangle spriteRect);
 
 		Vector2		Position() const;
 		Vector2&	Position();

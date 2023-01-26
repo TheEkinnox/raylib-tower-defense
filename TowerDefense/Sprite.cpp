@@ -5,7 +5,7 @@
 
 namespace TD
 {
-	Sprite::Sprite() : Sprite({ 0 }, {}, { 0, 0 })
+	Sprite::Sprite() : Sprite({}, {}, { 0, 0 })
 	{
 	}
 
@@ -23,15 +23,7 @@ namespace TD
 		const Vector2 position, const Renderer::Layer layer) : Layer(layer),
 		m_spriteSheet(spriteSheet), m_spriteRect(spriteRect), m_position(position)
 	{
-		if (spriteSheet.id != 0 &&
-			(spriteRect.x < 0 || spriteRect.x + spriteRect.width > static_cast<float>(spriteSheet.width) ||
-				spriteRect.y < 0 || spriteRect.y + spriteRect.height > static_cast<float>(spriteSheet.height)))
-		{
-			throw std::invalid_argument("Unable to set texture - Sprite is outside of texture's bounds.");
-		}
-
-		m_spriteSheet = spriteSheet;
-		m_spriteRect = spriteRect;
+		SetTexture(spriteSheet, spriteRect);
 	}
 
 	Sprite& Sprite::operator=(const Sprite& other)
@@ -69,6 +61,32 @@ namespace TD
 	Texture Sprite::GetTexture() const
 	{
 		return m_spriteSheet;
+	}
+
+	void Sprite::SetTexture(const Texture texture)
+	{
+		const Rectangle spriteRect
+		{
+			0,
+			0,
+			static_cast<float>(texture.width),
+			static_cast<float>(texture.height)
+		};
+
+		SetTexture(texture, spriteRect);
+	}
+
+	void Sprite::SetTexture(const Texture texture, const Rectangle spriteRect)
+	{
+		if (texture.id != 0 &&
+			(spriteRect.x < 0 || spriteRect.x + spriteRect.width > static_cast<float>(texture.width) ||
+				spriteRect.y < 0 || spriteRect.y + spriteRect.height > static_cast<float>(texture.height)))
+		{
+			throw std::invalid_argument("Unable to set texture - Sprite is outside of texture's bounds.");
+		}
+
+		m_spriteSheet = texture;
+		m_spriteRect = spriteRect;
 	}
 
 	Vector2 Sprite::Position() const
