@@ -150,29 +150,29 @@
     <ClInclude Include="bulletType.h">
       <Filter>Header Files\Towers</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerHUD.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="HUDButton.h">
+      <Filter>Header Files\HUD</Filter>
     </ClInclude>
     <ClInclude Include="HUDWindow.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="HUDButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameOver.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="PlayerHUD.h">
+      <Filter>Header Files\HUD</Filter>
     </ClInclude>
     <ClInclude Include="MainMenu.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="NewTowerButton.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameOver.h">
+      <Filter>Header Files\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerConfig.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="NewTowerButtonARCHIVED.h">
+      <Filter>Header Files\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="TowerButton.h">
+      <Filter>Header Files\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,9 +227,6 @@
     <ClCompile Include="Node.cpp">
       <Filter>Source Files\PathFinding</Filter>
     </ClCompile>
-    <ClCompile Include="ConfigTower.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Dijkstra.cpp">
       <Filter>Source Files\PathFinding</Filter>
     </ClCompile>
@@ -257,32 +254,26 @@
     <ClCompile Include="RegularTower.cpp">
       <Filter>Source Files\Towers</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerHUD.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HUDWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameOverWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NewTowerButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerConfig.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyArmyConfig.cpp">
       <Filter>Source Files\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="EnemyWave.cpp">
       <Filter>Source Files\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHUD.cpp">
+      <Filter>Source Files\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigTower.cpp">
+      <Filter>Source Files\Towers</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="TowerButton.cpp">
+      <Filter>Source Files\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HUDButton.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
