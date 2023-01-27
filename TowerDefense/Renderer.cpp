@@ -36,13 +36,20 @@ namespace TD
 		return *m_sprites[zLayer].back();
 	}
 
-	void Renderer::RemoveSprite(Sprite& sprite)
+	void Renderer::RemoveSprite(const Sprite& sprite)
 	{
 		if (sprite.Layer < 0 || sprite.Layer > m_sprites.size())
 			return;
 
-		m_sprites[sprite.Layer].remove(&sprite);
-		delete& sprite;
+		for (Sprite* layerSprite : m_sprites[sprite.Layer])
+		{
+			if (layerSprite != nullptr && layerSprite == &sprite)
+			{
+				m_sprites[sprite.Layer].remove(layerSprite);
+				delete layerSprite;
+				return;
+			}
+		}
 	}
 
 	const Texture* Renderer::LoadTextureFile(const std::string& name)

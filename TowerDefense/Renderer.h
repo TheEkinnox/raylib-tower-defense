@@ -19,7 +19,7 @@ namespace TD
 		~Renderer();
 
 		Sprite&							CreateSprite(const Texture& texture, Vector2 position, Layer zLayer = 0);
-		void							RemoveSprite(Sprite& sprite);
+		void							RemoveSprite(const Sprite& sprite);
 		const Texture*					LoadTextureFile(const std::string& name);
 		const Texture*					GetTexture(const std::string& name);
 		Vector2							GetTextureScale(float width, float height) const;
