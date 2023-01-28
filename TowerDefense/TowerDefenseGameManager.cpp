@@ -6,36 +6,35 @@
 #include "ExplosiveTower.h"
 #include "RegularTower.h"
 #include "StunTower.h"
-//#include "TowerButton.h"
+#include "GameOver.h"
 
 namespace TD
 {
-
 	TowerDefenseGameManager::TowerDefenseGameManager() : IGameManager()
 	{
 	}
 
 	void TowerDefenseGameManager::Init(const int argc, char* const* argv)
 	{
-		const char* configPath = TextFormat("Assets/maps/%s",
-			argc > 1 ? argv[1] : "level1.cfg");
+		if (argc > 1)
+			LoadLevel(TextFormat("Assets/maps/%s", argv[1]));
+		else
+			SetCurrentState(GameState::MAIN_MENU);
+	}
 
-		//TODO: Handle this on level load - Init should just open the main menu
+	void TowerDefenseGameManager::LoadLevel(const std::string& configPath)
+	{
+		Map.Clear();
+		EnemyArmy.ClearEnemies();
+		Player.Clear();
+
 		if (!Map.BuildFromFile(configPath) ||
 			!EnemyArmy.Load(configPath) ||
 			!Player.Load(configPath))
 			currentState = GameState::ERROR;
-			
-		const float scale = Map.GetScale();
-		const Texture mapTexture = Map.GetTexture();
 
-		const Vector2 pos = {
-			static_cast<float>(mapTexture.width) / 2,
-			static_cast<float>(mapTexture.height) / 2
-		};
-
-		Sprite& mapSprite = renderer.CreateSprite(mapTexture, pos, 0);
-		mapSprite.SetScale(scale, -scale);
+		m_currentLevelPath = configPath;
+		currentState = GameState::RUNNING;
 	}
 
 	void TowerDefenseGameManager::Update()
@@ -73,14 +72,56 @@ namespace TD
 			};
 			Map.AddTower<ExplosiveTower>(explosiveTowerPos);
 		}
-		//TowerButton regularButton(BulletType::REGULAR);
-		//regularButton.Update();
+
+		if (IsKeyPressed(KEY_G))
+		{
+			SetCurrentState(GameState::GAME_OVER);
+		}
 
 		EnemyArmy.Update();
 
 		Map.UpdateTowers();
 
+		Player.Update();
+		
 		renderer.DrawSprites();
+	}
+
+	void TowerDefenseGameManager::SetCurrentState(GameState state)
+	{
+		if (state == currentState)
+			return;
+
+		switch (state)
+		{
+		case GameState::INIT:
+			break;
+		case GameState::MAIN_MENU:
+			break;
+		case GameState::RUNNING:
+			break;
+		case GameState::GAME_OVER:
+		{
+			GameOverWindow* gameOver = new GameOverWindow({ 0, 0 }, renderer.GetRenderSize() );
+			gameOver->Create();
+
+			Player.HUD.Windows.push_back(gameOver);
+			break;
+		}
+		case GameState::QUIT:
+			break;
+		case GameState::ERROR:
+			break;
+		default:
+			break;
+		}
+
+		IGameManager::SetCurrentState(state);
+	}
+
+	std::string TowerDefenseGameManager::GetCurrentLevel() const
+	{
+		return m_currentLevelPath;
 	}
 
 	TowerDefenseGameManager& TowerDefenseGameManager::GetInstance()

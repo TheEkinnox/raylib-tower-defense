@@ -9,7 +9,7 @@
 
 namespace TD
 {
-	GameMap::GameMap() : m_width(0), m_height(0), m_mapTexture(), m_graph(0)
+	GameMap::GameMap() : m_width(0), m_height(0), m_mapTexture(), m_mapSprite(nullptr), m_graph(0)
 	{
 	}
 
@@ -183,8 +183,6 @@ namespace TD
 
 	Vector2 GameMap::IndexToPosition(const uint32_t index) const
 	{
-		const float scale = GetScale();
-
 		return Vector2{
 				static_cast<float>(index % m_width),
 				static_cast<float>(index / m_width)
@@ -223,6 +221,13 @@ namespace TD
 		m_towers.clear();
 
 		UnloadRenderTexture(m_mapTexture);
+
+		if (m_mapSprite != nullptr)
+		{
+			Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+			renderer.RemoveSprite(*m_mapSprite);
+			m_mapSprite = nullptr;
+		}
 	}
 
 	bool GameMap::AddTile(const uint8_t tileData, const size_t index)
@@ -339,6 +344,19 @@ namespace TD
 			GetPlayerHQPosition(false), WHITE);
 
 		EndTextureMode();
+
+		const Vector2 pos = {
+			static_cast<float>(m_mapTexture.texture.width) / 2,
+			static_cast<float>(m_mapTexture.texture.height) / 2
+		};
+
+		if (m_mapSprite == nullptr)
+			m_mapSprite = &renderer.CreateSprite(m_mapTexture.texture, pos, Layer::MAP);
+		else
+			m_mapSprite->SetTexture(m_mapTexture.texture);
+
+		const float scale = GetScale();
+		m_mapSprite->SetScale(scale, -scale);
 
 		return true;
 	}

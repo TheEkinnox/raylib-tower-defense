@@ -6,21 +6,25 @@
 namespace TD
 {
 	class Sprite;
-
+	class HUDWindow;
 	class HUDButton
 	{
 	public:
 		Sprite*			Sprite;
-		Texture			DefaultTexture;
-		Texture			HoveredTexture;
-		Texture			ClickedTexture;
+		Texture			ButtonTexture;
+		Color			DefaultTint;
+		Color			HoveredTint;
+		Color			ClickedTint;
 		Vector2			RelativePosition;
 
-		HUDButton(Texture defaultTexture, Texture hoveredTexture, Texture clickedTexture);
-
+		HUDButton(Vector2 relativePosition, HUDWindow& window);
+		~HUDButton();
+		
 		virtual void	Update();
+		virtual void	Click();
 
 	protected:
+		HUDWindow&		m_window;
 		bool			IsHovered();
 	};
 }

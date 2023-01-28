@@ -8,6 +8,9 @@ namespace TD
 	class PlayerHUD
 	{
 	public:
+		PlayerHUD() = default;
+		~PlayerHUD();
+
 		std::vector<HUDWindow*>	Windows;
 
 		void					ClearWindows();

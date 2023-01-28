@@ -100,7 +100,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="AStar.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="bulletType.h" />
+    <ClInclude Include="BulletType.h" />
     <ClInclude Include="ConfigTower.h" />
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Edge.h" />
@@ -110,6 +110,7 @@
     <ClInclude Include="EnemyConfig.h" />
     <ClInclude Include="EnemyType.h" />
     <ClInclude Include="EnemyWave.h" />
+    <ClInclude Include="ExitButton.h" />
     <ClInclude Include="ExplosiveTower.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameMap.h" />
@@ -117,6 +118,7 @@
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="HealerEnemy.h" />
     <ClInclude Include="HUDButton.h" />
+    <ClInclude Include="Layer.h" />
     <ClInclude Include="HUDWindow.h" />
     <ClInclude Include="IGameManager.h" />
     <ClInclude Include="IPathFinder.h" />
@@ -125,8 +127,8 @@
     <ClInclude Include="OpenClosedLists.h" />
     <ClInclude Include="OpenClosedLists.hpp" />
     <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="NewTowerButtonARCHIVED.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PlayAgain.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerHUD.h" />
     <ClInclude Include="Pool.h" />
@@ -150,12 +152,15 @@
     <ClCompile Include="EnemyArmyConfig.cpp" />
     <ClCompile Include="EnemyConfig.cpp" />
     <ClCompile Include="EnemyWave.cpp" />
+    <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="ExplosiveTower.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="HealerEnemy.cpp" />
     <ClCompile Include="HUDButton.cpp" />
+    <ClCompile Include="HUDWindow.cpp" />
     <ClCompile Include="IGameManager.cpp" />
     <ClCompile Include="IPathFinder.cpp" />
     <ClCompile Include="ITower.cpp" />
@@ -165,6 +170,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlayAgain.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerHUD.cpp" />
     <ClCompile Include="PooledObject.cpp" />

@@ -23,7 +23,7 @@ namespace TD
 
 		Renderer&			GetRenderer();
 		GameState			GetCurrentState() const;
-		void				SetCurrentState(GameState state);
+		virtual void		SetCurrentState(GameState state);
 		
 
 	protected:

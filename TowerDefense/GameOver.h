@@ -1,14 +1,15 @@
 #pragma once
+#include "HUDWindow.h"
 
 namespace TD
 {
-	class GameOverWindow
+	class IGameManager;
+	class GameOverWindow : public HUDWindow
 	{
 	public:
-		GameOverWindow();
-		~GameOverWindow();
+		GameOverWindow(Vector2 position, Vector2 dimensions);
+		~GameOverWindow() = default;
 
-		void Update();
-
+		void Create() override;
 	};
 }

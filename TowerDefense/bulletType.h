@@ -9,4 +9,6 @@ namespace TD
 		STUNNING,
 		EXPLOSIVE
 	};
+
+	typedef BulletType TowerType;
 }

@@ -2,21 +2,21 @@
 
 #include <raylib.h>
 
-#include "Renderer.h"
+#include "Layer.h"
 
 namespace TD
 {
 	class Sprite
 	{
 	public:
-		Renderer::Layer	Layer;
+		Layer	Layer;
 
 		Sprite();
 
-		Sprite(Texture texture, Vector2 position, Renderer::Layer layer = 0);
+		Sprite(Texture texture, Vector2 position, TD::Layer layer = Layer::DEFAULT);
 
 		Sprite(Texture spriteSheet, Rectangle spriteRect, Vector2 position,
-			Renderer::Layer layer = 0);
+			TD::Layer layer = Layer::DEFAULT);
 
 		Sprite(const Sprite& other) = default;
 		Sprite(Sprite&& other) = default;

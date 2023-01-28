@@ -38,12 +38,12 @@ namespace TD
 
 			if (tokens[0] == "hq_init_life")
 			{
-				BaseHealth = std::stof(tokens[1]);
+				BaseHealth = std::stoul(tokens[1]);
 				loadedCount++;
 			}
 			else if (tokens[0] == "budget")
 			{
-				Money = std::stof(tokens[1]);
+				Money = std::stoul(tokens[1]);
 				loadedCount++;
 			}
 		}
@@ -65,12 +65,12 @@ namespace TD
 
 	void Player::Update()
 	{
-		Hud.Update();
+		HUD.Update();
 	}
 
 	void Player::Clear()
 	{
-		Hud.ClearWindows();
+		HUD.ClearWindows();
 		Money = 0;
 		BaseHealth = 0;
 	}

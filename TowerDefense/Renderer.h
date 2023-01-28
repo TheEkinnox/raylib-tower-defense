@@ -5,6 +5,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include "Layer.h"
 
 namespace TD
 {
@@ -13,12 +14,10 @@ namespace TD
 	class Renderer
 	{
 	public:
-		typedef std::uint8_t Layer;
-
 		Renderer();
 		~Renderer();
 
-		Sprite&							CreateSprite(const Texture& texture, Vector2 position, Layer zLayer = 0);
+		Sprite&							CreateSprite(const Texture& texture, Vector2 position, Layer zLayer = Layer::DEFAULT);
 		void							RemoveSprite(const Sprite& sprite);
 		const Texture*					LoadTextureFile(const std::string& name);
 		const Texture*					GetTexture(const std::string& name);

@@ -10,7 +10,7 @@ namespace TD
 	}
 
 	Sprite::Sprite(const Texture texture, const Vector2 position,
-		const Renderer::Layer layer) :
+		const TD::Layer layer) :
 			Sprite(texture,
 				Rectangle{ 0, 0,
 					static_cast<float>(texture.width),
@@ -20,7 +20,7 @@ namespace TD
 	}
 
 	Sprite::Sprite(const Texture spriteSheet, const Rectangle spriteRect,
-		const Vector2 position, const Renderer::Layer layer) : Layer(layer),
+		const Vector2 position, const TD::Layer layer) : Layer(layer),
 		m_spriteSheet(spriteSheet), m_spriteRect(spriteRect), m_position(position)
 	{
 		SetTexture(spriteSheet, spriteRect);

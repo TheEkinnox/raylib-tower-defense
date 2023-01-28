@@ -20,7 +20,7 @@ namespace TD
 		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
 		Renderer& renderer = gameManager.GetRenderer();
 		const Texture& texture = *renderer.GetTexture(m_config.TexturePath);
-		m_sprite = &renderer.CreateSprite(texture, position, ENTITY_LAYER);
+		m_sprite = &renderer.CreateSprite(texture, position, Layer::ENTITY);
 
 		const GameMap& map = gameManager.Map;
 		m_sprite->SetScale(map.GetScale());

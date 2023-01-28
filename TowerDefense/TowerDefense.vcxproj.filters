@@ -147,7 +147,7 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\Towers</Filter>
     </ClInclude>
-    <ClInclude Include="bulletType.h">
+    <ClInclude Include="BulletType.h">
       <Filter>Header Files\Towers</Filter>
     </ClInclude>
     <ClInclude Include="HUDButton.h">
@@ -274,6 +274,12 @@
     </ClCompile>
     <ClCompile Include="HUDButton.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>Source Files\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="HUDWindow.cpp">
+      <Filter>Source Files\HUD</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

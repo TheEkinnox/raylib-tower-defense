@@ -28,24 +28,28 @@ namespace TD
 	Sprite& Renderer::CreateSprite(const Texture& texture, const Vector2 position,
 		const Layer zLayer)
 	{
-		if (zLayer >= m_sprites.size())
-			m_sprites.resize(static_cast<size_t>(zLayer) + 1);
+		size_t layer = static_cast<size_t>(zLayer);
 
-		m_sprites[zLayer].push_back(new Sprite(texture, position, zLayer));
+		if (layer >= m_sprites.size())
+			m_sprites.resize(layer + 1);
 
-		return *m_sprites[zLayer].back();
+		m_sprites[layer].push_back(new Sprite(texture, position, zLayer));
+
+		return *m_sprites[layer].back();
 	}
 
 	void Renderer::RemoveSprite(const Sprite& sprite)
 	{
-		if (sprite.Layer < 0 || sprite.Layer > m_sprites.size())
+		size_t layer = static_cast<size_t>(sprite.Layer);
+
+		if (layer < 0 || layer > m_sprites.size())
 			return;
 
-		for (Sprite* layerSprite : m_sprites[sprite.Layer])
+		for (Sprite* layerSprite : m_sprites[layer])
 		{
 			if (layerSprite != nullptr && layerSprite == &sprite)
 			{
-				m_sprites[sprite.Layer].remove(layerSprite);
+				m_sprites[layer].remove(layerSprite);
 				delete layerSprite;
 				return;
 			}
@@ -140,7 +144,7 @@ namespace TD
 			pos.x = (1.f - widthScale) * .5f * static_cast<float>(GetScreenWidth());
 		}
 
-		Sprite targetSprite = { m_target.texture, pos, 0 };
+		Sprite targetSprite = { m_target.texture, pos, Layer::DEFAULT };
 
 		// Flip the sprite since render textures are flipped by default
 		targetSprite.SetScale(scale.x, -scale.y);

@@ -6,7 +6,7 @@
 
 namespace TD
 {
-	bool ConfigTower::LoadFromFile(const BulletType type, const std::uint8_t level)
+	bool ConfigTower::LoadFromFile(const TowerType type, const std::uint8_t level)
 	{
 		char const* configPath = TextFormat(TOWER_CONIFG_PATH_FORMAT, type, level);
 

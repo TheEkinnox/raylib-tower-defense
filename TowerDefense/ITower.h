@@ -24,7 +24,7 @@ namespace TD
 		virtual void OnBulletCollision(Enemy& enemy) = 0;
 
 	protected:
-		ITower(Vector2 position, BulletType type);
+		ITower(Vector2 position, TowerType type);
 
 		double m_nextShootTime;
 

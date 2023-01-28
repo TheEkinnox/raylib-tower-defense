@@ -79,6 +79,7 @@ namespace TD
 		std::vector<ITower*>		m_towers;
 		std::vector<Vector2>		m_spawnPoints;
 		RenderTexture				m_mapTexture;
+		Sprite*						m_mapSprite;
 		Vector2						m_hqPosition{ -1, -1 };
 		ai::Graph					m_graph;
 

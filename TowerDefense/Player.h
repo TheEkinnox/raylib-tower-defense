@@ -7,7 +7,7 @@ namespace TD
 	class Player
 	{
 	public:
-		PlayerHUD		Hud;
+		PlayerHUD		HUD;
 		unsigned int	Money;
 		unsigned int	BaseHealth;
 

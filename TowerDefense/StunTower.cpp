@@ -8,7 +8,7 @@
 namespace TD
 {
 	StunTower::StunTower(const Vector2 position) :
-		ITower(position, BulletType::STUNNING)
+		ITower(position, TowerType::STUNNING)
 	{
 	}
 
@@ -19,7 +19,7 @@ namespace TD
 
 		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
 		const Texture* bulletTexture = renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile272.png");
-		Bullet& bullet = m_bulletPool.GetObject(renderer.CreateSprite(*bulletTexture, Position(), ENTITY_LAYER + 1), *this);
+		Bullet& bullet = m_bulletPool.GetObject(renderer.CreateSprite(*bulletTexture, Position(), Layer::BULLET), *this);
 
 		LibMath::Vector2 dir(enemy.Position().x - Position().x, enemy.Position().y - Position().y);
 		dir.normalize();

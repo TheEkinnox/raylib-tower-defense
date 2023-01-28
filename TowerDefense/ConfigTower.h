@@ -2,7 +2,7 @@
 #include <raylib.h>
 #include <string>
 #include <vector>
-#include "bulletType.h"
+#include "BulletType.h"
 
 #define MAX_LEVEL 3
 #define TOWER_CONIFG_PATH_FORMAT "Assets/towers/tower_%d_%d.cfg"
@@ -22,6 +22,6 @@ namespace TD
 		std::string		texturePath;
 		TD::BulletType	bulletType;
 		
-		bool LoadFromFile(BulletType type, std::uint8_t level);
+		bool LoadFromFile(TowerType type, std::uint8_t level);
 	};
 }
