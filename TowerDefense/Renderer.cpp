@@ -28,7 +28,7 @@ namespace TD
 	Sprite& Renderer::CreateSprite(const Texture& texture, const Vector2 position,
 		const Layer zLayer)
 	{
-		size_t layer = static_cast<size_t>(zLayer);
+		const size_t layer = static_cast<size_t>(zLayer);
 
 		if (layer >= m_sprites.size())
 			m_sprites.resize(layer + 1);
@@ -40,7 +40,7 @@ namespace TD
 
 	void Renderer::RemoveSprite(const Sprite& sprite)
 	{
-		size_t layer = static_cast<size_t>(sprite.Layer);
+		const size_t layer = static_cast<size_t>(sprite.Layer);
 
 		if (layer < 0 || layer > m_sprites.size())
 			return;
@@ -83,11 +83,54 @@ namespace TD
 		};
 	}
 
-	Vector2 Renderer::GetTextureScale(const float width, const float height) const
+	Vector2 Renderer::GetRenderScale() const
+	{
+		Vector2 scale{
+			static_cast<float>(GetScreenWidth()) / static_cast<float>(m_target.texture.width),
+			static_cast<float>(GetScreenHeight()) / static_cast<float>(m_target.texture.height)
+		};
+
+		// determine the game's target and current aspect ratio
+		const float targetAspect = static_cast<float>(m_target.texture.width) / static_cast<float>(m_target.texture.height);
+		const float screenAspect = static_cast<float>(GetScreenWidth()) / static_cast<float>(GetScreenHeight());
+
+		// current viewport height should be scaled by this amount
+		const float heightScale = screenAspect / targetAspect;
+
+		// if scaled height is less than current height, add letterbox (black bars on the top and bottom)
+		if (heightScale < 1.f)
+			scale.y *= heightScale;
+		else // add pillar-box (black bars on the left and right)
+			scale.x *= 1.f / heightScale;
+
+		return scale;
+	}
+
+	Vector2 Renderer::GetRenderPosition() const
+	{
+		Vector2 pos{ 0, 0 };
+
+		// determine the game's target and current aspect ratio
+		const float targetAspect = static_cast<float>(m_target.texture.width) / static_cast<float>(m_target.texture.height);
+		const float screenAspect = static_cast<float>(GetScreenWidth()) / static_cast<float>(GetScreenHeight());
+
+		// current viewport height should be scaled by this amount
+		const float heightScale = screenAspect / targetAspect;
+
+		// if scaled height is less than current height, add letterbox (black bars on the top and bottom)
+		if (heightScale < 1.f)
+			pos.y = (1.f - heightScale) * .5f * static_cast<float>(GetScreenHeight());
+		else // add pillar-box (black bars on the left and right)
+			pos.x = (1.f - 1.f / heightScale) * .5f * static_cast<float>(GetScreenWidth());
+
+		return pos;
+	}
+
+	Vector2 Renderer::GetTextureScale(const float width, const float height, const Vector2 modifier) const
 	{
 		return {
-			static_cast<float>(m_target.texture.width) / width,
-			static_cast<float>(m_target.texture.height) / height
+			static_cast<float>(m_target.texture.width) * modifier.x / width,
+			static_cast<float>(m_target.texture.height) * modifier.y / height
 		};
 	}
 
@@ -100,7 +143,7 @@ namespace TD
 
 			BeginTextureMode(m_target);
 
-				ClearBackground(RAYWHITE);
+				ClearBackground(WHITE);
 
 				for (auto& layerSprites : m_sprites)
 					for (const Sprite* sprite : layerSprites)
@@ -117,32 +160,8 @@ namespace TD
 
 	void Renderer::DrawTarget() const
 	{
-		Vector2 scale{
-			static_cast<float>(GetScreenWidth()) / static_cast<float>(m_target.texture.width),
-			static_cast<float>(GetScreenHeight()) / static_cast<float>(m_target.texture.height)
-		};
-
-		Vector2 pos{ 0, 0 };
-
-		// determine the game's target and current aspect ratio
-		const float targetAspect = static_cast<float>(m_target.texture.width) / static_cast<float>(m_target.texture.height);
-		const float screenAspect = static_cast<float>(GetScreenWidth()) / static_cast<float>(GetScreenHeight());
-
-		// current viewport height should be scaled by this amount
-		const float heightScale = screenAspect / targetAspect;
-
-		// if scaled height is less than current height, add letterbox (black bars on the top and bottom)
-		if (heightScale < 1.f)
-		{
-			scale.y *= heightScale;
-			pos.y = (1.f - heightScale) * .5f * static_cast<float>(GetScreenHeight());
-		}
-		else // add pillar-box (black bars on the left and right)
-		{
-			const float widthScale = 1.f / heightScale;
-			scale.x *= widthScale;
-			pos.x = (1.f - widthScale) * .5f * static_cast<float>(GetScreenWidth());
-		}
+		const Vector2 scale = GetRenderScale();
+		const Vector2 pos = GetRenderPosition();
 
 		Sprite targetSprite = { m_target.texture, pos, Layer::DEFAULT };
 

@@ -8,7 +8,7 @@ namespace TD
 	{
 	public:
 		const int	DesignWidth = 1280;
-		const int	DesignHeight = 576;
+		const int	DesignHeight = 654;
 
 		const int	MinWidth = 800;
 		const int	MinHeight = 360;
@@ -22,6 +22,5 @@ namespace TD
 
 	private:
 		IGameManager*	m_gameManager;
-		//InputScanner	m_inputScanner; // TODO: uncomment this part when InputScanner is implemented
 	};
 }

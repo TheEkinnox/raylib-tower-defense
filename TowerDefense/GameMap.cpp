@@ -194,7 +194,7 @@ namespace TD
 		const Renderer&	renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
 		const float		pixelWidth = static_cast<float>(GetWidth()) * TILE_WIDTH;
 		const float		pixelHeight = static_cast<float>(GetHeight()) * TILE_HEIGHT;
-		const Vector2	scaleVec = renderer.GetTextureScale(pixelWidth, pixelHeight);
+		const Vector2	scaleVec = renderer.GetTextureScale(pixelWidth, pixelHeight, { 1, .88f });
 
 		return LibMath::min(scaleVec.x, scaleVec.y);
 	}
@@ -337,6 +337,8 @@ namespace TD
 			return false;
 
 		BeginTextureMode(m_mapTexture);
+
+		ClearBackground(BLANK);
 
 		DrawTiles();
 

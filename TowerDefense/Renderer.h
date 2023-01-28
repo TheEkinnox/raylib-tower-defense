@@ -22,7 +22,9 @@ namespace TD
 		const Texture*					LoadTextureFile(const std::string& name);
 		const Texture*					GetTexture(const std::string& name);
 		Vector2							GetRenderSize() const;
-		Vector2							GetTextureScale(float width, float height) const;
+		Vector2							GetRenderScale() const;
+		Vector2							GetRenderPosition() const;
+		Vector2							GetTextureScale(float width, float height, Vector2 modifier = { 1, 1 }) const;
 		void							DrawSprites() const;
 
 	private:
