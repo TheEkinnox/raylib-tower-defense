@@ -8,10 +8,10 @@ namespace TD
 	class TowerButton : public HUDButton
 	{
 	public:
-		TowerButton(BulletType type, Texture defaultTexture, Texture hoveredTexture, Texture clickedTexture);
-		~TowerButton() = default;
+		TowerButton(Vector2 relativePosition, HUDWindow& window, BulletType type);
 
 		void			Update() override;
+		void			Click() override;
 		void			DragAndDrop();
 
 	private:

@@ -4,9 +4,8 @@
 
 namespace TD
 {
-	TowerButton::TowerButton(const BulletType type, Texture defaultTexture,
-		Texture hoveredTexture, Texture clickedTexture) :
-		HUDButton(defaultTexture, hoveredTexture, clickedTexture),
+	TowerButton::TowerButton(const Vector2 relativePosition, HUDWindow& window, const BulletType type) :
+		HUDButton(relativePosition, window),
 		m_isDragged(false), m_towerType(type)
 	{
 		m_towerConfig.LoadFromFile(type, 1);
@@ -15,6 +14,10 @@ namespace TD
 	void TowerButton::Update()
 	{
 		HUDButton::Update();
+	}
+
+	void TowerButton::Click()
+	{
 	}
 
 	void TowerButton::DragAndDrop()
