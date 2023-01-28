@@ -16,7 +16,7 @@ namespace TD
 		~Bullet() override;
 
 		Vector2		dir;			// direction of the bullet
-		TD::Sprite*	sprite;
+		Sprite*		sprite;
 		float		speed;			// the speed of the bullets in pixy/sec  
 		ITower*		parent;
 
@@ -25,5 +25,6 @@ namespace TD
 
 		void		Update() override;
 		Enemy*		CheckCollision();
+		void		SetActive(bool active) override;
 	};
 }

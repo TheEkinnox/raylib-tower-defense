@@ -15,19 +15,16 @@ namespace TD
 		~Pool();
 
 		template <typename ... Args>
-		T& GetObject(Args&... args);
+		T&		GetObject(Args&... args);
 
-		void Update();
+		void	Update();
+		void	Clear();
 	};
 
 	template <typename T>
 	Pool<T>::~Pool()
 	{
-		for (T* object : m_objects)
-			if (object != nullptr)
-				delete object;
-
-		m_objects.clear();
+		Clear();
 	}
 
 	template <typename T>
@@ -37,7 +34,17 @@ namespace TD
 			if (object->IsActive())
 				object->Update();
 	}
-	
+
+	template <typename T>
+	void Pool<T>::Clear()
+	{
+		for (T* object : m_objects)
+			if (object != nullptr)
+				delete object;
+
+		m_objects.clear();
+	}
+
 	template <typename T>
 	template <typename ... Args>
 	T& Pool<T>::GetObject(Args&... args)

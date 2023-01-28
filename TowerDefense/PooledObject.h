@@ -7,7 +7,7 @@ namespace TD
 	public:
 						PooledObject();
 		virtual			~PooledObject() = default;
-		void			SetActive(bool active);
+		virtual void	SetActive(bool active);
 		bool			IsActive() const;
 
 		virtual void	Update() = 0;

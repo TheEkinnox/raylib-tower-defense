@@ -7,9 +7,10 @@
 
 namespace TD
 {
-	Pool<Bullet> ITower::m_bulletPool{};
+	Pool<Bullet>	ITower::m_bulletPool{};
+	size_t			ITower::m_towersCount{0};
 
-	ITower::ITower(const Vector2 position, TowerType type) : level(1), config(), m_nextShootTime(), upgradeCost()
+	ITower::ITower(const Vector2 position, const TowerType type) : level(1), upgradeCost(), config(), m_nextShootTime()
 	{
 		if (!config.LoadFromFile(type, 1))
 			throw;
@@ -18,9 +19,19 @@ namespace TD
 		const Texture* towerTexture = renderer.GetTexture(config.texturePath);
 		m_sprite = &renderer.CreateSprite(*towerTexture, position, Layer::ENTITY);
 
-		GameMap& map = TowerDefenseGameManager::GetInstance().Map;
+		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
 		const float scale = map.GetScale();
 		m_sprite->SetScale(scale);
+
+		m_towersCount++;
+	}
+
+	ITower::~ITower()
+	{
+		m_towersCount--;
+
+		if (m_towersCount == 0)
+			m_bulletPool.Clear();
 	}
 
 	void ITower::LevelUp()

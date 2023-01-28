@@ -16,6 +16,8 @@ namespace TD
 
 	Bullet::~Bullet()
 	{
+		parent = nullptr;
+
 		if (sprite == nullptr)
 			return;
 
@@ -34,6 +36,12 @@ namespace TD
 
 	void Bullet::Update()
 	{
+		if (parent == nullptr)
+		{
+			SetActive(false);
+			return;
+		}
+
 		Position().x += dir.x * speed * GetFrameTime();
 		Position().y += dir.y * speed * GetFrameTime();
 
@@ -54,8 +62,7 @@ namespace TD
 
 		if (enemy != nullptr)
 		{
-			if (parent != nullptr)
-				parent->OnBulletCollision(*enemy);
+			parent->OnBulletCollision(*enemy);
 
 			SetActive(false);
 			sprite->SetScale(0);
@@ -69,13 +76,12 @@ namespace TD
 		const float scale = map.GetScale();
 
 		std::vector<Enemy*>& enemyList = enemyArmy.GetArmy();
-		LibMath::Vector2 enemyPos;
 		LibMath::Vector2 bulletPos(Position().x, Position().y);
 		const float squaredRange = sprite->GetTexture().width * scale * sprite->GetTexture().height * scale;
 
 		for (size_t i = 0; i < enemyList.size(); i++)
 		{
-			enemyPos = { enemyList[i]->Position().x, enemyList[i]->Position().y };
+			LibMath::Vector2 enemyPos = {enemyList[i]->Position().x, enemyList[i]->Position().y};
 
 			if (bulletPos.distanceSquaredFrom(enemyPos) <= squaredRange)
 				return enemyList[i];
@@ -84,4 +90,13 @@ namespace TD
 		return nullptr;
 	}
 
+	void Bullet::SetActive(const bool active)
+	{
+		PooledObject::SetActive(active);
+
+		if (sprite != nullptr)
+			sprite->SetScale(active ? 1 : 0);
+
+		parent = nullptr;
+	}
 }
