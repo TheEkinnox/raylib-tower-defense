@@ -22,6 +22,7 @@ namespace TD
 		void							RemoveSprite(const Sprite& sprite);
 		const Texture*					LoadTextureFile(const std::string& name);
 		const Texture*					GetTexture(const std::string& name);
+		Vector2							GetRenderSize() const;
 		Vector2							GetTextureScale(float width, float height) const;
 		void							DrawSprites() const;
 
