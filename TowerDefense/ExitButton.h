@@ -7,7 +7,6 @@ namespace TD
 	{
 	public: 
 		ExitButton(Vector2 relativePosition, HUDWindow& window);
-		~ExitButton() = default;
 
 		void	Click() override;
 	};

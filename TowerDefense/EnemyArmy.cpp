@@ -6,7 +6,7 @@
 
 namespace TD
 {
-	EnemyArmy::EnemyArmy() : m_config()
+	EnemyArmy::EnemyArmy() : m_timer(0), m_currentWave(1), m_config()
 	{
 	}
 
@@ -48,13 +48,21 @@ namespace TD
 		return m_enemies;
 	}
 
+	unsigned EnemyArmy::GetCurrentWave() const
+	{
+		return m_currentWave;
+	}
+
 	bool EnemyArmy::Load(const std::string& filePath)
 	{
+		m_timer = 0;
+		m_currentWave = 1;
 		return m_config.LoadFromFile(filePath);
 	}
 
 	void EnemyArmy::Update()
 	{
+		m_timer += GetFrameTime();
 #ifdef _DEBUG
 		if (IsKeyPressed(KEY_W))
 		{
@@ -70,22 +78,33 @@ namespace TD
 			}
 		}
 #endif
+		bool areAllWavesClear = true;
 
-		const float frameTime = GetFrameTime();
-
-		if (m_config.Warmup > 0)
+		if (m_timer > m_config.Warmup)
 		{
-			m_config.Warmup -= frameTime;
+			for (EnemyWave& wave : m_config.Waves)
+			{
+				wave.Update(*this);
+				areAllWavesClear = areAllWavesClear && wave.EnemiesToSpawn.empty();
+			}
 		}
 		else
 		{
-			for (EnemyWave& wave : m_config.Waves)
-				wave.Update(*this);
+			areAllWavesClear = false;
 		}
 
 		for (Enemy* enemy : m_enemies)
 			if (enemy != nullptr)
 				enemy->Update();
+
+		if (areAllWavesClear && m_enemies.empty())
+		{
+			for (EnemyWave& wave : m_config.Waves)
+				wave.Reset();
+
+			m_timer = 0;
+			m_currentWave++;
+		}
 	}
 
 	Vector2 EnemyArmy::GetSpawnPosition()

@@ -8,8 +8,11 @@ namespace TD
 	{
 	public:
 		GameOverWindow(Vector2 position, Vector2 dimensions);
-		~GameOverWindow() = default;
 
-		void Create() override;
+		void		Create() override;
+
+	private:
+		const char* TITLE = "GAME OVER !";
+		const char* SUBTITLE = "Your castle has been taken...";
 	};
 }

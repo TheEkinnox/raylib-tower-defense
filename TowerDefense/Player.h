@@ -18,7 +18,8 @@ namespace TD
 		template<typename T>
 		T*				BuyTower();
 		void			Damage(unsigned int damage);
-		void			UpdateMoney(int amount);
+		void			AddMoney(unsigned int amount);
+		void			RemoveMoney(unsigned int amount);
 		void			Update();
 		void			Clear();
 

@@ -5,10 +5,10 @@
 
 namespace TD
 {
-	HUDWindow::HUDWindow(Vector2 position, Vector2 dimensions) :
+	HUDWindow::HUDWindow(const Vector2 position, const Vector2 dimensions) :
 		Position(position), Dimensions(dimensions),
-		m_windowTexture(LoadRenderTexture(dimensions.x, dimensions.y)),
-		m_windowSprite(nullptr)
+		m_windowTexture(LoadRenderTexture(static_cast<int>(dimensions.x),
+			static_cast<int>(dimensions.y))), m_windowSprite(nullptr)
 	{
 	}
 
@@ -19,14 +19,15 @@ namespace TD
 
 	void HUDWindow::Update()
 	{
-		for (size_t i = 0; i < Buttons.size(); i++)
-			Buttons[i]->Update();
+		for (const auto& button : Buttons)
+			if (button != nullptr)
+				button->Update();
 	}
 
 	void HUDWindow::Clear()
 	{
-		for (size_t i = 0; i < Buttons.size() ; i++)
-			delete Buttons[i];
+		for (const auto& button : Buttons)
+			delete button;
 		
 		Buttons.clear();
 		UnloadRenderTexture(m_windowTexture);
@@ -37,5 +38,11 @@ namespace TD
 			renderer.RemoveSprite(*m_windowSprite);
 			m_windowSprite = nullptr;
 		}
+	}
+
+	void HUDWindow::Close() const
+	{
+		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
+		gameManager.Player.HUD.CloseWindow(this);
 	}
 }

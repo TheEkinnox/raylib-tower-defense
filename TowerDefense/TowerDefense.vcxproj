@@ -118,15 +118,19 @@
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="HealerEnemy.h" />
     <ClInclude Include="HUDButton.h" />
+    <ClInclude Include="InGameHUDWindow.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="HUDWindow.h" />
     <ClInclude Include="IGameManager.h" />
     <ClInclude Include="IPathFinder.h" />
     <ClInclude Include="ITower.h" />
+    <ClInclude Include="MainMenuButton.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="OpenClosedLists.h" />
     <ClInclude Include="OpenClosedLists.hpp" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="PauseButton.h" />
+    <ClInclude Include="PauseWindow.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayAgain.h" />
     <ClInclude Include="Player.h" />
@@ -134,6 +138,7 @@
     <ClInclude Include="Pool.h" />
     <ClInclude Include="PooledObject.h" />
     <ClInclude Include="RegularTower.h" />
+    <ClInclude Include="ResumeButton.h" />
     <ClInclude Include="StunTower.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Sprite.h" />
@@ -162,9 +167,13 @@
     <ClCompile Include="HUDButton.cpp" />
     <ClCompile Include="HUDWindow.cpp" />
     <ClCompile Include="IGameManager.cpp" />
+    <ClCompile Include="InGameHUDWindow.cpp" />
     <ClCompile Include="IPathFinder.cpp" />
     <ClCompile Include="ITower.cpp" />
+    <ClCompile Include="MainMenuButton.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="PauseButton.cpp" />
+    <ClCompile Include="PauseWindow.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -175,6 +184,7 @@
     <ClCompile Include="PlayerHUD.cpp" />
     <ClCompile Include="PooledObject.cpp" />
     <ClCompile Include="RegularTower.cpp" />
+    <ClCompile Include="ResumeButton.cpp" />
     <ClCompile Include="StunTower.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />

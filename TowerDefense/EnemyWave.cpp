@@ -7,29 +7,29 @@
 
 namespace TD
 {
-	EnemyWave::EnemyWave(const float delay) : Delay(delay)
+	EnemyWave::EnemyWave(const float delay) : Delay(delay), m_timer(0)
 	{
+	}
+
+	void EnemyWave::Reset()
+	{
+		m_timer = 0;
+		EnemiesToSpawn = SpawnedEnemies;
+		SpawnedEnemies.clear();
 	}
 
 	void EnemyWave::Update(EnemyArmy& army)
 	{
-		const float frameTime = GetFrameTime();
+		m_timer += GetFrameTime();
 
-		if (Delay > 0)
-		{
-			Delay -= frameTime;
+		if (m_timer < Delay)
 			return;
-		}
 
-		for (size_t i = 0; i < Enemies.size(); i++)
+		for (size_t i = 0; i < EnemiesToSpawn.size(); i++)
 		{
-			std::pair<EnemyType, float>& pair = Enemies[i];
+			const std::pair<EnemyType, float>& pair = EnemiesToSpawn[i];
 
-			if (pair.second > 0)
-			{
-				pair.second -= frameTime;
-			}
-			else
+			if (m_timer >= pair.second + Delay)
 			{
 				switch (pair.first)
 				{
@@ -44,7 +44,8 @@ namespace TD
 					throw std::out_of_range("Invalid enemy type");
 				}
 
-				Enemies.erase(Enemies.begin() + i);
+				SpawnedEnemies.push_back(EnemiesToSpawn[i]);
+				EnemiesToSpawn.erase(EnemiesToSpawn.begin() + i);
 				i--;
 			}
 		}

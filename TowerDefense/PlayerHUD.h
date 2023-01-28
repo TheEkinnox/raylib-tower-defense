@@ -14,6 +14,7 @@ namespace TD
 		std::vector<HUDWindow*>	Windows;
 
 		void					ClearWindows();
+		void					CloseWindow(const HUDWindow* window);
 		void					Update();
 	};
 }

@@ -14,18 +14,25 @@ namespace TD
 		Vector2					Position;
 		Vector2					Dimensions;
 
-		HUDWindow(Vector2 position, Vector2 dimensions);
-		~HUDWindow();
+								HUDWindow(Vector2 position, Vector2 dimensions);
+		virtual					~HUDWindow();
 
 		template <typename T, typename ... Args>
 		T*						AddButton(Vector2 relativePosition, Args... args);
-		void					Update();
+		virtual void			Update();
 		void					Clear();
+		void					Close() const;
 		virtual void			Create() = 0;
 
 	protected:
 		RenderTexture			m_windowTexture;
 		Sprite*					m_windowSprite;
+
+		const Color				COLOR_TITLE = RAYWHITE;
+		const Color				COLOR_DARKENER = ColorAlpha(DARKPURPLE, .75f);
+
+		const int				FONT_SIZE_TITLE = 40;
+		const int				FONT_SIZE_CONTENT = 20;
 	};
 
 	template<typename T, typename ... Args>

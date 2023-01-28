@@ -7,6 +7,7 @@ namespace TD
 {
 	class Sprite;
 	class HUDWindow;
+
 	class HUDButton
 	{
 	public:
@@ -17,14 +18,14 @@ namespace TD
 		Color			ClickedTint;
 		Vector2			RelativePosition;
 
-		HUDButton(Vector2 relativePosition, HUDWindow& window);
-		~HUDButton();
+						HUDButton(Vector2 relativePosition, HUDWindow& window);
+		virtual			~HUDButton();
 		
 		virtual void	Update();
-		virtual void	Click();
+		virtual void	Click() = 0;
 
 	protected:
 		HUDWindow&		m_window;
-		bool			IsHovered();
+		bool			IsHovered() const;
 	};
 }

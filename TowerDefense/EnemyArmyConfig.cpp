@@ -52,7 +52,7 @@ namespace TD
 				EnemyType type = static_cast<EnemyType>(std::stoul(tokens[1]));
 				float delay = std::stof(tokens[2]);
 
-				Waves[curWave].Enemies.emplace_back(type, delay);
+				Waves[curWave].EnemiesToSpawn.emplace_back(type, delay);
 				enemyCount++;
 			}
 		}

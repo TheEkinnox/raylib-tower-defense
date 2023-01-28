@@ -58,9 +58,14 @@ namespace TD
 			TowerDefenseGameManager::GetInstance().SetCurrentState(GameState::GAME_OVER);
 	}
 
-	void Player::UpdateMoney(const int amount)
+	void Player::AddMoney(const unsigned int amount)
 	{
-		Money = std::max(0U, Money + amount);
+		Money = Money + amount;
+	}
+
+	void Player::RemoveMoney(const unsigned int amount)
+	{
+		Money = amount < Money ? Money - amount : 0;
 	}
 
 	void Player::Update()

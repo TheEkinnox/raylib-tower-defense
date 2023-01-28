@@ -13,7 +13,7 @@ namespace TD
 		return currentState;
 	}
 
-	void IGameManager::SetCurrentState(GameState state)
+	void IGameManager::SetCurrentState(const GameState state)
 	{
 		currentState = state;
 	}

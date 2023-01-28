@@ -2,6 +2,7 @@
 #include "GameEntity.h"
 
 #include "Sprite.h"
+#include "TowerDefenseGameManager.h"
 
 namespace TD
 {
@@ -11,6 +12,15 @@ namespace TD
 
 	GameEntity::GameEntity(Sprite& sprite) : m_sprite(&sprite)
 	{
+	}
+
+	GameEntity::~GameEntity()
+	{
+		if (m_sprite == nullptr)
+			return;
+
+		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+		renderer.RemoveSprite(*m_sprite);
 	}
 
 	const Sprite& GameEntity::GetSprite() const

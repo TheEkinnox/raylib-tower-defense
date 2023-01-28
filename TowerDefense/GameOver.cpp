@@ -15,19 +15,30 @@ namespace TD
 	void GameOverWindow::Create()
 	{
 		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
-		unsigned int money = gameManager.Player.Money;
+		const unsigned int money = gameManager.Player.Money;
 		Renderer& renderer = gameManager.GetRenderer();
 
 		if (m_windowTexture.id == 0)
 			throw;
 
+		const int centerX = static_cast<int>(Dimensions.x / 2);
+		const int centerY = static_cast<int>(Dimensions.y / 2);
+		int textWidth = MeasureText(TITLE, FONT_SIZE_TITLE);
+		char const* remainingMoneyText = TextFormat("Money remaining : %d", money);
+
 		BeginTextureMode(m_windowTexture);
 
-		DrawRectangleV(Position, Dimensions, ColorAlpha(DARKPURPLE, .7f));
+		ClearBackground(BLANK);
 
-		DrawText("GAME OVER !", Position.x + 500, Position.y + 200, 30, RED);
-		DrawText("Your castle has been taken...", Position.x + 390, Position.y + 230, 30, RED);
-		DrawText(TextFormat("Money remaining : %d", money), Position.x + 450, Position.y + 275, 30, ORANGE);
+		DrawRectangleV({ 0, 0 }, Dimensions, COLOR_DARKENER);
+
+		DrawText(TITLE, centerX - textWidth / 2, centerY - 125, FONT_SIZE_TITLE, COLOR_TITLE);
+
+		textWidth = MeasureText(SUBTITLE, FONT_SIZE_CONTENT);
+		DrawText(SUBTITLE, centerX - textWidth / 2, centerY - 115 + FONT_SIZE_TITLE, FONT_SIZE_CONTENT, COLOR_TITLE);
+
+		textWidth = MeasureText(remainingMoneyText, FONT_SIZE_CONTENT);
+		DrawText(remainingMoneyText, centerX - textWidth / 2, centerY - 15, FONT_SIZE_CONTENT, GOLD);
 		//DrawText("Scored Time : %d" ,725,725,12,YELLOW);
 
 		EndTextureMode();
@@ -40,7 +51,7 @@ namespace TD
 		m_windowSprite->SetScale(1, -1);
 		m_windowSprite->SetOrigin(0, 0);
 
-		AddButton<ExitButton>( Vector2 {500, 350});
-		AddButton<PlayAgainButton>(Vector2{ 725, 350 });
+		AddButton<ExitButton>(Vector2{ Dimensions.x / 2 - 120, Dimensions.y / 2 + 80 });
+		AddButton<PlayAgainButton>(Vector2{ Dimensions.x / 2 + 120, Dimensions.y / 2 + 80 });
 	}
 }

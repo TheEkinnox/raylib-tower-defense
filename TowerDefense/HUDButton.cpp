@@ -6,12 +6,10 @@
 
 namespace TD
 {
-	HUDButton::HUDButton(Vector2 relativePosition, HUDWindow& window) :
-		Sprite(nullptr), ButtonTexture(), RelativePosition(relativePosition), m_window(window)
+	HUDButton::HUDButton(const Vector2 relativePosition, HUDWindow& window) :
+		Sprite(nullptr), ButtonTexture(), DefaultTint(WHITE), HoveredTint(GRAY),
+		ClickedTint(DARKGRAY), RelativePosition(relativePosition), m_window(window)
 	{
-		DefaultTint = WHITE;
-		HoveredTint = GRAY;
-		ClickedTint = DARKGRAY;
 	}
 
 	HUDButton::~HUDButton()
@@ -22,6 +20,11 @@ namespace TD
 
 	void HUDButton::Update()
 	{
+		Sprite->Position() = Vector2{
+			m_window.Position.x + RelativePosition.x,
+			m_window.Position.y + RelativePosition.y
+		};
+
 		if (IsHovered())
 		{
 			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
@@ -29,23 +32,29 @@ namespace TD
 			else
 				Sprite->SetTint(HoveredTint);
 
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
 				Click();
 		}
 		else
 			Sprite->SetTint(DefaultTint);
 	}
 
-	void HUDButton::Click()
+	bool HUDButton::IsHovered() const
 	{
-	}
+		const auto& state = TowerDefenseGameManager::GetInstance().GetCurrentState();
+		const auto& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+		const Vector2 scale = renderer.GetRenderScale();
+		const Vector2 offset = renderer.GetRenderPosition();
 
-	bool HUDButton::IsHovered()
-	{
-		const Vector2 pos = Sprite->Position();
+		const Vector2 pos
+		{
+			Sprite->Position().x * scale.x + offset.x,
+			Sprite->Position().y * scale.y + offset.y
+		};
+
 		const Vector2 mousePos = GetMousePosition();
-		const float width = static_cast<float>(Sprite->GetTexture().width);
-		const float height = static_cast<float>(Sprite->GetTexture().height);
+		const float width = static_cast<float>(Sprite->GetTexture().width) * scale.x;
+		const float height = static_cast<float>(Sprite->GetTexture().height) * scale.y;
 
 		return mousePos.x >= pos.x - width / 2 && mousePos.x <= pos.x + width / 2 &&
 			mousePos.y >= pos.y - height / 2 && mousePos.y <= pos.y + height / 2;

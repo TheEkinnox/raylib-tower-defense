@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "TowerDefenseGameManager.h"
 
-#include "Sprite.h"
 #include "utility.h"
 #include "ExplosiveTower.h"
 #include "RegularTower.h"
 #include "StunTower.h"
 #include "GameOver.h"
+#include "InGameHUDWindow.h"
+#include "PauseWindow.h"
 
 namespace TD
 {
@@ -34,17 +35,12 @@ namespace TD
 			currentState = GameState::ERROR;
 
 		m_currentLevelPath = configPath;
-		currentState = GameState::RUNNING;
+		SetCurrentState(GameState::RUNNING);
 	}
 
-	void TowerDefenseGameManager::Update()
+#ifdef _DEBUG
+	void TowerDefenseGameManager::HandleDevShortcuts()
 	{
-		if (currentState == GameState::ERROR)
-			return;
-
-		if (IsKeyPressed(KeyboardKey::KEY_F11))
-			ToggleFullscreen();
-
 		if (IsKeyPressed(KEY_R))
 		{
 			const Vector2 regularTowerPos = Vector2{
@@ -74,20 +70,39 @@ namespace TD
 		}
 
 		if (IsKeyPressed(KEY_G))
-		{
 			SetCurrentState(GameState::GAME_OVER);
+	}
+#endif
+
+	void TowerDefenseGameManager::Update()
+	{
+		if (currentState == GameState::ERROR)
+			return;
+
+		if (IsKeyPressed(KeyboardKey::KEY_F11))
+			ToggleFullscreen();
+
+		if (IsKeyPressed(KEY_P))
+			SetCurrentState(currentState == GameState::PAUSED ?
+				GameState::RUNNING : GameState::PAUSED);
+
+#ifdef _DEBUG
+		HandleDevShortcuts();
+#endif
+
+		if (currentState == GameState::RUNNING)
+		{
+			EnemyArmy.Update();
+
+			Map.UpdateTowers();
 		}
-
-		EnemyArmy.Update();
-
-		Map.UpdateTowers();
 
 		Player.Update();
 		
 		renderer.DrawSprites();
 	}
 
-	void TowerDefenseGameManager::SetCurrentState(GameState state)
+	void TowerDefenseGameManager::SetCurrentState(const GameState state)
 	{
 		if (state == currentState)
 			return;
@@ -99,7 +114,31 @@ namespace TD
 		case GameState::MAIN_MENU:
 			break;
 		case GameState::RUNNING:
+		{
+			// Don't recreate the HUD if the game was just paused.
+			// this UI doesn't get destroyed on pause
+			if (currentState == GameState::PAUSED)
+				break;
+
+			const Vector2 inGameUIPos = { 0, renderer.GetRenderSize().y * .88f };
+			const Vector2 inGameUISize = { renderer.GetRenderSize().x, renderer.GetRenderSize().y * .12f };
+			InGameHUDWindow* inGameUI = new InGameHUDWindow(inGameUIPos, inGameUISize);
+			inGameUI->Create();
+
+			Player.HUD.Windows.push_back(inGameUI);
 			break;
+		}
+		case GameState::PAUSED:
+		{
+			if (currentState != GameState::RUNNING)
+				return;
+
+			PauseWindow* pauseWindow = new PauseWindow({ 0, 0 }, renderer.GetRenderSize());
+			pauseWindow->Create();
+
+			Player.HUD.Windows.push_back(pauseWindow);
+			break;
+		}
 		case GameState::GAME_OVER:
 		{
 			GameOverWindow* gameOver = new GameOverWindow({ 0, 0 }, renderer.GetRenderSize() );
@@ -111,6 +150,8 @@ namespace TD
 		case GameState::QUIT:
 			break;
 		case GameState::ERROR:
+			std::cout << "An unexpected error has occured." << std::endl;
+			SetCurrentState(GameState::QUIT);
 			break;
 		default:
 			break;

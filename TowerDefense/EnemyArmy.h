@@ -20,10 +20,13 @@ namespace TD
 		void					RemoveEnemy(const Enemy& enemy);
 		void					ClearEnemies();
 		std::vector<Enemy*>&	GetArmy();
+		unsigned int			GetCurrentWave() const;
 		bool					Load(const std::string& filePath);
 		void					Update();
 
 	private:
+		float					m_timer;
+		unsigned int			m_currentWave;
 		std::vector<Enemy*>		m_enemies;
 		EnemyArmyConfig			m_config;
 

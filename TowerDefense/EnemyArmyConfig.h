@@ -7,7 +7,7 @@ namespace TD
 {
 	struct EnemyArmyConfig
 	{
-		float					Warmup;
+		float					Warmup = 0;
 		std::vector<EnemyWave>	Waves;
 
 		bool					LoadFromFile(const std::string& filePath);

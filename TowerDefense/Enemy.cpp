@@ -109,7 +109,11 @@ namespace TD
 		m_config.Life = damage < m_config.Life ? m_config.Life - damage : 0;
 
 		if (m_config.Life == 0)
+		{
+			auto& gameManager = TowerDefenseGameManager::GetInstance();
+			gameManager.Player.AddMoney(m_config.Gold);
 			m_army->RemoveEnemy(*this);
+		}
 	}
 
 	void Enemy::Heal(const unsigned int amount)

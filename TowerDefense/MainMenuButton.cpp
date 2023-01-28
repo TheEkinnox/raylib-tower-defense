@@ -1,15 +1,16 @@
 #include "pch.h"
-#include "ExitButton.h"
-#include "TowerDefenseGameManager.h"
+#include "MainMenuButton.h"
+
 #include "HUDWindow.h"
+#include "TowerDefenseGameManager.h"
 
 namespace TD
 {
-	ExitButton::ExitButton(const Vector2 relativePosition, HUDWindow& window) :
+	MainMenuButton::MainMenuButton(const Vector2 relativePosition, HUDWindow& window) :
 		HUDButton(relativePosition, window)
 	{
 		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
-		ButtonTexture = *renderer.GetTexture("Assets/hud/PNG/exit_button.png");
+		ButtonTexture = *renderer.GetTexture("Assets/hud/PNG/main_menu_button.png");
 
 		const Vector2 pos
 		{
@@ -20,8 +21,8 @@ namespace TD
 		Sprite = &renderer.CreateSprite(ButtonTexture, pos, Layer::BUTTON);
 	}
 
-	void ExitButton::Click()
+	void MainMenuButton::Click()
 	{
-		TowerDefenseGameManager::GetInstance().SetCurrentState(GameState::QUIT);
+		TowerDefenseGameManager::GetInstance().SetCurrentState(GameState::MAIN_MENU);
 	}
 }

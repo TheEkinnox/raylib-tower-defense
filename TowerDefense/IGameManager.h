@@ -8,6 +8,7 @@ namespace TD
 		INIT,
 		MAIN_MENU,
 		RUNNING,
+		PAUSED,
 		GAME_OVER,
 		QUIT,
 		ERROR
