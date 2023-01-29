@@ -8,6 +8,7 @@
 #include "GameOver.h"
 #include "InGameHUDWindow.h"
 #include "PauseWindow.h"
+#include "MainMenu.h"
 
 namespace TD
 {
@@ -23,16 +24,17 @@ namespace TD
 			SetCurrentState(GameState::MAIN_MENU);
 	}
 
-	void TowerDefenseGameManager::LoadLevel(const std::string& configPath)
+	void TowerDefenseGameManager::LoadLevel(const std::string configPath)
 	{
 		Map.Clear();
 		EnemyArmy.ClearEnemies();
-		Player.Clear();
 
 		if (!Map.BuildFromFile(configPath) ||
 			!EnemyArmy.Load(configPath) ||
 			!Player.Load(configPath))
-			currentState = GameState::ERROR;
+		{
+			SetCurrentState(GameState::ERROR);
+		}
 
 		m_currentLevelPath = configPath;
 		SetCurrentState(GameState::RUNNING);
@@ -92,20 +94,28 @@ namespace TD
 			SetCurrentState(currentState == GameState::PAUSED ?
 				GameState::RUNNING : GameState::PAUSED);
 
+		try
+		{
 #ifdef _DEBUG
-		HandleDevShortcuts();
+			HandleDevShortcuts();
 #endif
 
-		if (currentState == GameState::RUNNING)
-		{
-			EnemyArmy.Update();
+			if (currentState == GameState::RUNNING)
+			{
+				EnemyArmy.Update();
 
-			Map.UpdateTowers();
+				Map.UpdateTowers();
+			}
+
+			Player.Update();
+
+			renderer.DrawSprites();
 		}
-
-		Player.Update();
-		
-		renderer.DrawSprites();
+		catch(std::exception ex)
+		{
+			std::cout << "\n**ERROR: " << ex.what() << "**\n" << std::endl;
+			SetCurrentState(GameState::ERROR);
+		}
 	}
 
 	void TowerDefenseGameManager::SetCurrentState(const GameState state)
@@ -118,7 +128,15 @@ namespace TD
 		case GameState::INIT:
 			break;
 		case GameState::MAIN_MENU:
+		{
+			Map.Clear();
+			EnemyArmy.ClearEnemies();
+			MainMenu* menu = new MainMenu({ 0, 0 }, renderer.GetRenderSize());
+			menu->Create();
+
+			Player.HUD.Windows.push_back(menu);
 			break;
+		}
 		case GameState::RUNNING:
 		{
 			// Don't recreate the HUD if the game was just paused.
@@ -147,7 +165,7 @@ namespace TD
 		}
 		case GameState::GAME_OVER:
 		{
-			GameOverWindow* gameOver = new GameOverWindow({ 0, 0 }, renderer.GetRenderSize() );
+			GameOverWindow* gameOver = new GameOverWindow({ 0, 0 }, renderer.GetRenderSize());
 			gameOver->Create();
 
 			Player.HUD.Windows.push_back(gameOver);
@@ -156,7 +174,6 @@ namespace TD
 		case GameState::QUIT:
 			break;
 		case GameState::ERROR:
-			std::cout << "An unexpected error has occured." << std::endl;
 			SetCurrentState(GameState::QUIT);
 			break;
 		default:

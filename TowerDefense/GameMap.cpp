@@ -233,6 +233,8 @@ namespace TD
 			delete tower;
 
 		m_towers.clear();
+		m_spawnPoints.clear();
+		m_hqPosition = { -1, -1 };
 
 		UnloadRenderTexture(m_mapTexture);
 

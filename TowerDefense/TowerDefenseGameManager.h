@@ -16,7 +16,7 @@ namespace TD
 		TowerDefenseGameManager();
 
 		void							Init(int argc = 0, char* const* argv = nullptr) override;
-		void							LoadLevel(const std::string& configPath);
+		void							LoadLevel(std::string configPath);
 		void							HandleDevShortcuts();
 		void							Update() override;
 		void							SetCurrentState(GameState state) override;

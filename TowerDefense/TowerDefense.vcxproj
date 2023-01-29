@@ -125,11 +125,11 @@
     <ClInclude Include="IGameManager.h" />
     <ClInclude Include="IPathFinder.h" />
     <ClInclude Include="ITower.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MainMenuButton.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="OpenClosedLists.h" />
     <ClInclude Include="OpenClosedLists.hpp" />
-    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PauseButton.h" />
     <ClInclude Include="PauseWindow.h" />
     <ClInclude Include="pch.h" />
@@ -141,6 +141,7 @@
     <ClInclude Include="RegularTower.h" />
     <ClInclude Include="RegularTowerButton.h" />
     <ClInclude Include="ResumeButton.h" />
+    <ClInclude Include="StartLevelButton.h" />
     <ClInclude Include="StunTower.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Sprite.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="InGameHUDWindow.cpp" />
     <ClCompile Include="IPathFinder.cpp" />
     <ClCompile Include="ITower.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MainMenuButton.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="PauseButton.cpp" />
@@ -190,6 +192,7 @@
     <ClCompile Include="RegularTower.cpp" />
     <ClCompile Include="RegularTowerButton.cpp" />
     <ClCompile Include="ResumeButton.cpp" />
+    <ClCompile Include="StartLevelButton.cpp" />
     <ClCompile Include="StunTower.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />

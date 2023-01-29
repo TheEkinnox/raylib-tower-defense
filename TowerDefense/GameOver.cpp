@@ -13,6 +13,7 @@ namespace TD
 	{
 	}
 
+
 	void GameOverWindow::Create()
 	{
 		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
@@ -59,5 +60,13 @@ namespace TD
 		AddButton<ExitButton>(Vector2{ Dimensions.x / 2 - 115, Dimensions.y / 2 + 80 });
 		AddButton<PlayAgainButton>(Vector2{ Dimensions.x / 2 + 115, Dimensions.y / 2 + 80 });
 		AddButton<MainMenuButton>(Vector2{ Dimensions.x / 2, Dimensions.y / 2 + 125 });
+	}
+
+	void GameOverWindow::Update()
+	{
+		if (TowerDefenseGameManager::GetInstance().GetCurrentState() != GameState::GAME_OVER)
+			Close();
+		else
+			HUDWindow::Update();
 	}
 }

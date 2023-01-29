@@ -183,9 +183,6 @@
     <ClInclude Include="GameOver.h">
       <Filter>Header Files\HUD\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>Header Files\HUD\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="PauseWindow.h">
       <Filter>Header Files\HUD\Windows</Filter>
     </ClInclude>
@@ -209,6 +206,15 @@
     </ClInclude>
     <ClInclude Include="Layer.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StartLevelButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="StartLevelButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -345,6 +351,9 @@
       <Filter>Source Files\HUD\Windows</Filter>
     </ClCompile>
     <ClCompile Include="PauseWindow.cpp">
+      <Filter>Source Files\HUD\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files\HUD\Windows</Filter>
     </ClCompile>
   </ItemGroup>

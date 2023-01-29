@@ -36,8 +36,11 @@ namespace TD
 		const uint32_t index = map.PositionToIndex(cellPos);
 		const uint32_t hqIndex = map.PositionToIndex(hqCellPos);
 
-		if (!m_pathFinder->PathFind(mapGraph, *mapGraph.GetNode(index),
-			*mapGraph.GetNode(hqIndex)))
+		ai::Node* enemyNode = mapGraph.GetNode(index);
+		ai::Node* hqNode = mapGraph.GetNode(hqIndex);
+
+		if (enemyNode == nullptr || hqNode == nullptr ||
+			!m_pathFinder->PathFind(mapGraph, *enemyNode, *hqNode))
 			throw runtime_error("Unable to find a path to the HQ.");
 	}
 

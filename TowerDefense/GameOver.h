@@ -10,6 +10,7 @@ namespace TD
 		GameOverWindow(Vector2 position, Vector2 dimensions);
 
 		void		Create() override;
+		void		Update() override;
 
 	private:
 		const char* TITLE = "GAME OVER !";
