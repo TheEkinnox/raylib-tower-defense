@@ -71,6 +71,9 @@ namespace TD
 
 		if (IsKeyPressed(KEY_G))
 			SetCurrentState(GameState::GAME_OVER);
+
+		if (IsKeyPressed(KEY_M))
+			Player.AddMoney(INT_MAX);
 	}
 #endif
 

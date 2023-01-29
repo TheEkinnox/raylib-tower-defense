@@ -4,6 +4,7 @@
 
 #include "TowerDefenseGameManager.h"
 #include "ITower.h"
+#include "ConfigTower.h"
 
 namespace TD
 {
@@ -34,15 +35,58 @@ namespace TD
 			m_bulletPool.Clear();
 	}
 
+	void ITower::Update()
+	{
+		const auto& state = TowerDefenseGameManager::GetInstance().GetCurrentState();
+		const auto& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+		const Vector2 scale = renderer.GetRenderScale();
+		const Vector2 offset = renderer.GetRenderPosition();
+
+		const Vector2 pos
+		{
+			m_sprite->Position().x * scale.x + offset.x,
+			m_sprite->Position().y * scale.y + offset.y
+		};
+
+		const Vector2 mousePos = GetMousePosition();
+		const float width = static_cast<float>(m_sprite->GetTexture().width) * scale.x;
+		const float height = static_cast<float>(m_sprite->GetTexture().height) * scale.y;
+
+		if (mousePos.x >= pos.x - width / 2 && mousePos.x <= pos.x + width / 2 &&
+			mousePos.y >= pos.y - height / 2 && mousePos.y <= pos.y + height / 2 &&
+			IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+		{
+			LevelUp();
+		}
+
+		Enemy* enemy = CheckRange();
+
+		if (enemy != nullptr)
+			ShootAt(*enemy);
+
+		m_bulletPool.Update();
+	}
+
 	void ITower::LevelUp()
 	{
+		Player& player = TowerDefenseGameManager::GetInstance().Player;
 		if (level == config.maxLevel)
 			return;
+		
+		ConfigTower upConfig;
 
-		level++; // add payment here.
-
-		if (!config.LoadFromFile(config.bulletType, level))
+		if (!upConfig.LoadFromFile(config.bulletType, level + 1))
 			throw;
+
+		if (player.Money < upConfig.price)
+			return;
+
+		level++;
+
+		config = upConfig;
+
+		player.RemoveMoney(config.price);
+
 
 		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
 		m_sprite->SetTexture(*renderer.GetTexture(config.texturePath));

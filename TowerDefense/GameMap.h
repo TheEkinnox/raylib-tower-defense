@@ -98,8 +98,10 @@ namespace TD
 
 		const unsigned int index = PositionToIndex(cellPosition);
 
-		if (m_towers[index] != nullptr)
-			return static_cast<T*>(m_towers[index]);
+		if (index > m_towers.size() || m_towers[index] != nullptr
+			|| m_terrain[index].Type == TerrainType::ROAD
+			|| m_terrain[index].Type == TerrainType::DIRT)
+			return nullptr;
 
 		Vector2 towerPos = GetScreenPosition(cellPosition);
 

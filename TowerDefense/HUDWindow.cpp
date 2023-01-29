@@ -19,15 +19,15 @@ namespace TD
 
 	void HUDWindow::Update()
 	{
-		for (const auto& button : Buttons)
-			if (button != nullptr)
-				button->Update();
+		for (size_t i = 0; i < Buttons.size(); i++)
+			if (Buttons[i] != nullptr)
+				Buttons[i]->Update();
 	}
 
 	void HUDWindow::Clear()
 	{
-		for (const auto& button : Buttons)
-			delete button;
+		for (size_t i = 0; i < Buttons.size(); i++)
+			delete Buttons[i];
 		
 		Buttons.clear();
 		UnloadRenderTexture(m_windowTexture);

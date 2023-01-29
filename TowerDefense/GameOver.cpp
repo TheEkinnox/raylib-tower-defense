@@ -4,6 +4,7 @@
 #include "Layer.h"
 #include "ExitButton.h"
 #include "PlayAgain.h"
+#include "MainMenuButton.h"
 
 namespace TD
 {
@@ -16,6 +17,7 @@ namespace TD
 	{
 		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
 		const unsigned int money = gameManager.Player.Money;
+		const unsigned int wave = gameManager.EnemyArmy.GetCurrentWave();
 		Renderer& renderer = gameManager.GetRenderer();
 
 		if (m_windowTexture.id == 0)
@@ -25,6 +27,7 @@ namespace TD
 		const int centerY = static_cast<int>(Dimensions.y / 2);
 		int textWidth = MeasureText(TITLE, FONT_SIZE_TITLE);
 		char const* remainingMoneyText = TextFormat("Money remaining : %d", money);
+		char const* waveText = TextFormat("Last reached wave : %d", wave);
 
 		BeginTextureMode(m_windowTexture);
 
@@ -37,9 +40,11 @@ namespace TD
 		textWidth = MeasureText(SUBTITLE, FONT_SIZE_CONTENT);
 		DrawText(SUBTITLE, centerX - textWidth / 2, centerY - 115 + FONT_SIZE_TITLE, FONT_SIZE_CONTENT, COLOR_TITLE);
 
+		textWidth = MeasureText(waveText, FONT_SIZE_CONTENT);
+		DrawText(waveText, centerX - textWidth / 2, centerY, FONT_SIZE_CONTENT, LIGHTGRAY);
+
 		textWidth = MeasureText(remainingMoneyText, FONT_SIZE_CONTENT);
-		DrawText(remainingMoneyText, centerX - textWidth / 2, centerY - 15, FONT_SIZE_CONTENT, GOLD);
-		//DrawText("Scored Time : %d" ,725,725,12,YELLOW);
+		DrawText(remainingMoneyText, centerX - textWidth / 2, centerY-30, FONT_SIZE_CONTENT, GOLD);
 
 		EndTextureMode();
 
@@ -51,7 +56,8 @@ namespace TD
 		m_windowSprite->SetScale(1, -1);
 		m_windowSprite->SetOrigin(0, 0);
 
-		AddButton<ExitButton>(Vector2{ Dimensions.x / 2 - 120, Dimensions.y / 2 + 80 });
-		AddButton<PlayAgainButton>(Vector2{ Dimensions.x / 2 + 120, Dimensions.y / 2 + 80 });
+		AddButton<ExitButton>(Vector2{ Dimensions.x / 2 - 115, Dimensions.y / 2 + 80 });
+		AddButton<PlayAgainButton>(Vector2{ Dimensions.x / 2 + 115, Dimensions.y / 2 + 80 });
+		AddButton<MainMenuButton>(Vector2{ Dimensions.x / 2, Dimensions.y / 2 + 125 });
 	}
 }

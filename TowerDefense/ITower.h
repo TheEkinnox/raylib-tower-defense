@@ -19,7 +19,7 @@ namespace TD
 
 		~ITower() override;
 
-		virtual void			Update() = 0;
+		virtual void			Update();
 		virtual void			LevelUp();
 		virtual void			ShootAt(const Enemy& enemy) = 0;
 		virtual void			OnBulletCollision(Enemy& enemy) = 0;

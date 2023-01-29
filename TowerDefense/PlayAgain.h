@@ -7,7 +7,6 @@ namespace TD
 	{
 	public:
 		PlayAgainButton(Vector2 relativePosition, HUDWindow& window);
-		~PlayAgainButton() = default;
 
 		void	Click() override;
 	};

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "PlayerHUD.h"
+#include "ConfigTower.h"
 
 namespace TD
 {
@@ -15,8 +16,7 @@ namespace TD
 		~Player() = default;
 
 		bool			Load(const std::string& fileName);
-		template<typename T>
-		T*				BuyTower();
+		void			BuyTower(ConfigTower configTower);
 		void			Damage(unsigned int damage);
 		void			AddMoney(unsigned int amount);
 		void			RemoveMoney(unsigned int amount);
@@ -26,10 +26,4 @@ namespace TD
 	private:
 		const int PLAYER_CONFIG_DATA_COUNT = 2;
 	};
-
-	template<typename T>
-	T* Player::BuyTower()
-	{
-		// TODO: Implement tower purchase
-	}
 }

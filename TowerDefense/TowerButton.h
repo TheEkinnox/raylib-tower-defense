@@ -1,6 +1,6 @@
 #pragma once
 #include "HUDButton.h"
-#include "bulletType.h"
+#include "BulletType.h"
 #include "ConfigTower.h"
 
 namespace TD
@@ -8,7 +8,7 @@ namespace TD
 	class TowerButton : public HUDButton
 	{
 	public:
-		TowerButton(Vector2 relativePosition, HUDWindow& window, BulletType type);
+		TowerButton(Vector2 relativePosition, HUDWindow& window, TowerType type);
 
 		void			Update() override;
 		void			Click() override;
@@ -17,6 +17,6 @@ namespace TD
 	private:
 		bool			m_isDragged;
 		ConfigTower		m_towerConfig;
-		BulletType		m_towerType;
+		TowerType		m_towerType;
 	};
 }

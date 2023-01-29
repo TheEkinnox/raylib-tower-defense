@@ -35,13 +35,9 @@ namespace TD
 		if (IsKeyPressed(KEY_THREE))
 			LevelUp();
 
-		Enemy* enemy = CheckRange();
-
-		if (enemy != nullptr)
-			ShootAt(*enemy);
-
-		m_bulletPool.Update();
+		ITower::Update();
 	}
+
 	void ExplosiveTower::OnBulletCollision(Enemy& enemy)
 	{
 	
