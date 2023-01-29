@@ -17,6 +17,9 @@ namespace TD
 		if (!m_config.LoadFromFile())
 			throw runtime_error("Unable to load the enemy's configuration file.");
 
+		m_config.MaxLife += static_cast<unsigned int>(m_config.MaxLife * log(m_army->GetCurrentWave()));
+		m_config.Life = m_config.MaxLife;
+
 		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
 		Renderer& renderer = gameManager.GetRenderer();
 		const Texture& texture = *renderer.GetTexture(m_config.TexturePath);
@@ -134,7 +137,7 @@ namespace TD
 
 	void Enemy::HitHQ() const
 	{
-		const unsigned int damage = m_config.Damage * m_army->GetCurrentWave();
+		const unsigned int damage = m_config.Damage;
 		TowerDefenseGameManager::GetInstance().Player.Damage(damage);
 		m_army->RemoveEnemy(*this);
 	}
