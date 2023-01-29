@@ -236,14 +236,15 @@ namespace TD
 		m_spawnPoints.clear();
 		m_hqPosition = { -1, -1 };
 
-		UnloadRenderTexture(m_mapTexture);
-
 		if (m_mapSprite != nullptr)
 		{
 			Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
 			renderer.RemoveSprite(*m_mapSprite);
 			m_mapSprite = nullptr;
 		}
+
+		UnloadRenderTexture(m_mapTexture);
+		m_mapTexture.id = 0;
 	}
 
 	bool GameMap::AddTile(const uint8_t tileData, const size_t index)

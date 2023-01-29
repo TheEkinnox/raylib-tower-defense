@@ -129,8 +129,10 @@ namespace TD
 			break;
 		case GameState::MAIN_MENU:
 		{
+			Player.Clear();
 			Map.Clear();
 			EnemyArmy.ClearEnemies();
+
 			MainMenu* menu = new MainMenu({ 0, 0 }, renderer.GetRenderSize());
 			menu->Create();
 
