@@ -36,8 +36,8 @@ namespace TD
 		const uint32_t index = map.PositionToIndex(cellPos);
 		const uint32_t hqIndex = map.PositionToIndex(hqCellPos);
 
-		ai::Node* enemyNode = mapGraph.GetNode(index);
-		ai::Node* hqNode = mapGraph.GetNode(hqIndex);
+		const ai::Node* enemyNode = mapGraph.GetNode(index);
+		const ai::Node* hqNode = mapGraph.GetNode(hqIndex);
 
 		if (enemyNode == nullptr || hqNode == nullptr ||
 			!m_pathFinder->PathFind(mapGraph, *enemyNode, *hqNode))
@@ -134,7 +134,8 @@ namespace TD
 
 	void Enemy::HitHQ() const
 	{
-		TowerDefenseGameManager::GetInstance().Player.Damage(m_config.Damage);
+		const unsigned int damage = m_config.Damage * m_army->GetCurrentWave();
+		TowerDefenseGameManager::GetInstance().Player.Damage(damage);
 		m_army->RemoveEnemy(*this);
 	}
 }
