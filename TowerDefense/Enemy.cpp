@@ -17,7 +17,7 @@ namespace TD
 		if (!m_config.LoadFromFile())
 			throw runtime_error("Unable to load the enemy's configuration file.");
 
-		m_config.MaxLife += static_cast<unsigned int>(m_config.MaxLife * log(m_army->GetCurrentWave()));
+		m_config.MaxLife += m_config.MaxLife / 2 * (m_army->GetCurrentWave() - 1);
 		m_config.Life = m_config.MaxLife;
 
 		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
