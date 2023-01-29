@@ -254,7 +254,24 @@ namespace TD
 			const TerrainType type = static_cast<TerrainType>(Unpack(tileData,
 				TERRAIN_TYPE_BIT_OFFSET, TERRAIN_TYPE_BIT_COUNT));
 
-			m_terrain[index] = { type, static_cast<uint32_t>(type) << TILE_WEIGHT_OFFSET};
+			uint32_t weight;
+
+			switch (type)
+			{
+			case TerrainType::ROAD:
+			case TerrainType::DIRT:
+				weight = 1;
+				break;
+			case TerrainType::GRASS:
+			case TerrainType::SAND:
+				weight = 16;
+				break;
+			default:
+				weight = static_cast<uint32_t>(type) << TILE_WEIGHT_OFFSET;
+				break;
+			}
+
+			m_terrain[index] = { type, weight};
 
 			return true;
 		}
