@@ -260,7 +260,7 @@ namespace TD
 			{
 			case TerrainType::ROAD:
 			case TerrainType::DIRT:
-				weight = 1;
+				weight = 0;
 				break;
 			case TerrainType::GRASS:
 			case TerrainType::SAND:
