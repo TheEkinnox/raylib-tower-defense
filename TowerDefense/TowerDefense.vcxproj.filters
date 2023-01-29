@@ -37,17 +37,23 @@
     <Filter Include="Source Files\HUD">
       <UniqueIdentifier>{b79f3cfd-866c-4774-89ee-1f555729acc7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Menus">
-      <UniqueIdentifier>{7ebaf489-2af3-445a-9a75-53d78a5ac1b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Menus">
-      <UniqueIdentifier>{b274a099-ad91-4dce-989f-141e11b898ec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\PathFinding">
       <UniqueIdentifier>{20dccc52-5098-46f5-95a5-28105513a7e3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\PathFinding">
       <UniqueIdentifier>{ec7aa24e-10fe-45a1-aadb-27afba8d05af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HUD\Buttons">
+      <UniqueIdentifier>{4a8e21a6-2106-437d-b29b-370212abd08e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\HUD\Windows">
+      <UniqueIdentifier>{3d526122-df39-48f0-b801-d2b7c96481ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HUD\Buttons">
+      <UniqueIdentifier>{6c1f133c-dec0-41ac-a5f6-9ddb985d8799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HUD\Windows">
+      <UniqueIdentifier>{ac14e0e7-511d-40af-90b8-8c1d4434fda1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -150,32 +156,50 @@
     <ClInclude Include="BulletType.h">
       <Filter>Header Files\Towers</Filter>
     </ClInclude>
-    <ClInclude Include="HUDButton.h">
-      <Filter>Header Files\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="HUDWindow.h">
-      <Filter>Header Files\HUD</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerHUD.h">
-      <Filter>Header Files\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>Header Files\Menus</Filter>
-    </ClInclude>
-    <ClInclude Include="GameOver.h">
-      <Filter>Header Files\Menus</Filter>
-    </ClInclude>
-    <ClInclude Include="NewTowerButtonARCHIVED.h">
       <Filter>Header Files\HUD</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="HUDButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="HUDWindow.h">
+      <Filter>Header Files\HUD\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="TowerButton.h">
-      <Filter>Header Files\HUD</Filter>
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>Header Files\HUD\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files\HUD\Windows</Filter>
     </ClInclude>
     <ClInclude Include="PauseWindow.h">
-      <Filter>Header Files\Menus</Filter>
+      <Filter>Header Files\HUD\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="ExitButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayAgain.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="ResumeButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameHUDWindow.h">
+      <Filter>Header Files\HUD\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -272,20 +296,38 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="HUDWindow.cpp">
+      <Filter>Source Files\HUD\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="TowerButton.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="ExitButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="HUDButton.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayAgain.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="ResumeButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameHUDWindow.cpp">
+      <Filter>Source Files\HUD\Windows</Filter>
     </ClCompile>
     <ClCompile Include="GameOver.cpp">
-      <Filter>Source Files\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="HUDWindow.cpp">
-      <Filter>Source Files\HUD</Filter>
+      <Filter>Source Files\HUD\Windows</Filter>
     </ClCompile>
     <ClCompile Include="PauseWindow.cpp">
-      <Filter>Source Files\Menus</Filter>
+      <Filter>Source Files\HUD\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
