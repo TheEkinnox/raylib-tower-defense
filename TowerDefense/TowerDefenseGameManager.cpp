@@ -79,6 +79,9 @@ namespace TD
 		if (currentState == GameState::ERROR)
 			return;
 
+		if (!IsWindowFocused())
+			SetCurrentState(GameState::PAUSED);
+
 		if (IsKeyPressed(KeyboardKey::KEY_F11))
 			ToggleFullscreen();
 
