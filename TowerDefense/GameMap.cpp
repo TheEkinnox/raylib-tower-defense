@@ -394,7 +394,7 @@ namespace TD
 				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile034.png"), pos, WHITE);
 				break;
 			case TerrainType::DIRT:
-				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile050.png"), pos, WHITE);
+				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile093.png"), pos, WHITE);
 				break;
 			case TerrainType::GRASS:
 				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile024.png"), pos, WHITE);
