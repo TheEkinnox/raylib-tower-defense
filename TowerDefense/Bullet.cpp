@@ -7,7 +7,8 @@
 
 namespace TD
 {
-	Bullet::Bullet(Sprite& sprite, ITower& parent) : dir(), sprite(&sprite), speed(0), parent(&parent)
+	Bullet::Bullet(Sprite& sprite, ITower& parent) :
+		dir(), sprite(&sprite), speed(0), parent(&parent)
 	{
 		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
 		const float scale = map.GetScale();
@@ -54,8 +55,9 @@ namespace TD
 		if (cellPos.x < 0 || static_cast<uint32_t>(cellPos.x) > map.GetWidth() ||
 			cellPos.y < 0 || static_cast<uint32_t>(cellPos.y) > map.GetHeight())
 		{
-			renderer.RemoveSprite(*sprite);
 			SetActive(false);
+			renderer.RemoveSprite(*sprite);
+			return;
 		}
 
 		Enemy* enemy = CheckCollision();
@@ -63,11 +65,9 @@ namespace TD
 		if (enemy != nullptr)
 		{
 			parent->OnBulletCollision(*enemy);
-
 			SetActive(false);
-			sprite->SetScale(0);
 		}
-	};
+	}
 
 	Enemy* Bullet::CheckCollision()
 	{
@@ -95,8 +95,20 @@ namespace TD
 		PooledObject::SetActive(active);
 
 		if (sprite != nullptr)
-			sprite->SetScale(active ? 1 : 0);
+		{
+			if (active)
+			{
+				const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
+				const float scale = map.GetScale();
+				sprite->SetScale(scale);
+			}
+			else
+			{
+				sprite->SetScale(0);
+			}
+		}
 
-		parent = nullptr;
+		if (!active)
+			parent = nullptr;
 	}
 }
