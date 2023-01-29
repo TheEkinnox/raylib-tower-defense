@@ -36,6 +36,13 @@ namespace TD
 
 				Warmup = std::stof(tokens[1]);
 			}
+			else if (tokens[0] == "wave_hp_modifier")
+			{
+				if (tokens.size() < 2)
+					return false;
+
+				WaveHealthModifier = std::stof(tokens[1]);
+			}
 			else if (tokens[0] == "wave")
 			{
 				if (tokens.size() < 2)

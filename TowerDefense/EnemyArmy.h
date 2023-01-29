@@ -21,6 +21,7 @@ namespace TD
 		void					ClearEnemies();
 		std::vector<Enemy*>&	GetArmy();
 		unsigned int			GetCurrentWave() const;
+		float					GetWaveHealthModifier() const;
 		bool					Load(const std::string& filePath);
 		void					Update();
 

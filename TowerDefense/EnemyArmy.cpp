@@ -52,6 +52,14 @@ namespace TD
 		return m_currentWave;
 	}
 
+	float EnemyArmy::GetWaveHealthModifier() const
+	{
+		if (m_currentWave == 1)
+			return static_cast<float>(m_currentWave);
+
+		return static_cast<float>(m_currentWave) * m_config.WaveHealthModifier;
+	}
+
 	bool EnemyArmy::Load(const std::string& filePath)
 	{
 		ClearEnemies();
