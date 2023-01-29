@@ -28,6 +28,7 @@ namespace TD
 		SetWindowMinSize(App::MinWidth, App::MinHeight);
 		InitAudioDevice();
 		HideCursor();
+		SetExitKey(KEY_NULL);
 
 		m_gameManager = &TowerDefenseGameManager::GetInstance();
 		m_gameManager->Init(argc, argv);

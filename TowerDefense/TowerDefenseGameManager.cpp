@@ -106,7 +106,7 @@ namespace TD
 		if (IsKeyPressed(KeyboardKey::KEY_F11))
 			ToggleFullscreen();
 
-		if (IsKeyPressed(KEY_P))
+		if (IsKeyPressed(KEY_ESCAPE))
 			SetCurrentState(currentState == GameState::PAUSED ?
 				GameState::RUNNING : GameState::PAUSED);
 
