@@ -25,10 +25,9 @@ namespace TD
 
 		const int centerX = static_cast<int>(Dimensions.x / 2);
 		const int centerY = static_cast<int>(Dimensions.y / 2);
-		const int textWidth = MeasureText(TITLE, FONT_SIZE_TITLE);
 		const Texture logoTexture = *renderer.GetTexture(LOGO_PATH);
 		const float buttonsYOffset = logoTexture.height + 48;
-		const float buttonAreaHeight = (Dimensions.y - buttonsYOffset - 16) * .6f;
+		const float buttonAreaHeight = (Dimensions.y - buttonsYOffset - 16) * .8f;
 
 		BeginTextureMode(m_windowTexture);
 
@@ -36,7 +35,6 @@ namespace TD
 
 		DrawRectangleV({ 0, 0 }, Dimensions, COLOR_DARKENER);
 
-		DrawText(TITLE, centerX - textWidth / 2, centerY + 150, FONT_SIZE_TITLE, COLOR_TITLE);
 		DrawTexture(logoTexture, centerX - logoTexture.width / 2, 32, WHITE);
 
 		EndTextureMode();

@@ -13,7 +13,6 @@ namespace TD
 		void		Update();
 
 	private:
-		const char*			TITLE = "MAIN MENU";
 		const char*			LOGO_PATH = "Assets/logo.png";
 		const std::string	LEVELS_FOLDER = "Assets/maps";
 		const char*			CONFIG_FILE_EXTENSION = ".cfg";
