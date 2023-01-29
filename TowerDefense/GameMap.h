@@ -63,7 +63,7 @@ namespace TD
 		void						UpdateTowers() const;
 		Vector2						GetPlayerHQPosition(bool scale = true) const;
 		Vector2						GetSpawnPosition(Vector2 origin = { .5f, .5f }) const;
-		Vector2 GetMouseCellPosition() const;
+		Vector2						GetMouseCellPosition() const;
 		Vector2						GetCellPosition(Vector2 screenPosition) const;
 		Vector2						GetScreenPosition(Vector2 cellPosition, Vector2 origin = { .5f, .5f }, bool useScale = true) const;
 		Vector2						IndexToPosition(uint32_t index) const;
@@ -89,6 +89,7 @@ namespace TD
 		bool						BuildGraph();
 		bool						GenerateMapTexture();
 		void						DrawTiles() const;
+		void						DrawSpawnPoints() const;
 	};
 
 	template<typename T>
