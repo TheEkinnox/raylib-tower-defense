@@ -12,8 +12,15 @@
 
 namespace TD
 {
-	TowerDefenseGameManager::TowerDefenseGameManager() : IGameManager()
+	TowerDefenseGameManager::TowerDefenseGameManager() :
+		IGameManager(), m_backgroundMusic()
 	{
+	}
+
+	TowerDefenseGameManager::~TowerDefenseGameManager()
+	{
+		StopMusicStream(m_backgroundMusic);
+		UnloadMusicStream(m_backgroundMusic);
 	}
 
 	void TowerDefenseGameManager::Init(const int argc, char* const* argv)
@@ -22,6 +29,10 @@ namespace TD
 			LoadLevel(TextFormat("Assets/maps/%s", argv[1]));
 		else
 			SetCurrentState(GameState::MAIN_MENU);
+
+		m_backgroundMusic = LoadMusicStream("Assets/sounds/background_music.mp3");
+		PlayMusicStream(m_backgroundMusic);
+		SetMusicVolume(m_backgroundMusic, 0.5f);
 	}
 
 	void TowerDefenseGameManager::LoadLevel(const std::string configPath)
@@ -85,7 +96,12 @@ namespace TD
 			return;
 
 		if (!IsWindowFocused())
+		{
 			SetCurrentState(GameState::PAUSED);
+			PauseMusicStream(m_backgroundMusic);
+		}
+		else
+			PlayMusicStream(m_backgroundMusic);
 
 		if (IsKeyPressed(KeyboardKey::KEY_F11))
 			ToggleFullscreen();
@@ -99,6 +115,8 @@ namespace TD
 #ifdef _DEBUG
 			HandleDevShortcuts();
 #endif
+
+			UpdateMusicStream(m_backgroundMusic);
 
 			if (currentState == GameState::RUNNING)
 			{

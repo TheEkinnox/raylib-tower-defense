@@ -14,6 +14,7 @@ namespace TD
 		Player		Player;
 
 		TowerDefenseGameManager();
+		~TowerDefenseGameManager() override;
 
 		void							Init(int argc = 0, char* const* argv = nullptr) override;
 		void							LoadLevel(std::string configPath);
@@ -25,5 +26,6 @@ namespace TD
 
 	private:
 		std::string						m_currentLevelPath;
+		Music							m_backgroundMusic;
 	};
 }
