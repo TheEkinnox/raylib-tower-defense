@@ -359,6 +359,8 @@ namespace TD
 
 		DrawTiles();
 
+		DrawSpawnPoints();
+
 		DrawTextureV(*renderer.GetTexture("Assets/HQ.png"),
 			GetPlayerHQPosition(false), WHITE);
 
@@ -403,6 +405,23 @@ namespace TD
 				DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile029.png"), pos, WHITE);
 				break;
 			}
+		}
+	}
+	
+	void GameMap::DrawSpawnPoints() const
+	{
+		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+
+		for (size_t i = 0; i < m_spawnPoints.size(); i++)
+		{
+			const Vector2 cellPos
+			{
+				m_spawnPoints[i].x / TILE_WIDTH,
+				m_spawnPoints[i].y / TILE_HEIGHT
+			};
+			const Vector2 pos = GetScreenPosition(cellPos, { 0, 0 }, false);
+
+			DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile022.png"), pos, WHITE);
 		}
 	}
 }
