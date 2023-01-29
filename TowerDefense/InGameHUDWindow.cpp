@@ -26,10 +26,10 @@ namespace TD
 		m_windowSprite->SetScale(1, -1);
 		m_windowSprite->SetOrigin(0, 0);
 
-		AddButton<RegularTowerButton>({Dimensions.x/2 - 200, Dimensions.y/2});
-		AddButton<StunTowerButton>({Dimensions.x / 2 - 50, Dimensions.y / 2 });
-		AddButton<ExplosiveTowerButton>({Dimensions.x / 2 + 50, Dimensions.y / 2 });
-		AddButton<PoisonTowerButton>({Dimensions.x / 2 + 200, Dimensions.y / 2 });
+		AddButton<RegularTowerButton>({Dimensions.x/2 - 225, Dimensions.y/2});
+		AddButton<StunTowerButton>({Dimensions.x / 2 - 75, Dimensions.y / 2 });
+		AddButton<ExplosiveTowerButton>({Dimensions.x / 2 + 75, Dimensions.y / 2 });
+		AddButton<PoisonTowerButton>({Dimensions.x / 2 + 225, Dimensions.y / 2 });
 
 		AddButton<PauseButton>(Vector2{
 			Dimensions.x - 32,
