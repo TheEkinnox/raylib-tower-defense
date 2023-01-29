@@ -9,6 +9,8 @@
 
 namespace TD
 {
+	float App::m_timeScale = 1;
+
 	App::App() : m_gameManager(nullptr)
 	{
 	}
@@ -48,5 +50,15 @@ namespace TD
 
 		if (m_gameManager->GetCurrentState() == GameState::ERROR)
 			std::cout << "\nAn unexpected error has occured..." << std::endl;
+	}
+
+	void App::SetTimeScale(const float timeScale)
+	{
+		m_timeScale = timeScale;
+	}
+
+	float App::GetScaledFrameTime()
+	{
+		return GetFrameTime() * m_timeScale;
 	}
 }

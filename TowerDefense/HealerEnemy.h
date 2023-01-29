@@ -17,6 +17,6 @@ namespace TD
 		float			m_healRange;
 		unsigned int	m_healAmount;
 		float			m_healCooldown;
-		double			m_nextHealTime;
+		float			m_healTimer;
 	};
 }

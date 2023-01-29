@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include "EnemyWave.h"
 
+#include "App.h"
 #include "EnemyArmy.h"
 #include "HealerEnemy.h"
 
@@ -20,7 +21,7 @@ namespace TD
 
 	void EnemyWave::Update(EnemyArmy& army)
 	{
-		m_timer += GetFrameTime();
+		m_timer += App::GetScaledFrameTime();
 
 		if (m_timer < Delay)
 			return;

@@ -27,7 +27,7 @@ namespace TD
 	protected:
 		ITower(Vector2 position, TowerType type);
 
-		double					m_nextShootTime;
+		float					m_shootTimer;
 
 		static	Pool<Bullet>	m_bulletPool;
 		static	size_t			m_towersCount;

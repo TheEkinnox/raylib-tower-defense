@@ -4,6 +4,8 @@
 #include <Vector/Vector2.h>
 
 #include "HealerEnemy.h"
+
+#include "App.h"
 #include "EnemyArmy.h"
 #include "TowerDefenseGameManager.h"
 #include "utility.h"
@@ -11,7 +13,7 @@
 
 TD::HealerEnemy::HealerEnemy(const EnemyType type, EnemyArmy& army, const Vector2 position) :
 	Enemy(type, army, position), m_healRange(0), m_healAmount(0), m_healCooldown(0),
-	m_nextHealTime(0)
+	m_healTimer(0)
 {
 	char const* configPath = TextFormat(ENEMY_CONFIG_PATH_FORMAT, m_config.Type);
 
@@ -43,7 +45,7 @@ TD::HealerEnemy::HealerEnemy(const EnemyType type, EnemyArmy& army, const Vector
 		else if (tokens[0] == "heal_cooldown")
 		{
 			m_healCooldown = std::stof(tokens[1]);
-			m_nextHealTime = GetTime() + static_cast<double>(m_healCooldown);
+			m_healTimer = m_healCooldown;
 			loadedCount++;
 		}
 		else if (tokens[0] == "heal_amount")
@@ -59,7 +61,12 @@ TD::HealerEnemy::HealerEnemy(const EnemyType type, EnemyArmy& army, const Vector
 
 void TD::HealerEnemy::HealAround()
 {
-	if (!m_army || GetTime() < m_nextHealTime)
+	if (!m_army)
+		return;
+
+	m_healTimer -= App::GetScaledFrameTime();
+
+	if (m_healTimer > 0)
 		return;
 
 	const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
@@ -88,7 +95,7 @@ void TD::HealerEnemy::HealAround()
 	if (!healedAllies)
 		Heal(m_healAmount);
 
-	m_nextHealTime = GetTime() + static_cast<double>(m_healCooldown);
+	m_healTimer = m_healCooldown;
 }
 
 void TD::HealerEnemy::Update()

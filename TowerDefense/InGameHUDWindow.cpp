@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "InGameHUDWindow.h"
 
-#include "TowerButton.h"
 #include "PauseButton.h"
 #include "RegularTowerButton.h"
 #include "StunTowerButton.h"
 #include "ExplosiveTowerButton.h"
 #include "PoisonTowerButton.h"
+#include "SpeedUpButton.h"
 #include "TowerDefenseGameManager.h"
 
 namespace TD
@@ -30,6 +30,11 @@ namespace TD
 		AddButton<StunTowerButton>({Dimensions.x / 2 - 75, Dimensions.y / 2 });
 		AddButton<ExplosiveTowerButton>({Dimensions.x / 2 + 75, Dimensions.y / 2 });
 		AddButton<PoisonTowerButton>({Dimensions.x / 2 + 225, Dimensions.y / 2 });
+
+		AddButton<SpeedUpButton>(Vector2{
+			Dimensions.x - 32 - 48,
+			Dimensions.y / 2
+		});
 
 		AddButton<PauseButton>(Vector2{
 			Dimensions.x - 32,

@@ -4,6 +4,8 @@
 
 #include "TowerDefenseGameManager.h"
 #include "ITower.h"
+
+#include "App.h"
 #include "ConfigTower.h"
 
 namespace TD
@@ -11,7 +13,7 @@ namespace TD
 	Pool<Bullet>	ITower::m_bulletPool{};
 	size_t			ITower::m_towersCount{0};
 
-	ITower::ITower(const Vector2 position, const TowerType type) : level(1), upgradeCost(), config(), m_nextShootTime()
+	ITower::ITower(const Vector2 position, const TowerType type) : level(1), upgradeCost(), config(), m_shootTimer()
 	{
 		if (!config.LoadFromFile(type, 1))
 			throw;
@@ -103,7 +105,9 @@ namespace TD
 
 	void ITower::ShootAt(const Enemy& enemy)
 	{
-		if (GetTime() < m_nextShootTime)
+		m_shootTimer -= App::GetScaledFrameTime();
+
+		if (m_shootTimer > 0)
 			return;
 
 		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
@@ -119,7 +123,7 @@ namespace TD
 		const float rotation = dir.angleFrom(LibMath::Vector2::right()).degree() + 90;
 		m_sprite->SetRotation(rotation);
 
-		m_nextShootTime = GetTime() + static_cast<double>(1 / config.firingRate);
+		m_shootTimer = 1 / config.firingRate;
 	}
 
 	Enemy* ITower::CheckRange()

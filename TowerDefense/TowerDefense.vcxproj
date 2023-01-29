@@ -143,6 +143,7 @@
     <ClInclude Include="RegularTower.h" />
     <ClInclude Include="RegularTowerButton.h" />
     <ClInclude Include="ResumeButton.h" />
+    <ClInclude Include="SpeedUpButton.h" />
     <ClInclude Include="StartLevelButton.h" />
     <ClInclude Include="StunTower.h" />
     <ClInclude Include="Renderer.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="RegularTower.cpp" />
     <ClCompile Include="RegularTowerButton.cpp" />
     <ClCompile Include="ResumeButton.cpp" />
+    <ClCompile Include="SpeedUpButton.cpp" />
     <ClCompile Include="StartLevelButton.cpp" />
     <ClCompile Include="StunTower.cpp" />
     <ClCompile Include="Renderer.cpp" />

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Enemy.h"
 #include "EnemyArmy.h"
+
+#include "App.h"
 #include "HealerEnemy.h"
 #include "TowerDefenseGameManager.h"
 
@@ -71,7 +73,7 @@ namespace TD
 
 	void EnemyArmy::Update()
 	{
-		m_timer += GetFrameTime();
+		m_timer += App::GetScaledFrameTime();
 #ifdef _DEBUG
 		if (IsKeyPressed(KEY_W))
 		{

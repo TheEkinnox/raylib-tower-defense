@@ -2,6 +2,8 @@
 #include <Vector/Vector2.h>
 #include "TowerDefenseGameManager.h"
 #include "PoisonTower.h"
+
+#include "App.h"
 #include "ConfigTower.h"
 
 
@@ -14,7 +16,9 @@ namespace TD
 
 	void PoisonTower::ShootAt(const Enemy& enemy)
 	{
-		if (GetTime() < m_nextShootTime)
+		m_shootTimer -= App::GetScaledFrameTime();
+
+		if (m_shootTimer > 0)
 			return;
 
 		EnemyArmy& enemyArmy = TowerDefenseGameManager::GetInstance().EnemyArmy;
@@ -23,7 +27,9 @@ namespace TD
 
 		const std::vector<Enemy*>& enemyList = enemyArmy.GetArmy();
 		const LibMath::Vector2 towerPos(Position().x, Position().y);
-		const float squaredRange = config.range * config.range * TILE_WIDTH * scale * TILE_HEIGHT * scale;
+
+		const float squaredRange = config.range * config.range *
+			TILE_WIDTH * scale * TILE_HEIGHT * scale;
 
 		for (size_t i = 0; i < enemyList.size(); i++)
 		{
@@ -33,13 +39,15 @@ namespace TD
 				enemyList[i]->Damage(config.damage);
 		}
 
-		m_nextShootTime = GetTime() + static_cast<double>(1 / config.firingRate);
+		m_shootTimer = 1 / config.firingRate;
 	};
 
 	void PoisonTower::Update()
 	{
+#ifdef _DEBUG
 		if (IsKeyPressed(KEY_FOUR))
 			LevelUp();
+#endif
 
 		ITower::Update();
 	}

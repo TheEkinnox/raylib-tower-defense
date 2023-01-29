@@ -2,6 +2,8 @@
 #include <Vector/Vector2.h>
 
 #include "Bullet.h"
+
+#include "App.h"
 #include "TowerDefenseGameManager.h"
 #include "enemy.h"
 
@@ -43,8 +45,8 @@ namespace TD
 			return;
 		}
 
-		Position().x += dir.x * speed * GetFrameTime();
-		Position().y += dir.y * speed * GetFrameTime();
+		Position().x += dir.x * speed * App::GetScaledFrameTime();
+		Position().y += dir.y * speed * App::GetScaledFrameTime();
 
 		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
 		const GameMap& map = gameManager.Map;

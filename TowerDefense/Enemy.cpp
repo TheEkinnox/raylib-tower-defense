@@ -5,6 +5,7 @@
 #include <Arithmetic.h>
 #include <Vector/Vector2.h>
 
+#include "App.h"
 #include "AStar.h"
 #include "EnemyArmy.h"
 #include "TowerDefenseGameManager.h"
@@ -87,7 +88,7 @@ namespace TD
 	{
 		if (m_remainingStunTime > 0)
 		{
-			m_remainingStunTime -= GetFrameTime();
+			m_remainingStunTime -= App::GetScaledFrameTime();
 			return;
 		}
 
@@ -96,7 +97,7 @@ namespace TD
 
 		LibMath::Vector2 pos(Position().x, Position().y);
 		const LibMath::Vector2 targetPos(targetVec.x, targetVec.y);
-		const float deltaSpeed = m_config.Speed * GetFrameTime();
+		const float deltaSpeed = m_config.Speed * App::GetScaledFrameTime();
 
 		if (pos.distanceSquaredFrom(targetPos) < deltaSpeed * deltaSpeed)
 		{

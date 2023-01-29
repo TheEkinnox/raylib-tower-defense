@@ -147,6 +147,9 @@
     <ClInclude Include="RegularTower.h">
       <Filter>Header Files\Towers</Filter>
     </ClInclude>
+    <ClInclude Include="PoisonTower.h">
+      <Filter>Header Files\Towers</Filter>
+    </ClInclude>
     <ClInclude Include="StunTower.h">
       <Filter>Header Files\Towers</Filter>
     </ClInclude>
@@ -180,6 +183,9 @@
     <ClInclude Include="RegularTowerButton.h">
       <Filter>Header Files\HUD\Buttons</Filter>
     </ClInclude>
+    <ClInclude Include="PoisonTowerButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
     <ClInclude Include="GameOver.h">
       <Filter>Header Files\HUD\Windows</Filter>
     </ClInclude>
@@ -195,6 +201,9 @@
     <ClInclude Include="PauseButton.h">
       <Filter>Header Files\HUD\Buttons</Filter>
     </ClInclude>
+    <ClInclude Include="SpeedUpButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
     <ClInclude Include="PlayAgain.h">
       <Filter>Header Files\HUD\Buttons</Filter>
     </ClInclude>
@@ -208,10 +217,7 @@
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StartLevelButton.cpp">
-      <Filter>Source Files\HUD\Buttons</Filter>
+      <Filter>Header Files\HUD\Windows</Filter>
     </ClInclude>
     <ClInclude Include="StartLevelButton.h">
       <Filter>Header Files\HUD\Buttons</Filter>
@@ -296,6 +302,9 @@
     <ClCompile Include="RegularTower.cpp">
       <Filter>Source Files\Towers</Filter>
     </ClCompile>
+    <ClCompile Include="PoisonTower.cpp">
+      <Filter>Source Files\Towers</Filter>
+    </ClCompile>
     <ClCompile Include="EnemyArmyConfig.cpp">
       <Filter>Source Files\Enemies</Filter>
     </ClCompile>
@@ -326,6 +335,9 @@
     <ClCompile Include="RegularTowerButton.cpp">
       <Filter>Source Files\HUD\Buttons</Filter>
     </ClCompile>
+    <ClCompile Include="PoisonTowerButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
     <ClCompile Include="ExitButton.cpp">
       <Filter>Source Files\HUD\Buttons</Filter>
     </ClCompile>
@@ -336,6 +348,12 @@
       <Filter>Source Files\HUD\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="PauseButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="SpeedUpButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="StartLevelButton.cpp">
       <Filter>Source Files\HUD\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="PlayAgain.cpp">

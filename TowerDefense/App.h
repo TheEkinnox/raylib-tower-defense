@@ -20,7 +20,11 @@ namespace TD
 		void			Run() const;
 		void			Quit() const;
 
+		static void		SetTimeScale(float timeScale);
+		static float	GetScaledFrameTime();
+
 	private:
 		IGameManager*	m_gameManager;
+		static float	m_timeScale;
 	};
 }
