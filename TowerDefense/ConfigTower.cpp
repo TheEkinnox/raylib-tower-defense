@@ -30,8 +30,8 @@ namespace TD
 
 			std::vector<std::string> tokens = SplitString(curLine, " ", false);
 
-			if (tokens.size() < 2 ||
-				tokens.size() == 1 && tokens[0] != "bulletTexture")
+			if (tokens.size() < 2 &&
+				!(tokens.size() == 1 && tokens[0] == "bulletTexture"))
 				continue;
 
 			if (tokens[0] == "firingRate")

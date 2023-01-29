@@ -7,7 +7,8 @@ namespace TD
 	{
 		REGULAR,
 		STUNNING,
-		EXPLOSIVE
+		EXPLOSIVE,
+		POISON
 	};
 
 	typedef BulletType TowerType;

@@ -136,6 +136,8 @@
     <ClInclude Include="PlayAgain.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerHUD.h" />
+    <ClInclude Include="PoisonTower.h" />
+    <ClInclude Include="PoisonTowerButton.h" />
     <ClInclude Include="Pool.h" />
     <ClInclude Include="PooledObject.h" />
     <ClInclude Include="RegularTower.h" />
@@ -188,6 +190,8 @@
     <ClCompile Include="PlayAgain.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerHUD.cpp" />
+    <ClCompile Include="PoisonTower.cpp" />
+    <ClCompile Include="PoisonTowerButton.cpp" />
     <ClCompile Include="PooledObject.cpp" />
     <ClCompile Include="RegularTower.cpp" />
     <ClCompile Include="RegularTowerButton.cpp" />
