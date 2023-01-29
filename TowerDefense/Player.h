@@ -30,7 +30,7 @@ namespace TD
 	private:
 		const int PLAYER_CONFIG_DATA_COUNT = 2;
 
-		GameMap&		GetMap();
+		static GameMap&	GetMap();
 	};
 
 	template <typename T>

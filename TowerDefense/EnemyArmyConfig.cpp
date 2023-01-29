@@ -9,6 +9,8 @@ namespace TD
 {
 	bool EnemyArmyConfig::LoadFromFile(const std::string& filePath)
 	{
+		Waves.clear();
+
 		std::ifstream fileStream(filePath);
 
 		if (!fileStream.is_open())

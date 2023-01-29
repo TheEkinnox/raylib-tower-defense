@@ -12,10 +12,7 @@ namespace TD
 
 	EnemyArmy::~EnemyArmy()
 	{
-		for (const Enemy* enemy : m_enemies)
-			delete enemy;
-
-		m_enemies.clear();
+		ClearEnemies();
 	}
 
 	void EnemyArmy::RemoveEnemy(const Enemy& enemy)
@@ -40,6 +37,8 @@ namespace TD
 		for (const Enemy* enemy : m_enemies)
 			delete enemy;
 
+		m_config.Waves.clear();
+
 		m_enemies.clear();
 	}
 
@@ -55,6 +54,8 @@ namespace TD
 
 	bool EnemyArmy::Load(const std::string& filePath)
 	{
+		ClearEnemies();
+
 		m_timer = 0;
 		m_currentWave = 1;
 		return m_config.LoadFromFile(filePath);

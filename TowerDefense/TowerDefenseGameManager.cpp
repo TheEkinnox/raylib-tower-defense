@@ -129,7 +129,7 @@ namespace TD
 
 			renderer.DrawSprites();
 		}
-		catch(std::exception ex)
+		catch(std::exception& ex)
 		{
 			std::cout << "\n**ERROR: " << ex.what() << "**\n" << std::endl;
 			SetCurrentState(GameState::ERROR);
@@ -147,9 +147,9 @@ namespace TD
 			break;
 		case GameState::MAIN_MENU:
 		{
-			Player.Clear();
 			Map.Clear();
 			EnemyArmy.ClearEnemies();
+			Player.Clear();
 
 			MainMenu* menu = new MainMenu({ 0, 0 }, renderer.GetRenderSize());
 			menu->Create();
