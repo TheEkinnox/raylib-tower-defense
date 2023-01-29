@@ -3,8 +3,8 @@
 #include "BulletType.h"
 
 #define MAX_LEVEL 3
-#define TOWER_CONIFG_PATH_FORMAT "Assets/towers/tower_%d_%d.cfg"
-#define TOWER_CONFIG_DATA_COUNT 9
+#define TOWER_CONFIG_PATH_FORMAT "Assets/towers/tower_%d_%d.cfg"
+#define TOWER_CONFIG_DATA_COUNT 10
 
 namespace TD
 {
@@ -20,7 +20,8 @@ namespace TD
 		unsigned int	sellPrice;
 		std::string		texturePath;
 		std::string		buttonTexturePath;
-		TD::BulletType	bulletType;
+		std::string		bulletTexturePath;
+		BulletType		bulletType;
 		
 		bool LoadFromFile(TowerType type, std::uint8_t level);
 	};

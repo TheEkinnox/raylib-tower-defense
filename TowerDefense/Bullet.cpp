@@ -75,9 +75,10 @@ namespace TD
 		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
 		const float scale = map.GetScale();
 
-		std::vector<Enemy*>& enemyList = enemyArmy.GetArmy();
-		LibMath::Vector2 bulletPos(Position().x, Position().y);
-		const float squaredRange = sprite->GetTexture().width * scale * sprite->GetTexture().height * scale;
+		const std::vector<Enemy*>& enemyList = enemyArmy.GetArmy();
+		const LibMath::Vector2 bulletPos(Position().x, Position().y);
+		const float squaredRange = static_cast<float>(sprite->GetTexture().width) * scale
+			* static_cast<float>(sprite->GetTexture().height) * scale;
 
 		for (size_t i = 0; i < enemyList.size(); i++)
 		{

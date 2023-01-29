@@ -21,7 +21,7 @@ namespace TD
 
 		virtual void			Update();
 		virtual void			LevelUp();
-		virtual void			ShootAt(const Enemy& enemy) = 0;
+		virtual void			ShootAt(const Enemy& enemy);
 		virtual void			OnBulletCollision(Enemy& enemy) = 0;
 
 	protected:

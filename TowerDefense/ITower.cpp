@@ -37,7 +37,6 @@ namespace TD
 
 	void ITower::Update()
 	{
-		const auto& state = TowerDefenseGameManager::GetInstance().GetCurrentState();
 		const auto& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
 		const Vector2 scale = renderer.GetRenderScale();
 		const Vector2 offset = renderer.GetRenderPosition();
@@ -69,7 +68,7 @@ namespace TD
 			}
 		}
 
-		Enemy* enemy = CheckRange();
+		const Enemy* enemy = CheckRange();
 
 		if (enemy != nullptr)
 			ShootAt(*enemy);
@@ -102,20 +101,40 @@ namespace TD
 		m_sprite->SetTexture(*renderer.GetTexture(config.texturePath));
 	}
 
+	void ITower::ShootAt(const Enemy& enemy)
+	{
+		if (GetTime() < m_nextShootTime)
+			return;
+
+		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+		const Texture* bulletTexture = renderer.GetTexture(config.bulletTexturePath);
+		Bullet& bullet = m_bulletPool.GetObject(renderer.CreateSprite(*bulletTexture, Position(), Layer::BULLET), *this);
+
+		LibMath::Vector2 dir(enemy.Position().x - Position().x, enemy.Position().y - Position().y);
+		dir.normalize();
+
+		bullet.dir = Vector2{ dir.m_x, dir.m_y };
+		bullet.speed = config.bulletSpeed;
+
+		const float rotation = dir.angleFrom(LibMath::Vector2::right()).degree() + 90;
+		m_sprite->SetRotation(rotation);
+
+		m_nextShootTime = GetTime() + static_cast<double>(1 / config.firingRate);
+	}
+
 	Enemy* ITower::CheckRange()
 	{
 		EnemyArmy& enemyArmy = TowerDefenseGameManager::GetInstance().EnemyArmy;
 		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
 		const float scale = map.GetScale();
 
-		std::vector<Enemy*>& enemyList = enemyArmy.GetArmy();
-		LibMath::Vector2 enemyPos;
-		LibMath::Vector2 towerPos(Position().x, Position().y);
+		const std::vector<Enemy*>& enemyList = enemyArmy.GetArmy();
+		const LibMath::Vector2 towerPos(Position().x, Position().y);
 		const float squaredRange = config.range * config.range * TILE_WIDTH * scale * TILE_HEIGHT * scale;
 
 		for (size_t i = 0; i < enemyList.size(); i++)
 		{
-			enemyPos = {enemyList[i]->Position().x, enemyList[i]->Position().y};
+			LibMath::Vector2 enemyPos = {enemyList[i]->Position().x, enemyList[i]->Position().y};
 
 			if (towerPos.distanceSquaredFrom(enemyPos) <= squaredRange)
 				return enemyList[i];

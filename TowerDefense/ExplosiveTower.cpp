@@ -1,5 +1,4 @@
 #include "pch.h"
-#include <Vector/Vector2.h>
 #include "TowerDefenseGameManager.h"
 #include "ExplosiveTower.h"
 #include "ConfigTower.h"
@@ -7,37 +6,17 @@
 
 namespace TD
 {
-	ExplosiveTower::ExplosiveTower(Vector2 position) :
+	ExplosiveTower::ExplosiveTower(const Vector2 position) :
 		ITower(position, TowerType::EXPLOSIVE)
 	{
 	}
 
-	void ExplosiveTower::ShootAt(const Enemy& enemy)
-	{
-		if (GetTime() < m_nextShootTime)
-			return;
-
-		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
-		const Texture* bulletTexture = renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile252.png");
-		Bullet& bullet = m_bulletPool.GetObject(renderer.CreateSprite(*bulletTexture, Position(), Layer::BULLET), *this);
-
-		LibMath::Vector2 dir(enemy.Position().x - Position().x, enemy.Position().y - Position().y);
-		dir.normalize();
-
-		bullet.dir = Vector2{ dir.m_x, dir.m_y };
-		bullet.speed = config.bulletSpeed;
-
-		const float rotation = dir.angleFrom(LibMath::Vector2::right()).degree() + 90;
-		m_sprite->SetRotation(rotation);
-		bullet.sprite->SetRotation(rotation);
-
-		m_nextShootTime = GetTime() + static_cast<double>(1 / config.firingRate);
-	};
-
 	void ExplosiveTower::Update()
 	{
+#ifdef _DEBUG
 		if (IsKeyPressed(KEY_THREE))
 			LevelUp();
+#endif
 
 		ITower::Update();
 	}
@@ -54,7 +33,8 @@ namespace TD
 		{
 			const Vector2 enemyCell = map.GetCellPosition(enemyList[i]->Position());
 
-			if (enemyCell.x == cellPosition.x && enemyCell.y == cellPosition.y)
+			if (static_cast<unsigned int>(enemyCell.x) == static_cast<unsigned int>(cellPosition.x)
+				&& static_cast<unsigned int>(enemyCell.y) == static_cast<unsigned int>(cellPosition.y))
 				enemyList[i]->Damage(config.damage);
 		}
 	}

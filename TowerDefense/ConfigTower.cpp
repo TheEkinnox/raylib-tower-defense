@@ -9,11 +9,11 @@ namespace TD
 {
 	bool ConfigTower::LoadFromFile(const TowerType type, const std::uint8_t level)
 	{
-		char const* configPath = TextFormat(TOWER_CONIFG_PATH_FORMAT, type, level);
+		char const* configPath = TextFormat(TOWER_CONFIG_PATH_FORMAT, type, level);
 
-		std::ifstream filestream(configPath);
+		std::ifstream fileStream(configPath);
 
-		if (!filestream.is_open())
+		if (!fileStream.is_open())
 			return false;
 
 		bulletType = type;
@@ -21,7 +21,7 @@ namespace TD
 		std::string curLine;
 		int loadedCount = 0;
 		
-		while (std::getline(filestream, curLine) && loadedCount < TOWER_CONFIG_DATA_COUNT)
+		while (std::getline(fileStream, curLine) && loadedCount < TOWER_CONFIG_DATA_COUNT)
 		{
 			curLine = Trim(RemoveComments(curLine));
 
@@ -30,7 +30,8 @@ namespace TD
 
 			std::vector<std::string> tokens = SplitString(curLine, " ", false);
 
-			if (tokens.size() < 2)
+			if (tokens.size() < 2 ||
+				tokens.size() == 1 && tokens[0] != "bulletTexture")
 				continue;
 
 			if (tokens[0] == "firingRate")
@@ -78,7 +79,13 @@ namespace TD
 				buttonTexturePath = TrimLeft(curLine.substr(tokens[0].size()));
 				loadedCount++;
 			}
+			else if (tokens[0] == "bulletTexture")
+			{
+				bulletTexturePath = TrimLeft(curLine.substr(tokens[0].size()));
+				loadedCount++;
+			}
 		}
+
 		return loadedCount == TOWER_CONFIG_DATA_COUNT;
 	}
 }

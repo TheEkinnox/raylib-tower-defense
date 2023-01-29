@@ -18,15 +18,14 @@ namespace TD
 		if (m_windowTexture.id == 0)
 			throw;
 
-		FilePathList configFiles = LoadDirectoryFiles(LEVELS_FOLDER.c_str());
+		const FilePathList configFiles = LoadDirectoryFiles(LEVELS_FOLDER.c_str());
 
 		if (configFiles.count == 0)
 			throw;
 
 		const int centerX = static_cast<int>(Dimensions.x / 2);
-		const int centerY = static_cast<int>(Dimensions.y / 2);
 		const Texture logoTexture = *renderer.GetTexture(LOGO_PATH);
-		const float buttonsYOffset = logoTexture.height + 48;
+		const float buttonsYOffset = static_cast<float>(logoTexture.height) + 48;
 		const float buttonAreaHeight = (Dimensions.y - buttonsYOffset - 16) * .8f;
 
 		BeginTextureMode(m_windowTexture);
@@ -51,8 +50,9 @@ namespace TD
 			if (!IsFileExtension(fileName, CONFIG_FILE_EXTENSION))
 				continue;
 
-			float yPos = buttonsYOffset + (i + 1) * buttonAreaHeight /
-				(configFiles.count + 1) - BUTTON_HEIGHT / 2;
+			const float yPos = buttonsYOffset + static_cast<float>(i + 1)
+				* buttonAreaHeight / static_cast<float>(configFiles.count + 1)
+				- BUTTON_HEIGHT / 2;
 
 			const Vector2 btnPos
 			{
