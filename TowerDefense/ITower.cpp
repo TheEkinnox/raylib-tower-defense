@@ -53,10 +53,20 @@ namespace TD
 		const float height = static_cast<float>(m_sprite->GetTexture().height) * scale.y;
 
 		if (mousePos.x >= pos.x - width / 2 && mousePos.x <= pos.x + width / 2 &&
-			mousePos.y >= pos.y - height / 2 && mousePos.y <= pos.y + height / 2 &&
-			IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+			mousePos.y >= pos.y - height / 2 && mousePos.y <= pos.y + height / 2)
 		{
-			LevelUp();
+			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+			{
+				LevelUp();
+			}
+			else if (IsMouseButtonReleased(MOUSE_BUTTON_RIGHT))
+			{
+
+				auto& gameManager = TowerDefenseGameManager::GetInstance();
+				gameManager.Player.AddMoney(config.sellPrice);
+				gameManager.Map.RemoveTower(this);
+				return;
+			}
 		}
 
 		Enemy* enemy = CheckRange();

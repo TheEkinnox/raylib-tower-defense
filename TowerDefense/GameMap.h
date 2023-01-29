@@ -59,6 +59,7 @@ namespace TD
 
 		template<typename T>
 		T*							AddTower(Vector2 cellPosition);
+		void						RemoveTower(const ITower* tower);
 		ITower*						GetTowerOnScreenPosition(Vector2 screenPos) const;
 		void						UpdateTowers() const;
 		Vector2						GetPlayerHQPosition(bool scale = true) const;

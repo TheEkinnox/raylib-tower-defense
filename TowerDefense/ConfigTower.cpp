@@ -58,6 +58,11 @@ namespace TD
 				price = std::stoul(tokens[1]);
 				loadedCount++;
 			}
+			else if (tokens[0] == "sellPrice")
+			{
+				sellPrice = std::stoul(tokens[1]);
+				loadedCount++;
+			}
 			else if (tokens[0] == "bulletSpeed")
 			{
 				bulletSpeed = std::stof(tokens[1]);

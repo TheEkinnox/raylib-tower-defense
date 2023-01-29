@@ -108,6 +108,21 @@ namespace TD
 		return false;
 	}
 
+	void GameMap::RemoveTower(const ITower* tower)
+	{
+		if (tower == nullptr)
+			return;
+
+		for (size_t i = 0; i < m_towers.size(); i++)
+		{
+			if (m_towers[i] == tower)
+			{
+				delete m_towers[i];
+				m_towers[i] = nullptr;
+			}
+		}
+	}
+
 	ITower* GameMap::GetTowerOnScreenPosition(const Vector2 screenPos) const
 	{
 		const Vector2 cellPos = GetCellPosition(screenPos);
