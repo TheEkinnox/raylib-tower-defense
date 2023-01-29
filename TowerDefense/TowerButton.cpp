@@ -13,28 +13,26 @@ namespace TD
 
 		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
 
-		switch (type)
-		{
-		case TowerType::REGULAR:
-			ButtonTexture = *renderer.GetTexture("Assets/hud/PNG/regular_button.png");
-			break;
-		case TowerType::STUNNING:
-			ButtonTexture = *renderer.GetTexture("Assets/hud/PNG/stun_button.png");
-			break;
-		case TowerType::EXPLOSIVE:
-			ButtonTexture = *renderer.GetTexture("Assets/hud/PNG/explosive_button.png");
-			break;
-		default:
-			break;
-		}
+		ButtonTexture = *renderer.GetTexture(m_towerConfig.buttonTexturePath);
+		const Texture towerTexture = *renderer.GetTexture(m_towerConfig.texturePath);
 
-		Vector2 pos
+		const Vector2 pos
 		{
 			m_window.Position.x + relativePosition.x,
 			m_window.Position.y + relativePosition.y
 		};
 
-		Sprite = &TowerDefenseGameManager::GetInstance().GetRenderer().CreateSprite(ButtonTexture, pos, Layer::BUTTON);
+		Sprite = &renderer.CreateSprite(ButtonTexture, pos, Layer::BUTTON);
+		m_towerSprite = &renderer.CreateSprite(towerTexture, Sprite->Position(), Layer::BUTTON);
+		m_towerSprite->SetTint(BLANK);
+	}
+
+	TowerButton::~TowerButton()
+	{
+		HUDButton::~HUDButton();
+
+		if (m_towerSprite != nullptr)
+			TowerDefenseGameManager::GetInstance().GetRenderer().RemoveSprite(*m_towerSprite);
 	}
 
 	void TowerButton::Update()
@@ -49,18 +47,28 @@ namespace TD
 
 	void TowerButton::DragAndDrop()
 	{
-		Player& player = TowerDefenseGameManager::GetInstance().Player;
-		if (!m_isDragged && player.Money >= m_towerConfig.price && IsHovered() && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+		const Player& player = TowerDefenseGameManager::GetInstance().Player;
+		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
+
+		if (m_isDragged)
+		{
+			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+			{
+				m_isDragged = false;
+				m_towerSprite->SetTint(BLANK);
+				BuyTower();
+			}
+			else
+			{
+				m_towerSprite->Position() = map.GetScreenPosition(map.GetMouseCellPosition());
+			}
+		}
+		else if (player.Money >= m_towerConfig.price && IsHovered() &&
+			IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
 			m_isDragged = true;
-			Sprite->Position() = GetMousePosition();
-		}
-		else if (m_isDragged && IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-		{
-			m_isDragged = false;
-			// TODO: Check position and place new tower
-			const Vector2 regularTowerPos = Vector2{Sprite->Position()};
-			player.BuyTower(m_towerConfig);
+			m_towerSprite->Position() = map.GetScreenPosition(map.GetMouseCellPosition());
+			m_towerSprite->SetTint(WHITE);
 		}
 	}
 }

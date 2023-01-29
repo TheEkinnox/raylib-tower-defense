@@ -112,6 +112,7 @@
     <ClInclude Include="EnemyWave.h" />
     <ClInclude Include="ExitButton.h" />
     <ClInclude Include="ExplosiveTower.h" />
+    <ClInclude Include="ExplosiveTowerButton.h" />
     <ClInclude Include="GameEntity.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Graph.h" />
@@ -138,10 +139,12 @@
     <ClInclude Include="Pool.h" />
     <ClInclude Include="PooledObject.h" />
     <ClInclude Include="RegularTower.h" />
+    <ClInclude Include="RegularTowerButton.h" />
     <ClInclude Include="ResumeButton.h" />
     <ClInclude Include="StunTower.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="StunTowerButton.h" />
     <ClInclude Include="TowerButton.h" />
     <ClInclude Include="TowerDefenseGameManager.h" />
     <ClInclude Include="utility.h" />
@@ -159,6 +162,7 @@
     <ClCompile Include="EnemyWave.cpp" />
     <ClCompile Include="ExitButton.cpp" />
     <ClCompile Include="ExplosiveTower.cpp" />
+    <ClCompile Include="ExplosiveTowerButton.cpp" />
     <ClCompile Include="GameEntity.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="GameOver.cpp" />
@@ -184,10 +188,12 @@
     <ClCompile Include="PlayerHUD.cpp" />
     <ClCompile Include="PooledObject.cpp" />
     <ClCompile Include="RegularTower.cpp" />
+    <ClCompile Include="RegularTowerButton.cpp" />
     <ClCompile Include="ResumeButton.cpp" />
     <ClCompile Include="StunTower.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StunTowerButton.cpp" />
     <ClCompile Include="TowerButton.cpp" />
     <ClCompile Include="TowerDefenseGameManager.cpp" />
     <ClCompile Include="utility.cpp" />

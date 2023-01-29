@@ -1,12 +1,10 @@
 #pragma once
-#include <raylib.h>
 #include <string>
-#include <vector>
 #include "BulletType.h"
 
 #define MAX_LEVEL 3
 #define TOWER_CONIFG_PATH_FORMAT "Assets/towers/tower_%d_%d.cfg"
-#define TOWER_CONFIG_DATA_COUNT 7
+#define TOWER_CONFIG_DATA_COUNT 8
 
 namespace TD
 {
@@ -20,6 +18,7 @@ namespace TD
 		unsigned int	damage;
 		unsigned int	price;
 		std::string		texturePath;
+		std::string		buttonTexturePath;
 		TD::BulletType	bulletType;
 		
 		bool LoadFromFile(TowerType type, std::uint8_t level);

@@ -152,6 +152,20 @@ namespace TD
 		return pos;
 	}
 
+	Vector2 GameMap::GetMouseCellPosition() const
+	{
+		const Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+
+		const Vector2 mousePos = GetMousePosition();
+		const Vector2 renderScale = renderer.GetRenderScale();
+		const Vector2 renderPos = renderer.GetRenderPosition();
+		
+		const float xPos = (mousePos.x - renderPos.x) / renderScale.x;
+		const float yPos = (mousePos.y - renderPos.y) / renderScale.y;
+
+		return GetCellPosition(Vector2{ xPos, yPos });
+	}
+
 	Vector2 GameMap::GetCellPosition(const Vector2 screenPosition) const
 	{
 		const float scale = GetScale();

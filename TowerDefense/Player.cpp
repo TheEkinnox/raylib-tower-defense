@@ -4,9 +4,6 @@
 #include "Player.h"
 #include "utility.h"
 #include "TowerDefenseGameManager.h"
-#include "ExplosiveTower.h"
-#include "StunTower.h"
-#include "RegularTower.h"
 
 namespace TD
 {
@@ -53,34 +50,6 @@ namespace TD
 		return loadedCount == PLAYER_CONFIG_DATA_COUNT;
 	}
 
-	void Player::BuyTower(ConfigTower configTower)
-	{
-		if (Money < configTower.price)
-			return;
-
-		GameMap& map = TowerDefenseGameManager::GetInstance().Map;
-
-		ITower* addedTower = nullptr;
-
-		switch (configTower.bulletType)
-		{
-		case BulletType::REGULAR:
-			addedTower = map.AddTower<RegularTower>(map.GetCellPosition(GetMousePosition()));
-			break;
-		case BulletType::STUNNING:
-			addedTower = map.AddTower<StunTower>(map.GetCellPosition(GetMousePosition()));
-			break;
-		case BulletType::EXPLOSIVE:
-			addedTower = map.AddTower<ExplosiveTower>(map.GetCellPosition(GetMousePosition()));
-			break;
-		default:
-			break;
-		}
-
-		if (addedTower != nullptr)
-			RemoveMoney(configTower.price);
-	}
-
 	void Player::Damage(const unsigned int damage)
 	{
 		BaseHealth = damage < BaseHealth ? BaseHealth - damage : 0;
@@ -109,5 +78,10 @@ namespace TD
 		HUD.ClearWindows();
 		Money = 0;
 		BaseHealth = 0;
+	}
+
+	GameMap& Player::GetMap()
+	{
+		return TowerDefenseGameManager::GetInstance().Map;
 	}
 }

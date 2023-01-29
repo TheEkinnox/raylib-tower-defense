@@ -1,5 +1,6 @@
 #include "pch.h"
 #include <fstream>
+#include <raylib.h>
 
 #include "utility.h"
 #include "ConfigTower.h"
@@ -65,6 +66,11 @@ namespace TD
 			else if (tokens[0] == "texture")
 			{
 				texturePath = TrimLeft(curLine.substr(tokens[0].size()));
+				loadedCount++;
+			}
+			else if (tokens[0] == "buttonTexture")
+			{
+				buttonTexturePath = TrimLeft(curLine.substr(tokens[0].size()));
 				loadedCount++;
 			}
 		}

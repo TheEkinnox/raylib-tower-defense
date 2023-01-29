@@ -1,8 +1,11 @@
 #include "pch.h"
 #include "InGameHUDWindow.h"
 
+#include "ExplosiveTowerButton.h"
 #include "TowerButton.h"
 #include "PauseButton.h"
+#include "RegularTowerButton.h"
+#include "StunTowerButton.h"
 #include "TowerDefenseGameManager.h"
 
 namespace TD
@@ -22,9 +25,9 @@ namespace TD
 		m_windowSprite->SetScale(1, -1);
 		m_windowSprite->SetOrigin(0, 0);
 
-		AddButton<TowerButton>({Dimensions.x/2 - 150, Dimensions.y/2}, TowerType::REGULAR);
-		AddButton<TowerButton>({Dimensions.x / 2, Dimensions.y / 2 }, TowerType::STUNNING);
-		AddButton<TowerButton>({Dimensions.x / 2 + 150, Dimensions.y / 2 }, TowerType::EXPLOSIVE);
+		AddButton<RegularTowerButton>({Dimensions.x/2 - 150, Dimensions.y/2});
+		AddButton<StunTowerButton>({Dimensions.x / 2, Dimensions.y / 2 });
+		AddButton<ExplosiveTowerButton>({Dimensions.x / 2 + 150, Dimensions.y / 2 });
 
 		AddButton<PauseButton>(Vector2{
 			Dimensions.x - 32,

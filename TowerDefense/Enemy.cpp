@@ -102,6 +102,9 @@ namespace TD
 
 		Position().x = LibMath::max(pos.m_x, 0);
 		Position().y = LibMath::max(pos.m_y, 0);
+
+		const float rotation = acosf(dir.m_x) * RAD2DEG;
+		m_sprite->SetRotation(rotation);
 	}
 
 	void Enemy::Damage(const unsigned int damage)

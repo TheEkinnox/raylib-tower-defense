@@ -171,6 +171,15 @@
     <ClInclude Include="TowerButton.h">
       <Filter>Header Files\HUD\Buttons</Filter>
     </ClInclude>
+    <ClInclude Include="ExplosiveTowerButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="StunTowerButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="RegularTowerButton.h">
+      <Filter>Header Files\HUD\Buttons</Filter>
+    </ClInclude>
     <ClInclude Include="GameOver.h">
       <Filter>Header Files\HUD\Windows</Filter>
     </ClInclude>
@@ -300,6 +309,15 @@
       <Filter>Source Files\HUD\Windows</Filter>
     </ClCompile>
     <ClCompile Include="TowerButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosiveTowerButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="StunTowerButton.cpp">
+      <Filter>Source Files\HUD\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="RegularTowerButton.cpp">
       <Filter>Source Files\HUD\Buttons</Filter>
     </ClCompile>
     <ClCompile Include="ExitButton.cpp">

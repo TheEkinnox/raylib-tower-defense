@@ -33,5 +33,8 @@ namespace TD
 		RenderTexture					m_target;
 
 		void							DrawTarget() const;
+		void							DrawCursor() const;
+
+		const Texture					m_cursorTexture;
 	};
 }

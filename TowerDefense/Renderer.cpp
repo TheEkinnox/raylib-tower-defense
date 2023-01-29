@@ -2,11 +2,13 @@
 #include "Renderer.h"
 
 #include "Sprite.h"
+#include "TowerDefenseGameManager.h"
 
 namespace TD
 {
 	Renderer::Renderer() :
-		m_target(LoadRenderTexture(GetScreenWidth(), GetScreenHeight()))
+		m_target(LoadRenderTexture(GetScreenWidth(), GetScreenHeight())),
+		m_cursorTexture(LoadTexture("Assets/hud/PNG/cursor_pointerFlat.png"))
 	{
 	}
 
@@ -23,6 +25,8 @@ namespace TD
 
 		m_sprites.clear();
 		m_textures.clear();
+
+		UnloadTexture(m_cursorTexture);
 	}
 
 	Sprite& Renderer::CreateSprite(const Texture& texture, const Vector2 position,
@@ -155,6 +159,8 @@ namespace TD
 
 		DrawTarget();
 
+		DrawCursor();
+
 		EndDrawing();
 	}
 
@@ -169,5 +175,17 @@ namespace TD
 		targetSprite.SetScale(scale.x, -scale.y);
 		targetSprite.SetOrigin(0, 0);
 		targetSprite.Draw();
+	}
+
+	void Renderer::DrawCursor() const
+	{
+		const Vector2 scale = GetRenderScale();
+
+		Sprite cursorSprite = { m_cursorTexture, GetMousePosition(), Layer::DEFAULT };
+
+		// Flip the sprite since render textures are flipped by default
+		cursorSprite.SetScale(scale.x, scale.y);
+		cursorSprite.SetOrigin(0, 0);
+		cursorSprite.Draw();
 	}
 }

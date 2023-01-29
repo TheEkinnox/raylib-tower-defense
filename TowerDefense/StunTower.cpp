@@ -27,6 +27,9 @@ namespace TD
 		bullet.dir = Vector2{ dir.m_x, dir.m_y };
 		bullet.speed = config.bulletSpeed;
 
+		const float rotation = dir.angleFrom(LibMath::Vector2::right()).degree() + 90;
+		m_sprite->SetRotation(rotation);
+
 		m_nextShootTime = GetTime() + static_cast<double>(1 / config.firingRate);
 	};
 

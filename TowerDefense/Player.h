@@ -2,6 +2,7 @@
 #include <string>
 #include "PlayerHUD.h"
 #include "ConfigTower.h"
+#include "GameMap.h"
 
 namespace TD
 {
@@ -16,7 +17,10 @@ namespace TD
 		~Player() = default;
 
 		bool			Load(const std::string& fileName);
-		void			BuyTower(ConfigTower configTower);
+
+		template		<typename T>
+		void			BuyTower(const ConfigTower& configTower);
+
 		void			Damage(unsigned int damage);
 		void			AddMoney(unsigned int amount);
 		void			RemoveMoney(unsigned int amount);
@@ -25,5 +29,21 @@ namespace TD
 
 	private:
 		const int PLAYER_CONFIG_DATA_COUNT = 2;
+
+		GameMap&		GetMap();
 	};
+
+	template <typename T>
+	void Player::BuyTower(const ConfigTower& configTower)
+	{
+		if (Money < configTower.price)
+			return;
+
+		GameMap& map = GetMap();
+
+		const T* addedTower = map.AddTower<T>(map.GetMouseCellPosition());
+
+		if (addedTower != nullptr)
+			RemoveMoney(configTower.price);
+	}
 }

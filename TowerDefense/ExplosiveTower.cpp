@@ -27,6 +27,10 @@ namespace TD
 		bullet.dir = Vector2{ dir.m_x, dir.m_y };
 		bullet.speed = config.bulletSpeed;
 
+		const float rotation = dir.angleFrom(LibMath::Vector2::right()).degree() + 90;
+		m_sprite->SetRotation(rotation);
+		bullet.sprite->SetRotation(rotation);
+
 		m_nextShootTime = GetTime() + static_cast<double>(1 / config.firingRate);
 	};
 
@@ -40,21 +44,17 @@ namespace TD
 
 	void ExplosiveTower::OnBulletCollision(Enemy& enemy)
 	{
-	
 		EnemyArmy& enemyArmy = TowerDefenseGameManager::GetInstance().EnemyArmy;
 		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
-		const float scale = map.GetScale();
 
-		std::vector<Enemy*>& enemyList = enemyArmy.GetArmy();
-		LibMath::Vector2 enemyPos;
-		LibMath::Vector2 bulletPos(enemy.Position().x, enemy.Position().y);
-		const float squaredRange = TILE_WIDTH * scale * TILE_HEIGHT * scale;
+		const std::vector<Enemy*>& enemyList = enemyArmy.GetArmy();
+		const Vector2 cellPosition = map.GetCellPosition(enemy.Position());
 
 		for (size_t i = 0; i < enemyList.size(); i++)
 		{
-			enemyPos = { enemyList[i]->Position().x, enemyList[i]->Position().y };
+			const Vector2 enemyCell = map.GetCellPosition(enemyList[i]->Position());
 
-			if (bulletPos.distanceSquaredFrom(enemyPos) <= squaredRange)
+			if (enemyCell.x == cellPosition.x && enemyCell.y == cellPosition.y)
 				enemyList[i]->Damage(config.damage);
 		}
 	}
