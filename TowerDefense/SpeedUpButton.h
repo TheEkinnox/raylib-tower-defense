@@ -3,6 +3,13 @@
 
 namespace TD
 {
+	enum class GameSpeed
+	{
+		X1 = 1,
+		X2 = 2,
+		X4 = 4
+	};
+
 	class SpeedUpButton : public HUDButton
 	{
 	public:
@@ -13,6 +20,8 @@ namespace TD
 		void	Update() override;
 
 	private:
-		bool	isFaster;
+		Texture		m_x2Texture;
+		Texture		m_x4Texture;
+		GameSpeed	m_currentSpeed;
 	};
 }

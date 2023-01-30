@@ -8,10 +8,12 @@
 namespace TD
 {
 	SpeedUpButton::SpeedUpButton(const Vector2 relativePosition, HUDWindow& window) :
-		HUDButton(relativePosition, window), isFaster(false)
+		HUDButton(relativePosition, window), m_currentSpeed(GameSpeed::X1)
 	{
 		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
-		ButtonTexture = *renderer.GetTexture("Assets/hud/PNG/speed_up_button.png");
+		ButtonTexture = *renderer.GetTexture("Assets/hud/PNG/button_speed_x1.png");
+		m_x2Texture = *renderer.GetTexture("Assets/hud/PNG/button_speed_x2.png");
+		m_x4Texture = *renderer.GetTexture("Assets/hud/PNG/button_speed_x4.png");
 
 		const Vector2 pos
 		{
@@ -29,18 +31,27 @@ namespace TD
 
 	void SpeedUpButton::Click()
 	{
-		isFaster = !isFaster;
+		switch (m_currentSpeed)
+		{
+		case GameSpeed::X1:
+			m_currentSpeed = GameSpeed::X2;
+			Sprite->SetTexture(m_x2Texture);
+			break;
+		case GameSpeed::X2:
+			m_currentSpeed = GameSpeed::X4;
+			Sprite->SetTexture(m_x4Texture);
+			break;
+		case GameSpeed::X4:
+			m_currentSpeed = GameSpeed::X1;
+			Sprite->SetTexture(ButtonTexture);
+			break;
+		}
 
-		App::SetTimeScale(isFaster ? 2.f : 1.f);
+		App::SetTimeScale(static_cast<float>(m_currentSpeed));
 	}
 
 	void SpeedUpButton::Update()
 	{
 		HUDButton::Update();
-
-		if (isFaster)
-			Sprite->SetScale(-1, 1);
-		else
-			Sprite->SetScale(1, 1);
 	}
 }
