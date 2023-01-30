@@ -68,7 +68,8 @@ namespace TD
 		{
 			m_isDragged = true;
 			m_towerSprite->Position() = map.GetScreenPosition(map.GetMouseCellPosition());
-			m_towerSprite->SetTint(WHITE);
+			m_towerSprite->SetTint(ColorAlpha(WHITE, .8f));
+			m_towerSprite->SetScale(map.GetScale());
 		}
 	}
 }
