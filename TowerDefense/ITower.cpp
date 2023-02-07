@@ -191,10 +191,7 @@ namespace TD
 
 	void ITower::GenerateRangeTexture()
 	{
-		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
-		const float scale = map.GetScale();
-
-		const float scaledRange = config.range * TILE_WIDTH * scale;
+		const float scaledRange = config.range * TILE_WIDTH;
 		const float rangeDiameter = scaledRange * 2;
 		const int intRangeDiameter = static_cast<int>(rangeDiameter);
 		const Vector2 rangeCenter
@@ -214,7 +211,7 @@ namespace TD
 
 		DrawCircleV(rangeCenter, scaledRange, ColorAlpha(WHITE, .6f));
 
-		DrawRing(rangeCenter, scaledRange - RANGE_CIRCLE_THICKNESS * scale,
+		DrawRing(rangeCenter, scaledRange - RANGE_CIRCLE_THICKNESS,
 			rangeDiameter / 2, 0, 360, 36, WHITE);
 
 		EndTextureMode();
