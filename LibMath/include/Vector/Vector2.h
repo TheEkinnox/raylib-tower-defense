@@ -43,7 +43,8 @@ namespace LibMath
 		Vector2&		operator*=(float const&);						// multiply all components by a value
 		Vector2&		operator/=(float const&);						// divide all components by a value
 
-		Radian			angleFrom(Vector2 const&) const;				// return smallest angle between 2 vector
+		Radian			angleFrom(Vector2 const&) const;				// return smallest angle between 2 vectors
+		Radian			signedAngleFrom(Vector2 const& other) const;	// return signed angle between 2 vectors
 
 		float			cross(Vector2 const&) const;					// return a copy of the cross product result
 

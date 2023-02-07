@@ -41,7 +41,9 @@ namespace LibMath
 		Vector3&		operator*=(float const&);						// multiply all components by a value
 		Vector3&		operator/=(float const&);						// divide all components by a value
 
-		Radian			angleFrom(Vector3 const&) const;				// return smallest angle between 2 vector
+		Radian			angleFrom(Vector3 const&) const;				// return smallest angle between 2 vectors
+		Radian			signedAngleFrom(Vector3 const&,
+							Vector3 const&) const;						// return signed angle between 2 vectors
 
 		Vector3			cross(Vector3 const&) const;					// return a copy of the cross product result
 
