@@ -20,6 +20,7 @@ namespace TD
 		void			Run() const;
 		void			Quit() const;
 
+		static void		ToggleFullscreenWindow();
 		static void		SetTimeScale(float timeScale);
 		static float	GetScaledFrameTime();
 

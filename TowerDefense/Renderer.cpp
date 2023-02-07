@@ -89,14 +89,18 @@ namespace TD
 
 	Vector2 Renderer::GetRenderScale() const
 	{
-		Vector2 scale{
-			static_cast<float>(GetScreenWidth()) / static_cast<float>(m_target.texture.width),
-			static_cast<float>(GetScreenHeight()) / static_cast<float>(m_target.texture.height)
+		const float width = static_cast<float>(GetScreenWidth());
+		const float height = static_cast<float>(GetScreenHeight());
+
+		Vector2 scale
+		{
+			width / static_cast<float>(m_target.texture.width),
+			height / static_cast<float>(m_target.texture.height)
 		};
 
 		// determine the game's target and current aspect ratio
 		const float targetAspect = static_cast<float>(m_target.texture.width) / static_cast<float>(m_target.texture.height);
-		const float screenAspect = static_cast<float>(GetScreenWidth()) / static_cast<float>(GetScreenHeight());
+		const float screenAspect = width / height;
 
 		// current viewport height should be scaled by this amount
 		const float heightScale = screenAspect / targetAspect;

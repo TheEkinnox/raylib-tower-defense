@@ -52,6 +52,25 @@ namespace TD
 			std::cout << "\nAn unexpected error has occured..." << std::endl;
 	}
 
+	void App::ToggleFullscreenWindow()
+	{
+		static int lastWidth, lastHeight;
+		if (!IsWindowFullscreen())
+		{
+			lastWidth = GetScreenWidth();
+			lastHeight = GetScreenHeight();
+
+			const int monitor = GetCurrentMonitor();
+			SetWindowSize(GetMonitorWidth(monitor), GetMonitorHeight(monitor));
+			ToggleFullscreen();
+		}
+		else
+		{
+			ToggleFullscreen();
+			SetWindowSize(lastWidth, lastHeight);
+		}
+	}
+
 	void App::SetTimeScale(const float timeScale)
 	{
 		m_timeScale = timeScale;

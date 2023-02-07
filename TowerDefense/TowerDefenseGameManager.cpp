@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TowerDefenseGameManager.h"
 
+#include "App.h"
 #include "utility.h"
 #include "ExplosiveTower.h"
 #include "RegularTower.h"
@@ -104,7 +105,7 @@ namespace TD
 			PlayMusicStream(m_backgroundMusic);
 
 		if (IsKeyPressed(KeyboardKey::KEY_F11))
-			ToggleFullscreen();
+			App::ToggleFullscreenWindow();
 
 		if (IsKeyPressed(KEY_ESCAPE))
 			SetCurrentState(currentState == GameState::PAUSED ?
