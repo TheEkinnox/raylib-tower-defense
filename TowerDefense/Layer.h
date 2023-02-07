@@ -6,8 +6,10 @@ namespace TD
 	{
 		DEFAULT,
 		MAP = DEFAULT,
+		DECALS,
 		ENTITY,
 		BULLET,
+		TOWER,
 		WINDOW,
 		BUTTON
 	};

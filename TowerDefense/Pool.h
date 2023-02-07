@@ -1,5 +1,4 @@
 #pragma once
-#include "Bullet.h"
 #include "PooledObject.h"
 #include <vector>
 
@@ -8,18 +7,27 @@ namespace TD
 	template <typename T>
 	class Pool
 	{
-	private:
-		std::vector <T*> m_objects;
-
 	public:
+		explicit		Pool(size_t startSize = 0);
 		~Pool();
 
-		template <typename ... Args>
-		T&		GetObject(Args&... args);
+		template		<typename ... Args>
+		T&				GetObject(Args&... args);
 
-		void	Update();
-		void	Clear();
+		void			Update();
+		void			Clear();
+
+	private:
+		std::vector<T*>	m_objects;
 	};
+
+	template <typename T>
+	Pool<T>::Pool(size_t startSize) :
+		m_objects(startSize, nullptr)
+	{
+		for (T*& object : m_objects)
+			object = new T();
+	}
 
 	template <typename T>
 	Pool<T>::~Pool()
@@ -56,7 +64,6 @@ namespace TD
 		{
 			if (!m_objects[i]->IsActive())
 			{
-				m_objects[i]->~T();
 				new (m_objects[i]) T(args...);
 				m_objects[i]->SetActive(true);
 				return *m_objects[i];

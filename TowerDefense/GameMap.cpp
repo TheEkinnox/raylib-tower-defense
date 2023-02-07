@@ -136,7 +136,9 @@ namespace TD
 
 	void GameMap::UpdateTowers() const
 	{
-		for (const auto tower : m_towers)
+		ITower::UpdateBullets();
+
+		for (auto* tower : m_towers)
 			if (tower != nullptr)
 				tower->Update();
 	}
@@ -149,6 +151,11 @@ namespace TD
 		{
 			pos.x *= GetScale();
 			pos.y *= GetScale();
+
+			const Vector2 mapOffset = GetOffset();
+
+			pos.x += mapOffset.x;
+			pos.y += mapOffset.y;
 		}
 
 		return pos;
@@ -159,10 +166,11 @@ namespace TD
 		if (m_spawnPoints.empty())
 			return { 0 , 0 };
 
+		const Vector2 mapOffset = GetOffset();
 		const int index = Random(0, static_cast<int>(m_spawnPoints.size() - 1));
 		Vector2 pos = m_spawnPoints[index];
-		pos.x = (pos.x + TILE_WIDTH * origin.x) * GetScale();
-		pos.y = (pos.y + TILE_HEIGHT * origin.y) * GetScale();
+		pos.x = (pos.x + TILE_WIDTH * origin.x) * GetScale() + mapOffset.x;
+		pos.y = (pos.y + TILE_HEIGHT * origin.y) * GetScale() + mapOffset.y;
 
 		return pos;
 	}
@@ -174,6 +182,7 @@ namespace TD
 		const Vector2 mousePos = GetMousePosition();
 		const Vector2 renderScale = renderer.GetRenderScale();
 		const Vector2 renderPos = renderer.GetRenderPosition();
+		const Vector2 mapOffset = GetOffset();
 		
 		const float xPos = (mousePos.x - renderPos.x) / renderScale.x;
 		const float yPos = (mousePos.y - renderPos.y) / renderScale.y;
@@ -184,10 +193,11 @@ namespace TD
 	Vector2 GameMap::GetCellPosition(const Vector2 screenPosition) const
 	{
 		const float scale = GetScale();
+		const Vector2 mapOffset = GetOffset();
 
 		return Vector2{
-			LibMath::floor(screenPosition.x / (TILE_WIDTH * scale)),
-			LibMath::floor(screenPosition.y / (TILE_HEIGHT * scale))
+			LibMath::floor((screenPosition.x - mapOffset.x) / (TILE_WIDTH * scale)),
+			LibMath::floor((screenPosition.y - mapOffset.y) / (TILE_HEIGHT * scale))
 		};
 	}
 
@@ -195,8 +205,10 @@ namespace TD
 		const Vector2 origin, const bool useScale) const
 	{
 		const float scale = useScale ? GetScale() : 1;
-		const float xOffset = TILE_WIDTH * origin.x * scale;
-		const float yOffset = TILE_HEIGHT * origin.y * scale;
+		const Vector2 mapOffset = useScale ? GetOffset() : Vector2{ 0, 0 };
+
+		const float xOffset = TILE_WIDTH * origin.x * scale + mapOffset.x;
+		const float yOffset = TILE_HEIGHT * origin.y * scale + mapOffset.y;
 
 		return Vector2{
 				cellPosition.x * TILE_WIDTH * scale + xOffset,
@@ -226,6 +238,20 @@ namespace TD
 		const Vector2	scaleVec = renderer.GetTextureScale(pixelWidth, pixelHeight, { 1, .88f });
 
 		return LibMath::min(scaleVec.x, scaleVec.y);
+	}
+
+	Vector2 GameMap::GetOffset() const
+	{
+		const Renderer&	renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
+		const Vector2	renderSize = renderer.GetRenderSize();
+
+		const float		scale = GetScale();
+		const float		pixelWidth = static_cast<float>(GetWidth()) * TILE_WIDTH * scale;
+
+		return Vector2{
+			renderSize.x / 2 - pixelWidth / 2,
+			0
+		};
 	}
 
 	ai::Graph GameMap::GetGraph() const
@@ -398,18 +424,16 @@ namespace TD
 
 		EndTextureMode();
 
-		const Vector2 pos = {
-			static_cast<float>(m_mapTexture.texture.width) / 2,
-			static_cast<float>(m_mapTexture.texture.height) / 2
-		};
+		const Vector2 pos = GetOffset();
 
 		if (m_mapSprite == nullptr)
 			m_mapSprite = &renderer.CreateSprite(m_mapTexture.texture, pos, Layer::MAP);
 		else
-			m_mapSprite->SetTexture(m_mapTexture.texture);
+			m_mapSprite->SetTexture(m_mapTexture.texture).Position() = pos;
 
 		const float scale = GetScale();
 		m_mapSprite->SetScale(scale, -scale);
+		m_mapSprite->SetOrigin(0, 0);
 
 		return true;
 	}
@@ -444,16 +468,9 @@ namespace TD
 	{
 		Renderer& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
 
-		for (size_t i = 0; i < m_spawnPoints.size(); i++)
-		{
-			const Vector2 cellPos
-			{
-				m_spawnPoints[i].x / TILE_WIDTH,
-				m_spawnPoints[i].y / TILE_HEIGHT
-			};
-			const Vector2 pos = GetScreenPosition(cellPos, { 0, 0 }, false);
+		const Texture spawnPointTexture = *renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile022.png");
 
-			DrawTextureV(*renderer.GetTexture("Assets/textures/PNG/Default size/towerDefense_tile022.png"), pos, WHITE);
-		}
+		for (size_t i = 0; i < m_spawnPoints.size(); i++)
+			DrawTextureV(spawnPointTexture, m_spawnPoints[i], WHITE);
 	}
 }

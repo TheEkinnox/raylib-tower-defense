@@ -12,6 +12,7 @@ namespace TD
 	class Bullet : public PooledObject
 	{
 	public:
+		Bullet();
 		Bullet(Sprite& sprite, ITower& parent);
 		~Bullet() override;
 

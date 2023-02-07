@@ -9,6 +9,11 @@
 
 namespace TD
 {
+	Bullet::Bullet() :
+		dir(), sprite(nullptr), speed(0), parent(nullptr)
+	{
+	}
+
 	Bullet::Bullet(Sprite& sprite, ITower& parent) :
 		dir(), sprite(&sprite), speed(0), parent(&parent)
 	{
@@ -19,12 +24,7 @@ namespace TD
 
 	Bullet::~Bullet()
 	{
-		parent = nullptr;
-
-		if (sprite == nullptr)
-			return;
-
-		TowerDefenseGameManager::GetInstance().GetRenderer().RemoveSprite(*sprite);
+		Bullet::SetActive(false);
 	}
 
 	Vector2 Bullet::Position() const
@@ -48,17 +48,13 @@ namespace TD
 		Position().x += dir.x * speed * App::GetScaledFrameTime();
 		Position().y += dir.y * speed * App::GetScaledFrameTime();
 
-		TowerDefenseGameManager& gameManager = TowerDefenseGameManager::GetInstance();
-		const GameMap& map = gameManager.Map;
-		Renderer& renderer = gameManager.GetRenderer();
-
+		const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
 		const Vector2 cellPos = map.GetCellPosition(Position());
 
 		if (cellPos.x < 0 || static_cast<uint32_t>(cellPos.x) > map.GetWidth() ||
 			cellPos.y < 0 || static_cast<uint32_t>(cellPos.y) > map.GetHeight())
 		{
 			SetActive(false);
-			renderer.RemoveSprite(*sprite);
 			return;
 		}
 
@@ -97,21 +93,20 @@ namespace TD
 	{
 		PooledObject::SetActive(active);
 
-		if (sprite != nullptr)
+		if (active)
 		{
-			if (active)
-			{
-				const GameMap& map = TowerDefenseGameManager::GetInstance().Map;
-				const float scale = map.GetScale();
-				sprite->SetScale(scale);
-			}
-			else
-			{
-				sprite->SetScale(0);
-			}
+			if (sprite != nullptr)
+				sprite->Show();
 		}
-
-		if (!active)
+		else
+		{
 			parent = nullptr;
+
+			if (sprite == nullptr)
+				return;
+
+			TowerDefenseGameManager::GetInstance().GetRenderer().RemoveSprite(*sprite);
+			sprite = nullptr;
+		}
 	}
 }

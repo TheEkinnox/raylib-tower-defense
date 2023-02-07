@@ -63,7 +63,7 @@ namespace TD
 		return m_spriteSheet;
 	}
 
-	void Sprite::SetTexture(const Texture texture)
+	Sprite& Sprite::SetTexture(const Texture texture)
 	{
 		const Rectangle spriteRect
 		{
@@ -74,9 +74,10 @@ namespace TD
 		};
 
 		SetTexture(texture, spriteRect);
+		return *this;
 	}
 
-	void Sprite::SetTexture(const Texture texture, const Rectangle spriteRect)
+	Sprite& Sprite::SetTexture(const Texture texture, const Rectangle spriteRect)
 	{
 		if (texture.id != 0 &&
 			(spriteRect.x < 0 || spriteRect.x + spriteRect.width > static_cast<float>(texture.width) ||
@@ -87,6 +88,7 @@ namespace TD
 
 		m_spriteSheet = texture;
 		m_spriteRect = spriteRect;
+		return *this;
 	}
 
 	Vector2 Sprite::Position() const
@@ -104,9 +106,10 @@ namespace TD
 		return m_origin;
 	}
 
-	void Sprite::SetOrigin(const float xOrigin, const float yOrigin)
+	Sprite& Sprite::SetOrigin(const float xOrigin, const float yOrigin)
 	{
 		m_origin = { xOrigin, yOrigin };
+		return *this;
 	}
 
 	Vector2 Sprite::GetScale() const
@@ -114,14 +117,16 @@ namespace TD
 		return m_scale;
 	}
 
-	void Sprite::SetScale(const float scale)
+	Sprite& Sprite::SetScale(const float scale)
 	{
 		SetScale(scale, scale);
+		return *this;
 	}
 
-	void Sprite::SetScale(const float xScale, const float yScale)
+	Sprite& Sprite::SetScale(const float xScale, const float yScale)
 	{
 		m_scale = { xScale, yScale };
+		return *this;
 	}
 
 	float Sprite::GetRotation() const
@@ -129,9 +134,10 @@ namespace TD
 		return m_rotation;
 	}
 
-	void Sprite::SetRotation(const float rotation)
+	Sprite& Sprite::SetRotation(const float rotation)
 	{
 		m_rotation = rotation;
+		return *this;
 	}
 
 	Color Sprite::GetTint() const
@@ -139,15 +145,31 @@ namespace TD
 		return m_tint;
 	}
 
-	void Sprite::SetTint(const Color tint)
+	Sprite& Sprite::SetTint(const Color tint)
 	{
 		m_tint = tint;
+		return *this;
+	}
+
+	Sprite& Sprite::Show()
+	{
+		m_isVisible = true;
+		return *this;
+	}
+
+	Sprite& Sprite::Hide()
+	{
+		m_isVisible = false;
+		return *this;
 	}
 
 	void Sprite::Draw() const
 	{
 		if (m_spriteSheet.id == 0)
 			throw std::invalid_argument("Can't draw a sprite with an unloaded texture");
+
+		if (!m_isVisible)
+			return;
 
 		const bool flipX = m_scale.x < 0;
 		const bool flipY = m_scale.y < 0;

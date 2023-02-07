@@ -13,6 +13,6 @@ namespace TD
 		virtual void	Update() = 0;
 
 	private:
-		bool			m_active;
+		bool			m_active = false;
 	};
 }

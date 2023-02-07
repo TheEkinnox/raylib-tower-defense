@@ -113,7 +113,7 @@ namespace TD
 		Position().x = LibMath::max(pos.m_x, 0);
 		Position().y = LibMath::max(pos.m_y, 0);
 
-		const float rotation = acosf(dir.m_x) * RAD2DEG;
+		const float rotation = dir.signedAngleFrom(LibMath::Vector2::right()).degree();
 		m_sprite->SetRotation(rotation);
 	}
 

@@ -21,7 +21,7 @@ namespace TD
 		std::string curLine;
 		int loadedCount = 0;
 		
-		while (std::getline(fileStream, curLine) && loadedCount < TOWER_CONFIG_DATA_COUNT)
+		while (std::getline(fileStream, curLine))
 		{
 			curLine = Trim(RemoveComments(curLine));
 
@@ -82,7 +82,14 @@ namespace TD
 			else if (tokens[0] == "bulletTexture")
 			{
 				bulletTexturePath = TrimLeft(curLine.substr(tokens[0].size()));
-				loadedCount++;
+			}
+			else if (tokens[0] == "rangeCircleColor")
+			{
+				rangeCircleColor = GetColor(std::stoul(tokens[1], nullptr, 16));
+			}
+			else if (tokens[0] == "rangeCircleDangerColor")
+			{
+				rangeCircleDangerColor = GetColor(std::stoul(tokens[1], nullptr, 16));
 			}
 		}
 

@@ -27,24 +27,27 @@ namespace TD
 		Sprite&		operator=(Sprite&& other) noexcept;
 
 		Texture		GetTexture() const;
-		void		SetTexture(Texture texture);
-		void		SetTexture(Texture texture, Rectangle spriteRect);
+		Sprite&		SetTexture(Texture texture);
+		Sprite&		SetTexture(Texture texture, Rectangle spriteRect);
 
 		Vector2		Position() const;
 		Vector2&	Position();
 
 		Vector2		GetOrigin() const;
-		void		SetOrigin(float xOrigin, float yOrigin);
+		Sprite&		SetOrigin(float xOrigin, float yOrigin);
 
 		Vector2		GetScale() const;
-		void		SetScale(float scale);
-		void		SetScale(float xScale, float yScale);
+		Sprite&		SetScale(float scale);
+		Sprite&		SetScale(float xScale, float yScale);
 
 		float		GetRotation() const;
-		void		SetRotation(float rotation);
+		Sprite&		SetRotation(float rotation);
 
 		Color		GetTint() const;
-		void		SetTint(Color tint);
+		Sprite&		SetTint(Color tint);
+
+		Sprite&		Show();
+		Sprite&		Hide();
 
 		void		Draw() const;
 
@@ -56,5 +59,6 @@ namespace TD
 		Vector2		m_scale = { 1.f, 1.f };
 		float		m_rotation = 0;
 		Color		m_tint = WHITE;
+		bool		m_isVisible = true;
 	};
 }

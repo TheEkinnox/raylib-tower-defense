@@ -70,6 +70,7 @@ namespace TD
 		Vector2						IndexToPosition(uint32_t index) const;
 		unsigned int				PositionToIndex(Vector2 cellPosition) const;
 		float						GetScale() const;
+		Vector2						GetOffset() const;
 		ai::Graph					GetGraph() const;
 		Texture						GetTexture() const;
 		void						Clear();
@@ -101,7 +102,7 @@ namespace TD
 
 		const unsigned int index = PositionToIndex(cellPosition);
 
-		if (index > m_towers.size() || m_towers[index] != nullptr
+		if (index >= m_towers.size() || m_towers[index] != nullptr
 			|| m_terrain[index].Type == TerrainType::ROAD
 			|| m_terrain[index].Type == TerrainType::DIRT)
 			return nullptr;
