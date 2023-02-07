@@ -187,8 +187,8 @@ namespace TD
 		};
 
 		const Vector2 origin = {
-			static_cast<float>(m_spriteSheet.width) * m_origin.x,
-			static_cast<float>(m_spriteSheet.height) * m_origin.y
+			static_cast<float>(scaledRect.width) * m_origin.x,
+			static_cast<float>(scaledRect.height) * m_origin.y
 		};
 
 		DrawTexturePro(m_spriteSheet, sourceRect, scaledRect, origin, m_rotation, m_tint);
