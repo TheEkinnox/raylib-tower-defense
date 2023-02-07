@@ -55,13 +55,21 @@ namespace TD
 	void ITower::Update()
 	{
 		const auto& renderer = TowerDefenseGameManager::GetInstance().GetRenderer();
-		const Vector2 scale = renderer.GetRenderScale();
+		const Vector2 renderScale = renderer.GetRenderScale();
 		const Vector2 offset = renderer.GetRenderPosition();
+
+		const auto& map = TowerDefenseGameManager::GetInstance().Map;
+		const float mapScale = map.GetScale();
+		const Vector2 scale
+		{
+			renderScale.x * mapScale,
+			renderScale.y * mapScale
+		};
 
 		const Vector2 pos
 		{
-			m_sprite->Position().x * scale.x + offset.x,
-			m_sprite->Position().y * scale.y + offset.y
+			m_sprite->Position().x * renderScale.x + offset.x,
+			m_sprite->Position().y * renderScale.y + offset.y
 		};
 
 		const Vector2 mousePos = GetMousePosition();
