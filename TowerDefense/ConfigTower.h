@@ -22,7 +22,7 @@ namespace TD
 		std::string		texturePath;
 		std::string		buttonTexturePath;
 		std::string		bulletTexturePath;
-		BulletType		bulletType;
+		BulletType		bulletType = BulletType::REGULAR;
 		Color			rangeCircleColor = SKYBLUE;
 		Color			rangeCircleDangerColor = RED;
 		

@@ -4,13 +4,9 @@
 
 int main(const int argc, char* argv[])
 {
-	TD::App app;
+	const TD::App app(argc, argv);
 
-    app.Init(argc, argv);
+	app.Run();
 
-    app.Run();
-
-    app.Quit();
-
-    return 0;
+	return 0;
 }

@@ -11,11 +11,7 @@ namespace TD
 {
 	float App::m_timeScale = 1;
 
-	App::App() : m_gameManager(nullptr)
-	{
-	}
-
-	void App::Init(const int argc, char* const* argv)
+	App::App(const int argc, char* const* argv)
 	{
 		SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
 
@@ -41,10 +37,7 @@ namespace TD
 		while (!(WindowShouldClose() || m_gameManager->GetCurrentState() == GameState::QUIT
 			|| m_gameManager->GetCurrentState() == GameState::ERROR))
 			m_gameManager->Update();
-	}
 
-	void App::Quit() const
-	{
 		CloseAudioDevice();
 		CloseWindow();
 

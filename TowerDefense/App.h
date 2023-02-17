@@ -13,12 +13,10 @@ namespace TD
 		const int	MinWidth = 800;
 		const int	MinHeight = 360;
 
-		App();
+		App(int argc, char* const* argv);
 		~App() = default;
 
-		void			Init(int argc = 0, char* const* argv = nullptr);
 		void			Run() const;
-		void			Quit() const;
 
 		static void		ToggleFullscreenWindow();
 		static void		SetTimeScale(float timeScale);
