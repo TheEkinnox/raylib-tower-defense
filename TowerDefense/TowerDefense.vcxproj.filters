@@ -222,6 +222,9 @@
     <ClInclude Include="StartLevelButton.h">
       <Filter>Header Files\HUD\Buttons</Filter>
     </ClInclude>
+    <ClInclude Include="AppConfig.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -373,6 +376,9 @@
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files\HUD\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="AppConfig.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

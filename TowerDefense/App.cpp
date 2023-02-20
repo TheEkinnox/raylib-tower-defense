@@ -22,8 +22,10 @@ namespace TD
 		ChangeDirectory(GetApplicationDirectory());
 #endif
 
-		InitWindow(App::DesignWidth, App::DesignHeight, "Tower Defense");
-		SetWindowMinSize(App::MinWidth, App::MinHeight);
+		m_config.LoadFromFile(CONFIG_FILE_PATH);
+
+		InitWindow(m_config.designWidth, m_config.designHeight, m_config.title.c_str());
+		SetWindowMinSize(m_config.minWidth, m_config.minHeight);
 		InitAudioDevice();
 		HideCursor();
 		SetExitKey(KEY_NULL);
@@ -42,7 +44,7 @@ namespace TD
 		CloseWindow();
 
 		if (m_gameManager->GetCurrentState() == GameState::ERROR)
-			std::cout << "\nAn unexpected error has occured..." << std::endl;
+			std::cout << "\nAn unexpected error has occurred..." << std::endl;
 	}
 
 	void App::ToggleFullscreenWindow()

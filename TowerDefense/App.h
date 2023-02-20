@@ -1,4 +1,5 @@
 #pragma once
+#include "AppConfig.h"
 
 namespace TD
 {
@@ -7,12 +8,6 @@ namespace TD
 	class App
 	{
 	public:
-		const int	DesignWidth = 1280;
-		const int	DesignHeight = 654;
-
-		const int	MinWidth = 800;
-		const int	MinHeight = 360;
-
 		App(int argc, char* const* argv);
 		~App() = default;
 
@@ -23,7 +18,10 @@ namespace TD
 		static float	GetScaledFrameTime();
 
 	private:
+		AppConfig		m_config;
 		IGameManager*	m_gameManager;
 		static float	m_timeScale;
+
+		const char* CONFIG_FILE_PATH = "Assets/config.cfg";
 	};
 }

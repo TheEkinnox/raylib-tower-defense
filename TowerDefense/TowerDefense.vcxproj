@@ -98,6 +98,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="AppConfig.h" />
     <ClInclude Include="AStar.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletType.h" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="AppConfig.cpp" />
     <ClCompile Include="AStar.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="ConfigTower.cpp" />
