@@ -37,10 +37,8 @@ namespace ai
 					if (connectionRecord->CostSoFar <= endCost)
 						continue;
 
-					connectionRecord->Node = connection.To;
-					connectionRecord->Origin = current.Node;
-					connectionRecord->Connection = &connection;
-					connectionRecord->CostSoFar = endCost;
+					*connectionRecord = PathRecord{ current.Node, connection.To, &connection, endCost };
+
 					openList.SortByCostSoFar();
 				}
 				else

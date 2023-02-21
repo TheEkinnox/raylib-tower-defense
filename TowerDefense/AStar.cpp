@@ -53,11 +53,8 @@ namespace ai
 					if (connectionRecord->EstimatedTotalCost <= totalCost)
 						continue;
 
-					connectionRecord->Node = connection.To;
-					connectionRecord->Origin = current.Node;
-					connectionRecord->Connection = &connection;
-					connectionRecord->CostSoFar = endCost;
-					connectionRecord->EstimatedTotalCost = totalCost;
+					*connectionRecord = PathRecord{ current.Node, connection.To, &connection, endCost, totalCost };
+
 					openList.SortByCostSoFar();
 				}
 				else
